@@ -1,6 +1,10 @@
 'use strict';
 
 const express = require('express');
+const { Client } = require('pg');
+const db_client = new Client()
+
+await
 
 // Constants
 const PORT = 8080;

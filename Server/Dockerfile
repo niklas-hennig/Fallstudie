@@ -11,14 +11,15 @@ RUN mkdir -p setup
 ADD setup/DB_Setup.sql /docker-entrypoint-initdb.d/
 
 
-# Node.js setup
+# Node.js setup including npm (may take a while, installing about 300 packages)
 COPY setup/package.json /setup/
 COPY setup/server.js setup/
 
-ENV PGUSER docker
-ENV PGHOST localhost
-ENV PGPASSWORD docker
-ENV PGDATABASE docker
-ENV PGPORT 5432
+RUN apt-get update
+RUN apt-get install -y nodejs
+RUN apt-get install -y npm 
 
-RUN apt install nodejs
+# Npm Package setup
+RUN npm install express pg
+
+# ENTRYPOINT [ "node", "setup/server.js" ]

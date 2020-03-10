@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS benutzer;
+DROP TABLE IF EXISTS user_account;
 
 CREATE TABLE user_account (
     user_id serial PRIMARY KEY,
@@ -13,5 +13,5 @@ CREATE TABLE pr_issuer (account_id serial PRIMARY KEY);
 
 CREATE TABLE pr_consumer (account_id serial PRIMARY KEY);
 
-INSERT INTO benutzer (username, password, email)
+INSERT INTO user_account (username, password, email)
     VALUES ('testuser', 'test', 'none');
