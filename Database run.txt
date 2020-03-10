@@ -1,0 +1,16 @@
+Build:
+    C:\Users\NHG\Documents\DHBW\Webprogrammierung\Fallstudie>docker image build  DB -t webdb:latest
+
+Run:
+    docker run webdb:latest
+
+List active Containers:
+    docker conatiner ls
+--> Container ID 
+
+
+Enter Container:
+    docker exec -it <ContainerID> /bin/bash
+
+Stop Container:
+    docker stop <ContainerID>
