@@ -1,17 +1,9 @@
-To Run the Database-Container:
-    Build (Navigate to Directory containing the Project, i. e. Fallstudie):
-        docker image build  DB -t webdb:latest
-
-    Run:
-        docker run webdb:latest
-
-
-To run the Web-Server:
-    Build (Navigate to Directory containing the Project):
-        docker image build  WebServer -t webserver:latest
+To Build and Run the Container:
+    Build (Navigate to Directory containing the Project-Folder, the folder above the repository):
+        docker image build  Fallstudie -t server:latest
 
     Run (Server Reachable under localhost:10000):
-        docker run -p 10000:8080 webserver:latest
+        docker run -p 10000:8080 server:latest
 
 Other Docker Commands:
     List active Containers --> Container ID :

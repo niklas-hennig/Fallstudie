@@ -1,0 +1,23 @@
+{
+  "name": "Fallstudie",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"cd api && node server.js \" \"cd react-app && npm start\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nhennigdhbw/Fallstudie.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nhennigdhbw/Fallstudie/issues"
+  },
+  "homepage": "https://github.com/nhennigdhbw/Fallstudie#readme",
+  "dependencies": {
+    "concurrently": "^5.1.0"
+  }
+}
