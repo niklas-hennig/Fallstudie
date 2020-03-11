@@ -5,7 +5,7 @@ class App extends Component {
 
   componentDidMount(){
     console.log("cpdm");
-    console.log(axios.get('http://localhost:3001/api/getData')
+    console.log(axios.get('http://localhost:2001/api/getData')
     .then((data) => console.log(data.data)));
   }
 
@@ -14,7 +14,7 @@ class App extends Component {
   // it is easy to understand their functions when you
   // see them render into our screen
   render() {
-    console.log(axios.get('http://localhost:3001/api/getData'));
+    console.log(axios.get('http://localhost:2001/api/getData'));
     return (
       <div>
         <p>Console Output from Back-end Api</p>            
