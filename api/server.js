@@ -28,7 +28,7 @@ router.get('/getData', (req, res) => {
 });
 
 router.get('/testDB', (req, res) => {
-    pool.query('SELECT NOW()', (db_err, data) => {
+    pool.query('SELECT * FROM user_account', (db_err, data) => {
         return res.json(data.rows)
         pool.end()
       })

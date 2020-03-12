@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./server.js"
+    "start": "nohup node http_server.js > /usr/output.log"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
