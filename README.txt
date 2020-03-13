@@ -3,7 +3,7 @@ To Build and Run the Container:
         docker image build  Fallstudie -t server:latest
 
     Run (Server Reachable under localhost:10000):
-        docker run -p 10000:8080 server:latest
+        docker run -p 10000:80 server:latest
 
 Other Docker Commands:
     List active Containers --> Container ID :
