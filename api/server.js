@@ -2,6 +2,7 @@ const express = require('express');
 var cors = require('cors');
 const bodyParser = require('body-parser');
 const { Pool, Client} = require('pg');
+const cookieParser = require('cookie-parser');
 
 const API_PORT = 2001;
 const app = express();
@@ -20,6 +21,7 @@ const pool = new Pool({
 // bodyParser, parses the request body to be a readable json format
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cookieParser());
 
 // this is our get method
 // this method fetches all available data in our database
@@ -32,6 +34,20 @@ router.get('/testDB', (req, res) => {
         return res.json(data.rows)
         pool.end()
       })
+})
+
+router.get('/setCookie', (req, res) => {
+  res.cookie('testCookie', 'Cookie-system workin', { maxAge: 21600, httpOnly: true });
+  return res.send('Cookie has been set');
+})
+
+router.get('/testCookie', (req, res) => {
+  return res.json(req.cookies)
+})
+
+router.get('/clearCookie', (req, res) => {
+  res.clearCookie('testCookie');
+  return res.send('Cookie has been cleared')
 })
 
 
