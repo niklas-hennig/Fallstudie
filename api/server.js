@@ -31,8 +31,8 @@ router.get('/getData', (req, res) => {
 
 router.get('/testDB', (req, res) => {
     pool.query('SELECT * FROM user_account', (db_err, data) => {
+      if(db_err) console.log(db_err)
         return res.json(data.rows)
-        pool.end()
       })
 })
 
@@ -48,6 +48,37 @@ router.get('/testCookie', (req, res) => {
 router.get('/clearCookie', (req, res) => {
   res.clearCookie('testCookie');
   return res.send('Cookie has been cleared')
+})
+
+router.post('/User', (req, res) => {
+  if (!req.body.email) return res.status(400).send('No email provided');
+  if (!req.body.username) return res.status(400).send('No username provided');
+  if (!req.body.password) return res.status(400).send('No password provided');
+
+  pool.query('SELECT id FROM user_account WHERE email = $1', [req.body.email], (err, data,) => {
+    if (data) return res.status(400).send('User already registered')
+    return
+  })
+  console.log('creating user' + req.body.email)
+  pool.query('INSERT INTO user_account (username, password, email) VALUES ($1, $2, $3)', 
+              [req.body.username, req.body.password, req.body.email], (err, data) => {
+                if (err) console.log(err)
+                return 
+              })
+  console.log('last line')
+  return res.status(200).send('User created')
+  }
+)
+
+router.delete('/User/:username', (req, res) => {
+  console.log(req)
+  if (!req.params.username) return res.status(400).send('No username provided');
+  pool.query('DELETE FROM user_account WHERE username=$1', req.params.username, (err, data) => {
+    console.log(err)
+    console.log(data)
+  })
+  return res.send('User deleted')
+
 })
 
 

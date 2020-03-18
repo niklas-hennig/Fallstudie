@@ -5,6 +5,9 @@ FROM postgres:latest
 ENV POSTGRES_USER docker
 ENV POSTGRES_PASSWORD docker
 ENV POSTGRES_DB docker
+ENV POSTGRES_PORT 5432
+
+EXPOSE ${POSTGRES_PORT}
 
 ADD setup/DB_Setup.sql /docker-entrypoint-initdb.d/
 
