@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
 
 const auth_utils = require('./modules/authentication')
+const db_utils = require('./modules/db_utils')
 
 const API_PORT = 2001;
 const app = express();
@@ -21,7 +22,6 @@ const pool = new Pool({
     port: 5432,
   })
 
-auth_utils.test();
 
 // (optional) only made for logging and
 // bodyParser, parses the request body to be a readable json format
@@ -56,8 +56,7 @@ router.get('/clearCookie', (req, res) => {
 })
 
 router.get('/testAuth', (req, res) => {
-  console.log(req)
-  const decoded = jwt.verify(req.cookies["Authentification"], config.get('myprivatekey'));
+  const decoded = jwt.verify(req.cookies["Auth"], config.get('myprivatekey'));
   if (decoded['auth']=='true') return res.send('Auth successfull'); else res.send('Auth failed')
 })
 
@@ -66,64 +65,71 @@ router.get('/testAuth', (req, res) => {
 //User Management, for creating the request body must contain username, email and password; for Update only username is required
 //For Delete /api/User/:username should be used; get Functionality is not imlemented, shloud be used with Authentification
 router.post('/User', (req, res) => {
-  if (!req.body.email) return res.status(400).send('No email provided');
   if (!req.body.username) return res.status(400).send('No username provided');
+  username = req.body.username;
+  if (!req.body.email) return res.status(400).send('No email provided');
+  email = req.body.email;
   if (!req.body.password) return res.status(400).send('No password provided');
+  password = req.body.password;
 
-  pool.query('SELECT id FROM user_account WHERE email = $1', [req.body.email], (err, data,) => {
-    if (data) return res.status(400).send('User already registered')
-    return
+  db_utils.findUser(username)
+  .then(id => {
+    if (id){
+      if (id.length>0){
+        res.status(400).send('User already exists')
+      }else{
+        db_utils.createUser(username, email, password)
+        .then(id => res.send(toString(id)))
+        .catch(err => res.status(500).send(err))
+      }
+    }else{
+      db_utils.createUser(username, email, password)
+        .then(id => res.send(toString(id)))
+        .catch(err => res.status(500).send(err))
+    }
   })
-  pool.query('INSERT INTO user_account (username, password, email) VALUES ($1, $2, $3) RETURNING user_id', 
-              [req.body.username, req.body.password, req.body.email], (err, data) => {
-                if (err) console.log(err)
-                return res.status(200).send('User created with id: ' + data.rows[0].user_id)
-              })
-  }
+}
 )
 
 router.delete('/User/:username', (req, res) => {
   if (!req.params.username) return res.status(400).send('No username provided');
-  pool.query('DELETE FROM user_account WHERE username=$1', [req.params.username], (err, data) => {
-    if (err) console.log(err)
-    return
-  })
-  return res.send('User deleted')
-
+  username = req.params.username
+  db_utils.deleteUser(username)
+  .then(res.send('User deleted'))
+  //.catch(res.status(500).send('Unable to delete User'))
 })
 
 router.put('/User', (req, res) => {
   if (!req.body.username) return res.status(400).send('No username provided');
-  if (req.body.password) {
-  pool.query('UPDATE user_account SET password=$1 WHERE username=$2', [req.body.password, req.body.username], (err, data) => {
-    if (err) console.log(err)
-    return
+  username = req.body.username
+  db_utils.updateUser(username, req.body.password, req.body.email)
+  .then(res.send('User Information updated'))
+  .catch(err => {
+    if (!err) res.status(400).send('Please Provide Information to update')
+    else res.status(500).send('Unable to update user information')
   })
-  }
-
-  if (req.body.email) {
-    pool.query('UPDATE user_account SET email=$1 WHERE username=$2', [req.body.email, req.body.username], (err, data) => {
-      if (err) console.log(err)
-      return
-    })
-    }
-  
-  return res.send('User updated')
 
 })
 
 //Authentification: to authenticate use get; query should be /api/Authentification/<username>/<password>. Returning Cookie
 router.get('/Authentification/:username/:password', (req, res) => {
   if (!req.params.username) return res.status(400).send('No username provided');
+  username = req.params.username
   if (!req.params.password) return res.status(400).send('No password provided');
+  password = req.params.password
 
-  pool.query('SELECT password FROM user_account WHERE username=$1', [req.params.username], (err, data)=> {
-      if (req.params.password==data.rows[0].password) return res.cookie('Authentification', jwt.sign({username: req.params.username, auth: 'true'}, config.get('myprivatekey')), { maxAge: 21600, httpOnly: true }).send('Authentification successful')
-      else return res.status(400).send('Wrong username or pasword')
-  })
+  auth_utils.getAuthentification(username, password)
+  .then(res_cookie => 
+    res.cookie('Auth', res_cookie).send('Authentification successful'))
+  .catch(err => {console.log(err)
+    res.status(400).send(err)})
 
 })
 
+router.delete('/Authentification', (req, res) => {
+  res.clearCookie('Authentification');
+  return res.send('Authentification cleared')
+})
 
 
 // append /api for our http requests
