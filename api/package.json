@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nohup node http_server.js > /usr/output.log"
+    "start": "node server.js > /usr/output.log"
   },
   "dependencies": {
     "axios": "^0.19.2",
