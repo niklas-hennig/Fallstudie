@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const { Pool, Client} = require('pg');
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
+//const fileUpload = require('express-fileupload');
 
 const auth_utils = require('./modules/authentication')
 const db_utils = require('./modules/db_utils')
@@ -23,11 +24,10 @@ const pool = new Pool({
   })
 
 
-// (optional) only made for logging and
-// bodyParser, parses the request body to be a readable json format
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
+//app.use(fileUpload());
 
 // Testing Endpoints for different Functionalities, do not use in Production only for in-browser-testing
 router.get('/getData', (req, res) => {
@@ -57,10 +57,29 @@ router.get('/clearCookie', (req, res) => {
 
 router.get('/testAuth', (req, res) => {
   const decoded = jwt.verify(req.cookies["Auth"], config.get('myprivatekey'));
+  cookieDate = Date(decoded['time']);
+  console.log(cookieDate);
+  console.log(Date());
+  console.log(Date() - cookieDate);
   if (decoded['auth']=='true') return res.send('Auth successfull'); else res.send('Auth failed')
 })
 
+router.get('/testList/:parameter/:values', (req, res)=>{
+  list = req.params.values
+  list = list.split(',')
+  query_string = 'SELECT * FROM user_account WHERE ' + req.params.parameter + ' in (' +"'" + list.join("','") + "')"
+  console.log(req.params.list);
+  console.log(query_string)
+  pool.query(query_string)
+  .then(data => console.log(data.rows))
+  .catch(err => console.error(err))
+  res.send(list)
+})
 
+router.get('/testQuery', (req, res) => {
+  console.log(req.query)
+  res.send(req.query);
+})
 
 //User Management, for creating the request body must contain username, email and password; for Update only username is required
 //For Delete /api/User/:username should be used; get Functionality is not imlemented, shloud be used with Authentification

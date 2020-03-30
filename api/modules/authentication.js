@@ -6,7 +6,7 @@ const config = require('config');
 
 module.exports={
     createToken: function(username){
-        cookie_content = jwt.sign({username: username, auth: 'true'}, config.get('myprivatekey'))
+        cookie_content = jwt.sign({username: username, auth: 'true', time: Date.now()}, config.get('myprivatekey'))
         return cookie_content
     },
 
