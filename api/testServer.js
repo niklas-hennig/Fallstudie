@@ -42,8 +42,8 @@ async function test (t) {
         username: "testing",
         password: "test"
     }).then((test) => {
-        if (!test.status==200) console.log(test); else console.log(test.data)
-    }).catch((err) => console.log(err))
+        if (!test.status==200) console.error(test); else console.log(test.data)
+    }).catch((err) => {throw err})
 
     console.log('testing User; Method: Post => 400')
     await axios.post('http://localhost:2001/api/User', {
@@ -80,7 +80,10 @@ async function test (t) {
     
     setTimeout(function(){
         console.log('testing Authentification; Method: Get => 200, Cookie');
-        axios.get('http://localhost:2001/api/Authentification/testuser/test').then((res) => {
+        axios.post('http://localhost:2001/api/Authentification/', {
+            username: 'testuser',
+            password: 'test'
+        }).then((res) => {
         console.log(res.headers['set-cookie'][0])
         token = res.headers['set-cookie'][0]
     }).catch((err) => console.log(err))}, 500);

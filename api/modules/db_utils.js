@@ -23,7 +23,10 @@ module.exports={
     return new Promise((resolve, reject) => {
       pool.query('INSERT INTO user_account (username, password, email) VALUES ($1, $2, $3) RETURNING user_id', 
       [username, password, email])
-      .then(data => resolve(data.rows[0].user_id))
+      .then(data => {
+        console.log(data.rows[0].user_id)
+        resolve(data.rows[0].user_id);
+        })
       .catch(err => reject(err))
     })
   },

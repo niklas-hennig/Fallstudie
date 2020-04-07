@@ -98,12 +98,12 @@ router.post('/User', (req, res) => {
         res.status(400).send('User already exists')
       }else{
         db_utils.createUser(username, email, password)
-        .then(id => res.send(toString(id)))
+        .then(id => res.send(id.toString()))
         .catch(err => res.status(500).send(err))
       }
     }else{
       db_utils.createUser(username, email, password)
-        .then(id => res.send(toString(id)))
+        .then(id =>res.send(id.toString()))
         .catch(err => res.status(500).send(err))
     }
   })
@@ -130,12 +130,12 @@ router.put('/User', (req, res) => {
 
 })
 
-//Authentification: to authenticate use get; query should be /api/Authentification/<username>/<password>. Returning Cookie
-router.get('/Authentification/:username/:password', (req, res) => {
-  if (!req.params.username) return res.status(400).send('No username provided');
-  username = req.params.username
-  if (!req.params.password) return res.status(400).send('No password provided');
-  password = req.params.password
+//Authentification: to authenticate use get; query should be /api/Authentification/ with username and password in body. Returning Cookie
+router.post('/Authentification', (req, res) => {
+  if (!req.body.username) return res.status(400).send('No username provided');
+  username = req.body.username
+  if (!req.body.password) return res.status(400).send('No password provided');
+  password = req.body.password
 
   auth_utils.getAuthentification(username, password)
   .then(res_cookie => 
