@@ -61,7 +61,7 @@ router.get('/testAuth', (req, res) => {
   console.log(cookieDate);
   console.log(Date());
   console.log(Date() - cookieDate);
-  if (decoded['auth']=='true') return res.send('Auth successfull'); else res.send('Auth failed')
+  if (decoded['auth']=='true') return res.status(200).send('Auth successfull'); else res.status(401).send('Auth failed')
 })
 
 router.get('/testList/:parameter/:values', (req, res)=>{
