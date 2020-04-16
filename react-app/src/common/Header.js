@@ -12,7 +12,7 @@ class Header extends Component {
             position: 'absolute',
             width: '100%',
             left: '-0%',
-            height: '10%',
+            height: '3%',
             top: '0%',
             display: "flex", 
             flexDirection:"row", 

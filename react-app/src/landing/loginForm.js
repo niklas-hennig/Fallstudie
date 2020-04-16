@@ -69,7 +69,7 @@ class LoginForm extends Component {
                             <p id="picture_user"></p>
                             <img src={mailIcon}  alt="mailicon" style={this.iconStyle}/>
                         </label>
-                        <input type="text" name="username" placeholder="E-Mail Adresse"  onChange={this.changeHandler}/>
+                        <input type="text" name="username" placeholder="Nutzername"  onChange={this.changeHandler}/>
                     
                         <label for="password">
                             <p id="picture_password"></p>

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import MainContent from './landing/mainContent';
+import MainContent from './mainContent';
 import Footer from './common/Footer';
 import Header from './common/Header'
 import * as serviceWorker from './serviceWorker';

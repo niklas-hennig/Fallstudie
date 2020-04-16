@@ -46,12 +46,12 @@ class Login extends Component {
     }
     handleLogin = (event) => {
         this.setState({isLogin: true})
+        this.props.onLogin(true);
     }
 
 
     render() {
         let style = this.styleDefault;
-        if (this.state.isLogin) alert('login');
         return(
             <div id="login_box" style={style}>
                 <div id='top' style={{position:'relative', top:'10%', left:'20%'}}>
