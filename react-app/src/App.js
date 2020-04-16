@@ -1,23 +1,23 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import './style.css'
 
 class App extends Component {
-
-  componentDidMount(){
-    console.log("cpdm");
-    console.log(axios.get('http://localhost:2001/api/getData')
-    .then((data) => console.log(data.data)));
-  }
-
-
-  // here is our UI
-  // it is easy to understand their functions when you
-  // see them render into our screen
   render() {
-    console.log(axios.get('http://localhost:2001/api/getData'));
     return (
-      <div>
-        <p>Console Output from Back-end Api</p>            
+      <div className="App">
+        <header className="App-header">
+          <p>
+            Edit <code>src/App.js</code> and save to reload.
+          </p>
+          <a
+            className="App-link"
+            href="https://reactjs.org"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Learn React now
+          </a>
+        </header>
       </div>
     );
   }

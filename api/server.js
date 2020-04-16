@@ -1,4 +1,5 @@
 const express = require('express');
+const fs = require('fs');
 var cors = require('cors');
 const bodyParser = require('body-parser');
 const { Pool, Client} = require('pg');
@@ -9,10 +10,11 @@ const jwt = require('jsonwebtoken');
 const auth_utils = require('./modules/authentication')
 const db_utils = require('./modules/db_utils')
 
-const API_PORT = 2001;
+const API_PORT = 80;
 const app = express();
 app.use(cors());
 const router = express.Router();
+const htmlRouter = express.Router();
 const config = require('config');
 
 const pool = new Pool({
@@ -84,6 +86,7 @@ router.get('/testQuery', (req, res) => {
 //User Management, for creating the request body must contain username, email and password; for Update only username is required
 //For Delete /api/User/:username should be used; get Functionality is not imlemented, shloud be used with Authentification
 router.post('/User', (req, res) => {
+  console.log(req)
   if (!req.body.username) return res.status(400).send('No username provided');
   username = req.body.username;
   if (!req.body.email) return res.status(400).send('No email provided');
@@ -99,7 +102,10 @@ router.post('/User', (req, res) => {
       }else{
         db_utils.createUser(username, email, password)
         .then(id => res.send(id.toString()))
-        .catch(err => res.status(500).send(err))
+        .catch(err => {
+          res.status(500).send(err)
+          console.log('hier')
+        })
       }
     }else{
       db_utils.createUser(username, email, password)
@@ -150,7 +156,30 @@ router.delete('/Authentification', (req, res) => {
   return res.send('Authentification cleared')
 })
 
+htmlRouter.get('/', (req, res) => {
+  fs.readFile('../react-app/build/index.html', (err, data) => {
+    if (err) res.status(500).send(err);
+    console.log(data);
+    res.end(data);
+  })
+})
+
+
+htmlRouter.get('*', (req, res) => {
+  if (req.path) console.log(req.path);
+  if (!req.path) console.log(req);
+  if (!req.path.match('\/auth\/.*')){
+    fs.readFile('../react-app/build/'+req.path, (err, data) => {
+      if (err) res.status(500).send(err);
+      res.end(data);
+    })
+  }else{
+    res.status(400).send('not authenticated')
+  }
+})
+
 
 // append /api for our http requests
 app.use('/api', router);
+app.use('/', htmlRouter);
 app.listen(API_PORT, () => console.log(`LISTENING ON PORT ${API_PORT}`));
