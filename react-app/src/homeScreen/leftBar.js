@@ -12,7 +12,7 @@ class LeftBar extends Component {
     }
     render(){
         return <div style={this.style}>
-            <p>left</p>
+            <p>left lkdsfölkas</p>
         </div>
     }
 }

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Cookies from 'js-cookie';
 
 //Landing page imports
 import Description from './landing/description';
@@ -16,7 +17,8 @@ class MainContent extends Component {
         super();
         this.state = {
             Registration: false,
-            login: true             //Change to false, in develeopment to circumvent login
+            login: false,             //Change to false, in develeopment to circumvent login
+            auth: null
         }
         this.style={position: 'absolute', 
                     top: '8%',
@@ -36,7 +38,8 @@ class MainContent extends Component {
         this.setState({Registration: false})
     }
     handleLogin = (event) => {
-        this.setState({login: true})
+        this.setState({login: true, auth: Cookies.get('Auth')})
+        console.log(this.state.auth)
     }
 
     getLogin(){
