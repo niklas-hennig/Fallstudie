@@ -54,7 +54,7 @@ DROP TABLE IF EXISTS company;
 
 CREATE TABLE company (
     comp_id SERIAL PRIMARY KEY,
-    name VARCHAR(50),
+    name VARCHAR(50) NOT NULL,
     street VARCHAR(30),
     number INTEGER,
     postcode integer,
@@ -75,7 +75,7 @@ CREATE TABLE project (
     project_id SERIAL PRIMARY KEY,
     titel VARCHAR(30) NOT NULL,
     start_date DATE NOT NULL,
-    end_date DATE NOT NULL CHECK (end_date>start_date)
+    end_date DATE NOT NULL
 );
 
 DROP TABLE IF EXISTS role;
@@ -90,10 +90,11 @@ CREATE TABLE role (
 DROP TABLE IF EXISTS role_assignment;
 
 CREATE TABLE role_assignment (
-    project_id int,
+    assign_id SERIAL PRIMARY KEY,
     role_id int,
+    project_id int,
     number_of_freelancers int DEFAULT 1,
-    payment DOUBLE,
+    payment MONEY,
     CONSTRAINT project_id_fkey FOREIGN KEY (project_id)
       REFERENCES project (project_id) MATCH SIMPLE
       ON UPDATE CASCADE ON DELETE CASCADE,
@@ -102,7 +103,42 @@ CREATE TABLE role_assignment (
       ON UPDATE CASCADE ON DELETE CASCADE
 );
 
+DROP TABLE IF EXISTS applications;
+
+CREATE TABLE applications (
+    application_id SERIAL PRIMARY KEY,
+    freelancer_id int NOT NULL,
+    role_id int NOT NULL,
+    CONSTRAINT freelancer_id_fkey FOREIGN KEY (freelancer_id)
+      REFERENCES freelancer (user_id) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE,
+    CONSTRAINT role_id_fkey FOREIGN KEY (role_id)
+      REFERENCES role_assignment (assign_id) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE
+);
+
 
 
 INSERT INTO freelancer (username, password, email, name, surname)
     VALUES ('testuser', 'test', 'none', 'user', 'test');
+
+INSERT INTO prefences (pref_name)
+    VALUES ('Design');
+
+INSERT INTO prefence_assignment (user_id, pref_id)
+    VALUES (1, 1);
+
+INSERT INTO company (name)
+    VALUES ('testcomany');
+
+INSERT INTO company_account (username, password, email, comp_id)
+    VALUES('compt', 'test', 'none', 1);
+
+INSERT INTO project (titel, start_date, end_date)
+    VALUES ('TESTPROJECT', '2020-06-01', '2013-06-02');
+
+INSERT INTO role (title)
+    VALUES ('testrole');
+
+INSERT INTO role_assignment (role_id, project_id, number_of_freelancers, payment)
+    VALUES (1, 1, 10, 0.01);
