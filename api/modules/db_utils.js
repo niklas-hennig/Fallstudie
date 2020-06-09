@@ -21,19 +21,25 @@ module.exports={
     })
   },
 
-  createFreelancer: function(username, email, password){
+  createFreelancer: function(username, email, password, infos){
+    console.log(infos)
     return new Promise((resolve, reject) => {
-      pool.query('INSERT INTO freelancer (username, password, email) VALUES ($1, $2, $3) RETURNING user_id', 
-      [username, password, email])
+      pool.query('INSERT INTO freelancer (username, password, email, name, surname, street, number, postcode, city, iban, ktn_owner, expirience) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING user_id', 
+      [username, password, email, infos['name'], infos['surname'], infos['street'], infos['number'], infos['postcode'], infos['city'], infos['iban'], infos['ktn_owner'], infos['expirience']])
       .then(data => {
         console.log(data.rows[0].user_id)
         resolve(data.rows[0].user_id);
         })
-      .catch(err => reject(err))
+      .catch(err => {
+        console.log(err)
+        reject(err)
+      })
     })
   },
 
-  createCompUser: function(username, email, password){
+  createCompUser: function(username, email, password, infos){
+    
+
     return new Promise((resolve, reject) => {
       pool.query('INSERT INTO company_account (username, password, email) VALUES ($1, $2, $3) RETURNING user_id', 
       [username, password, email])
@@ -86,8 +92,8 @@ module.exports={
     })
   },
 
+
   findUser: function(username, email, type) {
-    console.log(type)
     if (type=='f') table = 'freelancer'
     else table = 'company_account'
     if(!username && ! email) throw Error('no arguments provided')

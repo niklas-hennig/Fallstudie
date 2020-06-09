@@ -31,6 +31,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
+router.get('/Company', (req, res) => {
+  res.send('');
+})
+
 
 htmlRouter.get('/', (req, res) => {
   fs.readFile('../react-app/build/index.html', (err, data) => {

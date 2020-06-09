@@ -84,7 +84,11 @@ CREATE TABLE role (
     role_id SERIAL PRIMARY KEY,
     title VARCHAR(30) NOT NULL,
     description VARCHAR(200),
-    requirements VARCHAR(50)
+    requirements VARCHAR(50),
+    area int,
+    CONSTRAINT area_fkey FOREIGN KEY (area)
+      REFERENCES prefences (pref_id) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
 DROP TABLE IF EXISTS role_assignment;
@@ -142,3 +146,7 @@ INSERT INTO role (title)
 
 INSERT INTO role_assignment (role_id, project_id, number_of_freelancers, payment)
     VALUES (1, 1, 10, 0.01);
+
+SELECT * FROM freelancer;
+DELETE FROM freelancer WHERE username = 'testing';
+SELECT * FROM freelancer;

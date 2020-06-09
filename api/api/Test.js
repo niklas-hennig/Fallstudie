@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-const router = express.Router();
 
 // Testing Endpoints for different Functionalities, do not use in Production only for in-browser-testing
 router.get('/getData', (req, res) => {
