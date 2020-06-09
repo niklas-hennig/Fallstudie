@@ -6,13 +6,14 @@ const config = require('config');
 
 module.exports={
     createToken: function(username){
-        cookie_content = jwt.sign({username: username, auth: 'true', time: Date.now()}, config.get('myprivatekey'))
+        private = jwt.sign({auth: 'true', time: Date.now()}, config.get('myprivatekey'))
+        cookie_content = {username: username, private}
         return cookie_content
     },
 
-    getAuthentification: function(username, password){
+    getAuthentification: function(username, password, type){
         return new Promise((resolve, reject) => {
-            db_utils.findUser(username)
+            db_utils.findUser(username, null, type)
             .then(data => {
                 if (password==data.password){
                     cookie = this.createToken(username)
