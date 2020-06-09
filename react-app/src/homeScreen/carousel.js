@@ -23,6 +23,9 @@ class Carousel extends Component {
       }
 
     getProjects(){
+        //fetch projects from db
+        //make div for every project 
+        //inset divs into state
         this.setState({projects: {}})
     }
 
