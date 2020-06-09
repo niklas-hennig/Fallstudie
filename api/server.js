@@ -148,7 +148,6 @@ router.post('/Authentification', (req, res) => {
     res.cookie('Auth', res_cookie).send('Authentification successful'))
   .catch(err => {console.log(err)
     res.status(400).send(err)})
-
 })
 
 router.delete('/Authentification', (req, res) => {
