@@ -53,5 +53,3 @@ EXPOSE 443
 EXPOSE ${REST_PORT}
 EXPOSE ${POSTGRES_PORT}
 
-# Start
-ADD setup/start_servers.sh /docker-entrypoint-initdb.d/

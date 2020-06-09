@@ -408,6 +408,19 @@ list-style-type:none;
 	margin-right: 15px;
 }
 
+.embla {
+	overflow: hidden;
+  }
+  
+  .embla__container {
+	display: flex;
+  }
+  
+  .embla__slide {
+	position: relative; 
+	flex: 0 0 100%; 
+  }
+
 
 /* MAIN PAGE - FREI */
 	
