@@ -12,22 +12,40 @@ module.exports={
   checkIfUserExists: function(username, isFreelancer){
     if (isFreelancer) table = 'freelancer'
     else table = 'company_account'
-    pool.query('SELECT user_id FROM freelancer WHERE username = $2', [table, username], (err, data,) => {
-      if (data.rows[0].user_id>0){
-        return true
-      }else{
-        return false
-      }
+    return new Promise((resolve, reject) => {
+      pool.query('SELECT user_id FROM freelancer WHERE username = $1', [username])
+      .then(data => {
+          if (data.rows[0].user_id>0){
+            resolve()
+          }else{
+            reject(data)
+          }
+      })
+      .catch(err => console.log(err))
+      
+    })
+  },
+
+  checkIfCompanyExists: function(company_name){
+    return new Promise((resolve, reject) => {
+      pool.query('SELECT comp_id FROM company WHERE name = $1', [company_name])
+      .then(data => {
+          if (data.rowCount>0){
+            resolve(data.rows[0].comp_id)
+          }else{
+            reject()
+          }
+      })
+      .catch(err => reject)
+      
     })
   },
 
   createFreelancer: function(username, email, password, infos){
-    console.log(infos)
     return new Promise((resolve, reject) => {
       pool.query('INSERT INTO freelancer (username, password, email, name, surname, street, number, postcode, city, iban, ktn_owner, expirience) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING user_id', 
       [username, password, email, infos['name'], infos['surname'], infos['street'], infos['number'], infos['postcode'], infos['city'], infos['iban'], infos['ktn_owner'], infos['expirience']])
       .then(data => {
-        console.log(data.rows[0].user_id)
         resolve(data.rows[0].user_id);
         })
       .catch(err => {
@@ -37,25 +55,24 @@ module.exports={
     })
   },
 
-  createCompUser: function(username, email, password, infos){
-    
+  createCompUser: function(username, email, password, infos, comp_id){
 
     return new Promise((resolve, reject) => {
-      pool.query('INSERT INTO company_account (username, password, email) VALUES ($1, $2, $3) RETURNING user_id', 
-      [username, password, email])
+      pool.query('INSERT INTO company_account (username, password, email, name, surname, comp_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING user_id', 
+      [username, password, email, infos['name'], infos['surname'], comp_id])
       .then(data => {
-        console.log(data.rows[0].user_id)
+        if (comp_id==0) reject();
         resolve(data.rows[0].user_id);
         })
       .catch(err => reject(err))
     })
   },
 
-  deleteUser: function(username, isFreelancer){
-    if (isFreelancer) table = 'freelancer'
+  deleteUser: function(username, type){
+    if (type=='f') table = 'freelancer'
     else table = 'company_account'
     return new Promise((resolve, reject) => {
-      pool.query('DELETE FROM $1 WHERE username=$2', [table, username])
+      pool.query('DELETE FROM ' + table +'WHERE username=$1', [username])
       .then(data => resolve(true))
       .catch(err => reject(err))
     })

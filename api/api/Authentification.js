@@ -4,7 +4,7 @@ const auth_utils = require('../modules/authentication')
 
 const router = express.Router();
 
-//Authentification: to authenticate use get; query should be /api/Authentification/ with username and password in body. Returning Cookie
+//Authentification: to authenticate use get; query should be /api/Authentification/ with username, password and type ('f' or 'c') in body. Returning Cookie
 router.post('/', (req, res) => {
     if (!req.body.username) return res.status(400).send('No username provided');
     username = req.body.username

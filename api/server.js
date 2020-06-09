@@ -32,22 +32,26 @@ app.use(bodyParser.json());
 app.use(cookieParser());
 
 router.get('/Company', (req, res) => {
-  res.send('');
+  pool.query('SELECT * FROM company;')
+  .then(data => {
+    console.log(data.rows[0])
+    res.send(data.rows[0])
+  })
+  .catch(err => {
+    res.status(500).send(err)
+  })
 })
 
 
 htmlRouter.get('/', (req, res) => {
   fs.readFile('../react-app/build/index.html', (err, data) => {
     if (err) res.status(500).send(err);
-    console.log(data);
     res.end(data);
   })
 })
 
 
 htmlRouter.get('*', (req, res) => {
-  if (req.path) console.log(req.path);
-  if (!req.path) console.log(req);
   if (!req.path.match('\/auth\/.*')){
     fs.readFile('../react-app/build/'+req.path, (err, data) => {
       if (err) res.status(500).send(err);

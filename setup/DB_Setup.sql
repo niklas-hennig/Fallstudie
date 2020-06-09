@@ -46,6 +46,8 @@ CREATE TABLE company_account(
     username VARCHAR(15) UNIQUE NOT NULL,
     password VARCHAR(25) NOT NULL,
     email VARCHAR(355) NOT NULL,
+    name VARCHAR(25),
+    surname VARCHAR(25),
     is_active BOOLEAN DEFAULT TRUE,
     comp_id int
 );
@@ -150,3 +152,5 @@ INSERT INTO role_assignment (role_id, project_id, number_of_freelancers, payment
 SELECT * FROM freelancer;
 DELETE FROM freelancer WHERE username = 'testing';
 SELECT * FROM freelancer;
+SELECT * FROM company_account JOIN company on company.comp_id=company_account.comp_id;
+DELETE FROM company_account WHERE username = 'testing';

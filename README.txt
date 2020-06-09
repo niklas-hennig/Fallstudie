@@ -3,7 +3,7 @@ To Build and Run the Container:
         docker image build Fallstudie -t server:latest
 
     Run (Server Reachable under localhost, api serving on port 2001, database reachable on port 5432):
-        docker run -p 80:80 -p 2001:2001 -p 5432:5432 --rm --name server server:latest
+        docker run -p 80:80 -p 5432:5432 --rm --name server server:latest
         
 
 Other Docker Commands:

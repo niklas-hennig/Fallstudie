@@ -81,41 +81,33 @@ router.post('/Freelancer', (req, res) => {
     email = req.body.email;
     if (!req.body.password) return res.status(400).send('No password provided');
     password = req.body.password;
-    if (!req.body.name||!req.body.surname) return res.status(400).send('No or incomplete name provided');
+    if (!req.body.company_name) return res.status(400).send('No company provided');
   
     infos = parseBody(req.body);
 
-    db_utils.findUser(username, false)
-    .then(id => {
-      if (id){
-        if (id.length>0){
-          res.status(400).send('User already exists')
-        }else{
-          db_utils.createCompUser(username, email, password, infos)
-          .then(id => res.send(id.toString()))
-          .catch(err => {
-            res.status(500).send(err)
-          })
-        }
-      }else{
-        db_utils.createCompUser(username, email, password, infos)
-          .then(id =>res.send(id.toString()))
-          .catch(err => res.status(500).send(err))
-      }
+    db_utils.checkIfCompanyExists(infos['company_name'])
+    .then(comp_id =>{
+      console.log('creating')
+      db_utils.createCompUser(username, email, password, infos, comp_id)
+      .then(id => res.status(200).send('created successful'))
+      .catch(err => res.status(500).send(err))
     })
+    .catch(err => res.status(500).send(err))
+
   }
   )
   
-  router.delete('/:username/:isFreelancer', (req, res) => {
+  router.delete('/:username/:type', (req, res) => {
     if (!req.params.username) return res.status(400).send('No username provided');
     username = req.params.username
-    if (!req.params.isFreelancer) return res.status(400).send('No type provided');
-    isFreelancer = req.params.isFreelancer
+    if (!req.params.type) return res.status(400).send('No type provided');
+    type = req.params.type
   
-    db_utils.deleteUser(username, isFreelancer)
+    db_utils.deleteUser(username, type)
     .then(res.send('User deleted'))
     //.catch(res.status(500).send('Unable to delete User'))
   })
+  
   
   router.put('/', (req, res) => {
     if (!req.body.username) return res.status(400).send('No username provided');
