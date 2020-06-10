@@ -105,13 +105,28 @@ router.post('/Freelancer', (req, res) => {
   
 
   router.put('/Freelancer', (req, res) => {
-    console.log('putting')
     if (!req.body.username) return res.status(400).send('No username provided');
     username = req.body.username;
 
     infos = parseBody(req.body);
 
     db_utils.updateFreelancer(username, req.body.password, req.body.email, infos)
+    .then(res.send('User Information updated'))
+    .catch(err => {
+      if (!err) res.status(400).send('Please Provide Information to update')
+      else res.status(500).send('Unable to update user information')
+    })
+  
+  })
+
+  router.put('/CompanyUser', (req, res) => {
+    console.log('putting')
+    if (!req.body.username) return res.status(400).send('No username provided');
+    username = req.body.username;
+
+    infos = parseBody(req.body);
+
+    db_utils.updateCompUser(username, req.body.password, req.body.email, infos)
     .then(res.send('User Information updated'))
     .catch(err => {
       if (!err) res.status(400).send('Please Provide Information to update')

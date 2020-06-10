@@ -89,6 +89,14 @@ async function test (t) {
         if (!test.status==200) console.error(test); else console.log('passed')
     }).catch((err) => {console.error(err)})
 
+    console.log('testing User; Method: Put => 200')
+    await axios.put('http://localhost:80/api/User/CompanyUser', {
+        username: 'testing',
+        name: 'changed'
+    }).then((test) => {
+        if (!test.status==200) console.error(test); else console.log('passed')
+    }).catch((err) => {console.error(err)})
+
     console.log('testing User; Method: Delete => 200')
     await axios.delete('http://localhost:80/api/User/testing/f', {
     }).then((test) => {
@@ -99,7 +107,7 @@ async function test (t) {
     }).then((test) => {
         if (!test.status==200) console.error(test); 
     }).catch((err) => {console.log('Error on Cleanup of Comp User' + err)})
-    
+   
 
     setTimeout(function(){
         console.log('testing Authentification; Method: Get => 200, Cookie');

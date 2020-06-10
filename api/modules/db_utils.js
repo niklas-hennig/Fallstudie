@@ -101,11 +101,44 @@ module.exports={
         .then(resolve(true))
         .catch(err=>reject(err))
       }else if (new_email) {
-        pool.query('UPDATE freelaner SET email=$1 WHERE username=$2', [new_email, username])
+        pool.query('UPDATE freelancer SET email=$1 WHERE username=$2', [new_email, username])
         .then(resolve(true))
         .catch(err => reject(err))
       }else{
         pool.query('UPDATE freelancer SET ' + upd_info , params)
+        .then(resolve(true))
+        .catch(err => reject(err))
+      }
+    })
+  },
+
+  updateCompUser: function(username, new_password, new_email, infos){
+    var i = 0;
+    var upd_info = '';
+    var params = [];
+    for (key in infos){
+      if(key!='username'){
+        params[i] = infos[key]
+        i = i+1;
+        if(i>1) upd_info = upd_info + ','
+        upd_info = upd_info + key + '=$' + i
+      }
+    }
+    params[i] = infos['username']
+    i = i+1;
+    upd_info = upd_info + ' WHERE username=$' + i
+
+    return new Promise((resolve, reject)=> {
+      if (new_password) {
+        pool.query('UPDATE company_account SET password=$1 WHERE username=$2', [new_password, username])
+        .then(resolve(true))
+        .catch(err=>reject(err))
+      }else if (new_email) {
+        pool.query('UPDATE company_account SET email=$1 WHERE username=$2', [new_email, username])
+        .then(resolve(true))
+        .catch(err => reject(err))
+      }else{
+        pool.query('UPDATE company_account SET ' + upd_info , params)
         .then(resolve(true))
         .catch(err => reject(err))
       }
