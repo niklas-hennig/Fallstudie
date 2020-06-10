@@ -97,7 +97,7 @@ router.post('/Freelancer', (req, res) => {
   
     db_utils.deleteUser(username, type)
     .then(res.send('User deleted'))
-    .catch(err => {console.log(err);
+    .catch(err => {res.status(500).send(err);
       res.status(500).send('Unable to delete User')
     })
   })
@@ -120,7 +120,6 @@ router.post('/Freelancer', (req, res) => {
   })
 
   router.put('/CompanyUser', (req, res) => {
-    console.log('putting')
     if (!req.body.username) return res.status(400).send('No username provided');
     username = req.body.username;
 

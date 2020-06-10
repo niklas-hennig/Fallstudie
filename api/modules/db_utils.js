@@ -21,7 +21,7 @@ module.exports={
             reject(data)
           }
       })
-      .catch(err => console.log(err))
+      .catch(err => rejct(err))
       
     })
   },
@@ -49,19 +49,17 @@ module.exports={
         resolve(data.rows[0].user_id);
         })
       .catch(err => {
-        console.log(err)
+        reject(err)
         reject(err)
       })
     })
   },
 
   createCompUser: function(username, email, password, name, surname, gender, comp_id){
-    console.log(username, password, email, name, surname,comp_id, gender)
     return new Promise((resolve, reject) => {
       pool.query('INSERT INTO company_account (username, password, email, name, surname, comp_id, gender) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING user_id', 
       [username, password, email, name, surname, comp_id, gender])
       .then(data => {
-        console.log(data.rows[0])
         if (comp_id==0) reject();
         resolve(data.rows[0].user_id);
         })
@@ -172,6 +170,54 @@ module.exports={
         .then(data => resolve(data.rows[0]))
         .catch(err => reject(err))
       })
+  },
+
+  getPrefences: function(username){
+    return new Promise((resolve, reject) => {
+      pool.query('SELECT pref_name FROM prefences as a JOIN prefence_assignment as b ON a.pref_id=b.pref_id JOIN freelancer as c ON b.user_id=c.user_id')
+      .then(data => resolve(data.rows))
+      .catch(err => reject(err))
+    })
+  },
+
+  getAllPrefences: function(){
+    return new Promise((resolve, reject) => {
+      pool.query('SELECT pref_name FROM prefences')
+      .then(data => resolve(data.rows))
+      .catch(err => reject(err))
+    })
+  },
+
+  assignPrefence: function(username, prefence_name){
+    return new Promise ((resolve, reject) => 
+      pool.query('SELECT user_id FROM freelancer WHERE username=$1', [username])
+          .then(data => {
+            user_id = data.rows[0].user_id;
+            pool.query('SELECT pref_id FROM prefences WHERE pref_name=$1', [prefence_name])
+                .then(data => {pool.query('INSERT INTO prefence_assignment (user_id, pref_id) VALUES ($1, $2)', [user_id, data.rows[0].pref_id])
+                                .then(data => resolve())
+                                .catch(err => reject(err))
+                  })
+                .catch(err => reject(err))
+                })
+            .catch(err => reject(err))
+      )
+  },
+
+  deletePrefenceAssignment: function(username, prefence_name){
+    return new Promise ((resolve, reject) => 
+    pool.query('SELECT user_id FROM freelancer WHERE username=$1', [username])
+        .then(data => {
+          user_id = data.rows[0].user_id;
+          pool.query('SELECT pref_id FROM prefences WHERE pref_name=$1', [prefence_name])
+              .then(data => {pool.query('DELETE FROM prefence_assignment WHERE user_id=$1 AND pref_id=$2', [user_id, data.rows[0].pref_id])
+                              .then(data => resolve())
+                              .catch(err => reject(err))
+                })
+              .catch(err => reject(err))
+              })
+          .catch(err => reject(err))
+    )
   }
   
 }

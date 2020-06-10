@@ -144,6 +144,9 @@ INSERT INTO freelancer (username, password, email, name, surname, gender)
 INSERT INTO prefences (pref_name)
     VALUES ('Design');
 
+INSERT INTO prefences (pref_name)
+    VALUES ('testprefence');
+
 INSERT INTO prefence_assignment (user_id, pref_id)
     VALUES (1, 1);
 
@@ -169,3 +172,7 @@ SELECT * FROM freelancer;
 SELECT * FROM company_account;
 DELETE FROM company_account WHERE username = 'testing';
 SELECT * FROM company_account JOIN company on company.comp_id=company_account.comp_id;
+
+SELECT pref_name FROM prefences;
+
+SELECT a.username, c.pref_name FROM freelancer as a JOIN prefence_assignment as b ON a.user_id=b.user_id JOIN prefences as c ON b.pref_id=c.pref_id;
