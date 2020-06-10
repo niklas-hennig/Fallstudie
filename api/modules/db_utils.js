@@ -41,10 +41,10 @@ module.exports={
     })
   },
 
-  createFreelancer: function(username, email, password, infos){
+  createFreelancer: function(username, email, password, name, surname, gender){
     return new Promise((resolve, reject) => {
-      pool.query('INSERT INTO freelancer (username, password, email, name, surname, street, number, postcode, city, iban, ktn_owner, expirience) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING user_id', 
-      [username, password, email, infos['name'], infos['surname'], infos['street'], infos['number'], infos['postcode'], infos['city'], infos['iban'], infos['ktn_owner'], infos['expirience']])
+      pool.query('INSERT INTO freelancer (username, password, email, name, surname, gender) VALUES ($1, $2, $3, $4, $5, $6) RETURNING user_id', 
+      [username, password, email, name, surname, gender])
       .then(data => {
         resolve(data.rows[0].user_id);
         })
@@ -55,12 +55,13 @@ module.exports={
     })
   },
 
-  createCompUser: function(username, email, password, infos, comp_id){
-
+  createCompUser: function(username, email, password, name, surname, gender, comp_id){
+    console.log(username, password, email, name, surname,comp_id, gender)
     return new Promise((resolve, reject) => {
-      pool.query('INSERT INTO company_account (username, password, email, name, surname, comp_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING user_id', 
-      [username, password, email, infos['name'], infos['surname'], comp_id])
+      pool.query('INSERT INTO company_account (username, password, email, name, surname, comp_id, gender) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING user_id', 
+      [username, password, email, name, surname, comp_id, gender])
       .then(data => {
+        console.log(data.rows[0])
         if (comp_id==0) reject();
         resolve(data.rows[0].user_id);
         })
@@ -72,30 +73,42 @@ module.exports={
     if (type=='f') table = 'freelancer'
     else table = 'company_account'
     return new Promise((resolve, reject) => {
-      pool.query('DELETE FROM ' + table +'WHERE username=$1', [username])
+      pool.query('DELETE FROM ' + table +' WHERE username=$1', [username])
       .then(data => resolve(true))
       .catch(err => reject(err))
     })
   },
 
-  updateUser: function(username, new_password, new_email, infos, isFreelancer){
-    if (isFreelancer) table = 'freelancer'
-    else table = 'company_account'
+  updateFreelancer: function(username, new_password, new_email, infos){
+    var i = 0;
+    var upd_info = '';
+    var params = [];
+    for (key in infos){
+      if(key!='username'){
+        params[i] = infos[key]
+        i = i+1;
+        if(i>1) upd_info = upd_info + ','
+        upd_info = upd_info + key + '=$' + i
+      }
+    }
+    params[i] = infos['username']
+    i = i+1;
+    upd_info = upd_info + ' WHERE username=$' + i
+
     return new Promise((resolve, reject)=> {
-      if (!new_password && !new_email) reject()
       if (new_password) {
-        pool.query('UPDATE $1 SET password=$2 WHERE username=$3', [table, new_password, username])
+        pool.query('UPDATE freelancer SET password=$1 WHERE username=$2', [new_password, username])
+        .then(resolve(true))
         .catch(err=>reject(err))
-      }
-      if (new_email) {
-        pool.query('UPDATE $1 SET email=$2 WHERE username=$3', [table, new_email, username])
+      }else if (new_email) {
+        pool.query('UPDATE freelaner SET email=$1 WHERE username=$2', [new_email, username])
+        .then(resolve(true))
+        .catch(err => reject(err))
+      }else{
+        pool.query('UPDATE freelancer SET ' + upd_info , params)
+        .then(resolve(true))
         .catch(err => reject(err))
       }
-      for (key in infos){
-        pool.query('UPDATE $1 SET $2=$3 WHERE username=$4', [table, key, infos[key], username])
-        .catch(err => reject(err))
-      }
-      resolve(true)
     })
   },
 
@@ -103,8 +116,8 @@ module.exports={
     if (isFreelancer) table = 'freelancer'
     else table = 'company_account'
     return new Promise((resolve, reject)=> {
-      pool.query('SELECT * FROM $1 WHERE username=$2', [table, username])
-      .then(data => resolve(data.rows))
+      pool.query('SELECT * FROM '+ table + ' WHERE username=$1', [username])
+      .then(data => resolve(data.rows[0]))
       .catch(err => reject(err))
     })
   },
