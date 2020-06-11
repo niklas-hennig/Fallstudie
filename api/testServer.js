@@ -132,13 +132,21 @@ async function test (t) {
         if (!test.status==200) console.error(test); else console.log('passed')
     }).catch((err) => {console.error(err)})
 
-
-
     console.log('testing Prefence; Method: Delete => 200')
     await axios.delete('http://localhost:80/api/Prefence/testuser/testprefence', {
     }).then((test) => {
         if (!test.status==200) console.error(test); else console.log('passed')
     }).catch((err) => {console.error(err)})
+
+    console.log('testing Company; Method: get => 200')
+    await axios.get('http://localhost:80/api/Company/testcomany', {
+    }).then((test) => {
+        if (!test.status==200) console.error(test); else console.log('passed')
+    }).catch((err) => {console.error(err)})
+
+    
+
+
    
 
     setTimeout(function(){

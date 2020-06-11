@@ -10,6 +10,8 @@ const jwt = require('jsonwebtoken');
 const User = require('./api/User');
 const Authentification = require('./api/Authentification');
 const Prefence = require('./api/Prefence')
+const Company = require('./api/Company')
+const Role = require('./api/Role')
 const Test = require('./api/Test');
 
 const API_PORT = 80;
@@ -69,6 +71,8 @@ app.use('/api', router);
 app.use('/api/User', User);
 app.use('/api/Authentification', Authentification);
 app.use('/api/Prefence', Prefence);
+app.use('/api/Company', Company)
+app.use('/api/Role', Role);
 app.use('/api/Test', Test);
 app.use('/', htmlRouter);
 

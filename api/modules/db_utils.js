@@ -218,6 +218,74 @@ module.exports={
               })
           .catch(err => reject(err))
     )
+  },
+
+  createCompany: function(name, street, number, postcode, city, country){
+    return new Promise ((resolve, reject) => 
+    pool.query('INSERT INTO company (name, street, number, postcode, city, country) VALUES($1, $2, $3, $4, $5, $6',
+    [name, street, number, postcode, city, country])
+    .then(data => resolve(data))
+    .catch(err => reject(err))
+    )
+
+  },
+
+  getCompanyInfo: function(name){
+    return new Promise ((resolve, reject) => {
+      pool.query('SELECT * FROM company WHERE name=$1', [name])
+      .then(data => resolve(data.rows[0]))
+      .catch(err => reject(err))
+    })
+  },
+
+  updateCompanyInfo: function(infos){
+    var i = 0;
+    var upd_info = '';
+    var params = [];
+    for (key in infos){
+      if(key!='name'){
+        params[i] = infos[key]
+        i = i+1;
+        if(i>1) upd_info = upd_info + ','
+        upd_info = upd_info + key + '=$' + i
+      }
+    }
+    params[i] = infos['name']
+    i = i+1;
+    upd_info = upd_info + ' WHERE name=$' + i
+
+    return new Promise((resolve, reject)=>{
+      pool.query('UPDATE company SET ' + upd_info, params)
+      .then(resolve())
+      .catch(err => reject(err))
+    })
+
+
+  },
+
+  deleteCompany: function(name){
+    return new Promise ((resolve, reject) => {
+      pool.query('DELETE FROM company WHERE name=$1', [name])
+      .then(resolve())
+      .catch(err => reject(err))
+    })
+  },
+
+  getPersonalizedRoles: function(username){
+    return new Promise((resolve, reject) => {
+      pool.query('SELECT role.* FROM role JOIN prefences as p ON role.area=p.pref_id JOIN prefence_assignment as pa ON p.pref_id=pa.pref_id JOIN freelancer as f ON f.user_id=pa.user_id WHERE f.username=$1',
+      [username])
+      .then(data => resolve(data.rows))
+      .catch(err => reject(err))
+    })
+  },
+
+  getRole: function(role_id){
+    return new Promise((resolve, rejct) => {
+      pool.query('SELECT * FROM role WHERE role_id=$1')
+      .thend(data => resolve(data.rows))
+      .catch(err => reject.err)
+    })
   }
   
 }
