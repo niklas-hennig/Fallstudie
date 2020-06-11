@@ -10,7 +10,7 @@ const jwt = require('jsonwebtoken');
 const auth_utils = require('./modules/authentication')
 const db_utils = require('./modules/db_utils')
 
-const API_PORT = 80;
+const API_PORT = 2001;
 const app = express();
 app.use(cors());
 const router = express.Router();
