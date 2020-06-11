@@ -8,98 +8,151 @@ const app = express();
 app.use(cookieParser());
 
 async function test (t) {
-    
+
+    //USER
+
     console.log('testing User; Method: Get => 404')
-    await axios.get('http://localhost:2001/api/User', {
+    await axios.get('http://localhost:80/api/User/Freelancer', {
     }).then((res) => {
         console.log(res.data)
     }).catch((err) => {if (!err.response.status==404) console.log(err.response.data); else console.log('passed')})
 
     console.log('testing User; Method: Post, no email => 400')
-    await axios.post('http://localhost:2001/api/User', {
+    await axios.post('http://localhost:80/api/User/Freelancer', {
     }).then((res) => {
         console.log(res.data)
     }).catch((err) => {if (!err.response.status==400) console.log(err.response.data); else console.log('passed')})
 
     console.log('testing User; Method: Post, no username => 400')
-    await axios.post('http://localhost:2001/api/User', {
+    await axios.post('http://localhost:80/api/User/Freelancer', {
         email: 'test@test.test',
     }).then((res) => {
         console.log(res.data)
     }).catch((err) => {if (!err.response.status==400) console.log(err.response.data); else console.log('passed')})
 
     console.log('testing User; Method: Post, no password => 400')
-    await axios.post('http://localhost:2001/api/User', {
+    await axios.post('http://localhost:80/api/User/Freelancer', {
         email: 'test@test.test',
         username: "testing"
     }).then((res) => {
         console.log(res.data)
     }).catch((err) => {if (!err.response.status==400) console.log(err.response.data); else console.log('passed')})
 
-    console.log('testing User; Method: Post => 200')
-    await axios.post('http://localhost:2001/api/User', {
+    console.log('testing User; Method: Post, no name => 400')
+    await axios.post('http://localhost:80/api/User/Freelancer', {
         email: 'test@test.test',
         username: "testing",
-        password: "test"
+        password: 'test'
+    }).then((res) => {
+        console.log(res.data)
+    }).catch((err) => {if (!err.response.status==400) console.log(err.response.data); else console.log('passed')})
+
+    console.log('testing User/Freelancer; Method: Post => 200')
+    await axios.post('http://localhost:80/api/User/Freelancer', {
+        email: 'test@test.test',
+        username: "testing",
+        password: "test",
+        name: 'test',
+        surname: 'user',
+        gender: 'u'
     }).then((test) => {
         if (!test.status==200) console.error(test); else console.log(test.data)
     }).catch((err) => {throw err})
 
     console.log('testing User; Method: Post => 400')
-    await axios.post('http://localhost:2001/api/User', {
+    await axios.post('http://localhost:80/api/User/CompanyUser', {
         email: 'test@test.test',
         username: "testing",
-        password: "test"
+        password: "test",
+        company_name: 'Unknown'
     }).then((res) => {
         console.log(res.data)
     }).catch((err) => {if (!err.response.status==400) console.log(err.response.data); else console.log('passed')})
 
-    console.log('testing User; Method: Put, password => 200')
-    await axios.put('http://localhost:2001/api/User', {
+    console.log('testing User/CompanyUser; Method: Post => 200')
+    await axios.post('http://localhost:80/api/User/CompanyUser', {
+        email: 'test@test.test',
+        username: "testing",
+        password: "test",
+        company_name: 'testcomany',
+        name: 'accountant',
+        surname: 'test',
+        gender: 'u'
+    }).then((test) => {
+        if (!test.status==200) console.error(test); else console.log('passed')
+    }).catch((err) => {throw err})
+
+    console.log('testing User; Method: Put => 200')
+    await axios.put('http://localhost:80/api/User/Freelancer', {
         username: 'testing',
-        password: 'new',
-        email: 'new_email'
-    }).then((res) => {
-        console.log(res.data)
-    }).catch((err) => console.log(err))
+        street: "t1street",
+        number: 13
+    }).then((test) => {
+        if (!test.status==200) console.error(test); else console.log('passed')
+    }).catch((err) => {console.error(err)})
 
-    console.log('testing User; Method: Put, no info => 400')
-    await axios.put('http://localhost:2001/api/User', {
-    }).then((res) => {
-        console.log(res.data)
-    }).catch((err) => {if (!err.response.status==400) console.log(err.response.data); else console.log('passed')})
+    console.log('testing User; Method: Put => 200')
+    await axios.put('http://localhost:80/api/User/CompanyUser', {
+        username: 'testing',
+        name: 'changed'
+    }).then((test) => {
+        if (!test.status==200) console.error(test); else console.log('passed')
+    }).catch((err) => {console.error(err)})
 
     console.log('testing User; Method: Delete => 200')
-    await axios.delete('http://localhost:2001/api/User/testing', {
-    }).then((res) => {
-        console.log(res.data)
-    }).catch((err) => console.log(err))
+    await axios.delete('http://localhost:80/api/User/testing/f', {
+    }).then((test) => {
+        if (!test.status==200) console.error(test); else console.log('passed')
+    }).catch((err) => {console.error(err)})
 
-    token = null
+    await axios.delete('http://localhost:80/api/User/testing/c', {
+    }).then((test) => {
+        if (!test.status==200) console.error(test); 
+    }).catch((err) => {console.log('Error on Cleanup of Comp User' + err)})
 
-    
+
+    //PREFERENCE
+
+    console.log('testing Prefence; all; Method: GET => 200')
+    await axios.get('http://localhost:80/api/Prefence', {
+    }).then((test) => {
+        if (!test.status==200) console.error(test); else console.log('passed')
+    }).catch((err) => {console.error(err)})
+
+    console.log('testing Prefence; Method: GET => 200')
+    await axios.get('http://localhost:80/api/Prefence/testuser', {
+    }).then((test) => {
+        if (!test.status==200) console.error(test); else console.log('passed')
+    }).catch((err) => {console.error(err)})
+
+    console.log('testing Prefence; Method: Put => 200')
+    await axios.put('http://localhost:80/api/Prefence/testuser', {
+        prefence: 'testprefence'
+    }).then((test) => {
+        if (!test.status==200) console.error(test); else console.log('passed')
+    }).catch((err) => {console.error(err)})
+
+
+
+    console.log('testing Prefence; Method: Delete => 200')
+    await axios.delete('http://localhost:80/api/Prefence/testuser/testprefence', {
+    }).then((test) => {
+        if (!test.status==200) console.error(test); else console.log('passed')
+    }).catch((err) => {console.error(err)})
+   
+
     setTimeout(function(){
         console.log('testing Authentification; Method: Get => 200, Cookie');
-        axios.post('http://localhost:2001/api/Authentification/', {
+        axios.post('http://localhost:80/api/Authentification/', {
             username: 'testuser',
-            password: 'test'
+            password: 'test',
+            type: 'f'
         }).then((res) => {
         console.log(res.headers['set-cookie'][0])
         token = res.headers['set-cookie'][0]
     }).catch((err) => console.log(err))}, 500);
-
-    console.log('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
-    console.log('finding')
-    await db_utils.findUser('none').then(data => {
-        if (data)
-            console.log(data.length)
-    })
-    console.log('create')
-    await db_utils.createUser('newtest', 'tst', 'temp').then(data => console.log(data)).catch(err => console.log(err))
-    console.log('delete')
-    await db_utils.deleteUser('newtest').then(data => console.log(data)).catch(err => console.log(err))
-    console.log('get')
-    await db_utils.getUserInfo('testuser').then(res => console.log(res))
+    
+    
 }
 
 test();
