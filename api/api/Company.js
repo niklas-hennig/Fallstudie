@@ -54,7 +54,6 @@ router.put('/', (req, res) => {
 })
 
 router.delete('/:name', (req, res) => {
-    if(!req.params.name) return res.status(400).send('No name provided')
 
     db_utils.deleteCompany(name)
     .then(res.send('Company deleted'))

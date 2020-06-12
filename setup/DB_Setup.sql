@@ -87,9 +87,9 @@ CREATE TABLE project (
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
     application_limit DATE NOT NULL,
-    comp_account_id int,
+    comp_id int,
     CONSTRAINT cmp_acc_fkey FOREIGN KEY (comp_account_id)
-      REFERENCES company_account (user_id) MATCH SIMPLE
+      REFERENCES company (comp_id) MATCH SIMPLE
       ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
@@ -176,6 +176,8 @@ SELECT * FROM freelancer;
 SELECT * FROM company_account;
 DELETE FROM company_account WHERE username = 'testing';
 SELECT * FROM company_account JOIN company on company.comp_id=company_account.comp_id;
+SELECT * FROM company;
+DELETE FROM company WHERE name = 't1';
 
 SELECT pref_name FROM prefences;
 
