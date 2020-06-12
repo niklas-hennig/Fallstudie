@@ -14,6 +14,7 @@ class Carousel extends Component {
         }
         
     }
+    /*
     componentDidMount() {
         this.embla.on('select', () => {
           console.log(
@@ -21,14 +22,14 @@ class Carousel extends Component {
           )
         })
       }
-
+*/
     getProjects(){
         //fetch projects from db
         //make div for every project 
         //inset divs into state
         this.setState({projects: {}})
     }
-
+/*
     render() {
     return (
         <div style={this.style}>
@@ -51,5 +52,9 @@ class Carousel extends Component {
         </div>
     )
     }
+    */
+   render() {
+       return <p>Ich bin ein Karoussel</p>
+   }
 }
 export default Carousel;

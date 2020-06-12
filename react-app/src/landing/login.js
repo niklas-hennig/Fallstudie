@@ -46,7 +46,7 @@ class Login extends Component {
     }
     handleLogin = (event) => {
         this.setState({isLogin: true})
-        this.props.onLogin(true);
+        this.props.onLogin(event);
     }
 
 

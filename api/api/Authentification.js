@@ -15,9 +15,9 @@ router.post('/', (req, res) => {
   
     auth_utils.getAuthentification(username, password, type)
     .then(res_cookie => 
-      res.cookie('Auth', res_cookie).send('Authentification successful'))
+      res.send(res_cookie))
     .catch(err => {console.log(err)
-      res.status(400).send(err)})
+      res.status(500).send(err)})
   })
   
   router.delete('/', (req, res) => {

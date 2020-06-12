@@ -16,8 +16,18 @@ router.get('/:name', (req, res)=>{
     if(!req.params.name) return res.status(400).send('No name provided')
 
     db_utils.getCompanyInfo(req.params.name)
-    .then(data => res.send(data))
+    .then(data => res.send(data.rows[0]))
     .catch(err => res.send(500).send(err))
+})
+
+router.get('/Existence/:name', (req, res)=>{
+    db_utils.getCompanyInfo(req.params.name)
+    .then(data => {
+        if(data.rowCount>0) res.send(true)
+        else res.send(false)
+    })
+    .catch(err => {console.log(err)
+        res.send(500).send(err)})
 })
 
 router.post('/', (req, res) => {
@@ -35,8 +45,11 @@ router.post('/', (req, res) => {
     country = req.body.country
 
     db_utils.createCompany(name, street, number, postcode, city, country)
-    .then(data => res.send('Company created'))
-    .catch(err => res.send(500).send(err))
+    .then(data => {
+        res.send(String(data))})
+    .catch(err => {console.log('comp_err')
+        console.log(err)
+        res.send(500).send(String(err))})
 
 })
 

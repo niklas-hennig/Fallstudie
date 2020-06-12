@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Cookies from 'js-cookie';
+import axios from "axios";
 
 //Landing page imports
 import Description from './landing/description';
@@ -7,10 +8,19 @@ import Login from './landing/login';
 import Registration from './landing/registration';
 import login_background from './media/login_background.jpg';
 
+//Complete Profile
+import CompleteProfile from './CompleProfile/completeProfile';
+
 //Home-Screen imports
 import LeftBar from './homeScreen/leftBar';
 import RightBar from './homeScreen/rightBar';
 import Carousel from './homeScreen/carousel';
+import Axios from 'axios';
+
+
+const transport = axios.create({
+    withCredentials: true
+  })
 
 class MainContent extends Component {
     constructor(){
@@ -18,7 +28,9 @@ class MainContent extends Component {
         this.state = {
             Registration: false,
             login: false,             //Change to false, in develeopment to circumvent login (true)
-            auth: null
+            auth: null,
+            content: null,
+            settingsIsFreelancer: true
         }
         this.style={position: 'absolute', 
                     top: '8%',
@@ -30,28 +42,65 @@ class MainContent extends Component {
                 }
         this.handleRegister = this.handleRegister.bind(this);
         this.handleBack = this.handleBack.bind(this);
+        this.handleCompanyComplete = this.handleCompanyComplete.bind(this);
     }
+
+    componentDidMount(){
+        this.setState({content: this.getLogin()});
+        console.log("cdm")
+    }
+
+
     handleRegister = (event) => {
-        this.setState({Registration: true});
+        this.setState({content: this.getRegistration()});
     }
     handleBack = (event) => {
-        this.setState({Registration: false})
+        this.setState({content: this.getLogin()})
     }
+
     handleLogin = (event) => {
-        this.setState({login: true, auth: Cookies.get('Auth')})
-        console.log(this.state.auth)
+        this.setState({auth: event})
+        axios.get('http://localhost:80/api/User/'+this.state.auth['username'] + '/'+ this.state.auth['type'], this.state.auth)
+        .then(data => {
+            console.log('MC check')
+            console.log(data.data['is_set'])
+            if(data.data['is_set']){
+                this.setState({content: this.getHome()})
+            }else{
+                this.setState({content: this.getSettings(), settingsIsFreelancer:true})
+            }
+        })
+        .catch(err => console.log(err))
+    }
+
+    handleCompanyComplete = (event) =>{
+        console.log('Handle Company')
+        console.log(event)
+        this.setState({comp_id:event, content: this.getSettings(), settingsIsFreelancer:false})
+    }
+
+    getSettings(){
+        if(this.state.auth) this.setState({settingsIsFreelancer:true})
+        else this.setState({settingsIsFreelancer:false})
+        return <CompleteProfile isFreelancerSetting={this.state.settingsIsFreelancer} comp_id={this.state.company_id}></CompleteProfile>
     }
 
     getLogin(){
-        let func = <Login onRegister={this.handleRegister} onLogin={this.handleLogin}/>
-        if (this.state.Registration){
-            func = <Registration onBack={this.handleBack}/>
-        }
+        let func = <Login onRegister={this.handleRegister} onLogin={this.handleLogin} />
         return <div id='backgroundImage' style={{backgroundImage: `url(${login_background})`}}>
                     <Description />
                     {func}
                 </div>
     }
+
+    getRegistration(){
+        let func = <Registration onBack={this.handleBack} onCompanyComplete={this.handleCompanyComplete}/>
+        return <div id='backgroundImage' style={{backgroundImage: `url(${login_background})`}}>
+                    <Description />
+                    {func}
+                </div>
+    }
+
     getHome(){
         return <div>
                     <LeftBar />
@@ -61,15 +110,10 @@ class MainContent extends Component {
     }
 
     render() {
-        let content = ''
-        if (!this.state.login){
-            content = this.getLogin();
-        }else{
-            content = this.getHome();
-        }
+        let cont = this.state.content
         return (
             <div id='MainContainer' style={this.style}>
-                {content}
+                {cont}
             </div>
         )
     }

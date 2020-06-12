@@ -177,7 +177,10 @@ SELECT * FROM company_account;
 DELETE FROM company_account WHERE username = 'testing';
 SELECT * FROM company_account JOIN company on company.comp_id=company_account.comp_id;
 SELECT * FROM company;
-DELETE FROM company WHERE name = 't1';
+DELETE FROM company WHERE name != 'testcomany';
+
+UPDATE freelancer SET is_set=false WHERE username!='testuser';
+
 
 SELECT pref_name FROM prefences;
 

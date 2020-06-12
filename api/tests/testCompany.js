@@ -15,6 +15,13 @@ module.exports={
         })
         .catch(err => console.log(err))
 
+        console.log('testing Company/Existence; Method: GET => 200')
+        await axios.get('http://localhost:80/api/Company/Existence/testcomany', {
+        }).then((test) => {
+            if (!test.status==200&&!test.data) console.error(test); else console.log('passed')
+        })
+        .catch(err => console.log(err))
+
         console.log('testing Company; no info; Method: Post => 400')
         await axios.post('http://localhost:80/api/Company/testcomany', {
 

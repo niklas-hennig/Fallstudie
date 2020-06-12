@@ -1,5 +1,6 @@
 import React, {Component} from "react";
-import RegistrationForm from './registrationForm';
+import Registration_form_freelancer from './registrationFormFreelancer';
+import Registration_form_company from './registrationFormCompany';
 
 class Registration extends Component {
     constructor(props) {
@@ -26,6 +27,9 @@ class Registration extends Component {
     handleBack = (event) => {
         this.props.onBack(true);
     }
+    handleCompanyComplete = (event) => {
+        this.props.onCompanyComplete(event);
+    }
     switchToCompany = (event) => {
         this.setState({isCompany: true})
     }
@@ -34,15 +38,15 @@ class Registration extends Component {
     }
 
     render() {
+        let form = ''
+        if(this.state.isCompany) form = <Registration_form_company  onRegistered={this.handleCompanyComplete}/>
+        else form = <Registration_form_freelancer  onRegistered={this.handleBack}/>
         return <div style={this.styleDefault}>
                     <div id='top' style={{position:'relative', top:'-3%', left:'20%'}}>
                         <button type="button" id="button_selbststaendiger" onClick={this.switchToFreelancer}>Selbstständiger</button>
                         <button type="button" id="button_unternehmen" onClick={this.switchToCompany}>Unternehmen </button>
                     </div>
-                    <RegistrationForm isCompany={this.state.isCompany} onRegistered={this.handleBack}/>
-                    <div id='BackBar' style={this.bottomStyle}>
-                        <button type="button" id="back" onClick={this.handleBack}>Zurück</button>
-                    </div>
+                    {form}
             
                 </div>
     }

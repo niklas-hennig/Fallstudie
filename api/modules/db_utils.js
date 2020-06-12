@@ -224,8 +224,9 @@ module.exports={
     return new Promise ((resolve, reject) => 
     pool.query('INSERT INTO company (name, street, number, postcode, city, country) VALUES($1, $2, $3, $4, $5, $6) RETURNING comp_id',
     [name, street, number, postcode, city, country])
-    .then(data => resolve(data))
-    .catch(err => reject(err))
+    .then(data => resolve(data.rows[0].comp_id))
+    .catch(err => {console.log(err)
+      reject(err)})
     )
 
   },
@@ -233,7 +234,7 @@ module.exports={
   getCompanyInfo: function(name){
     return new Promise ((resolve, reject) => {
       pool.query('SELECT * FROM company WHERE name=$1', [name])
-      .then(data => resolve(data.rows[0]))
+      .then(data => resolve(data))
       .catch(err => reject(err))
     })
   },

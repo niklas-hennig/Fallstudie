@@ -12,24 +12,22 @@ function parseBody(body){
     return infos;
 };
 
-//expects cookie in request
-router.get('/', (req, res)=>{
-  if (!req.cookies['Auth']) res.status(400).send("Not signed in")
-  else{
-    username = req.cookies['Auth']['username']
-    type = req.cookies['Auth']['type']
-    if (type=='f') isFreelancer=true
-    else isFreelancer=false
-    db_utils.getUserInfo(username, isFreelancer)
-    .then(data => {
-      res.send(data)
-    })
-    .catch(err => res.status(500).send(err))
-  }
+router.get('/:username/:type', (req, res)=>{
+  username = req.params.username
+  type = req.params.type
+  if (type=='f') isFreelancer=true
+  else isFreelancer=false
+  db_utils.getUserInfo(username, isFreelancer)
+  .then(data => {
+    res.send(data)
+  })
+  .catch(err => {console.log(err)
+    res.status(500).send(err)})
 })
 
 //Returns cookie in answer, requires username, password, email and others in body
 router.post('/Freelancer', (req, res) => {
+  console.log(req.body)
     if (!req.body.username) return res.status(400).send('No username provided');
     username = req.body.username;
     if (!req.body.email) return res.status(400).send('No email provided');

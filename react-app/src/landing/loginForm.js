@@ -12,7 +12,7 @@ class LoginForm extends Component {
             username: '',
             password: '',
             company:'',
-            type: ''
+            type: 'f'
         } 
 
 
@@ -21,6 +21,7 @@ class LoginForm extends Component {
             top: '10px',
             height: '35px'
         }
+        this.setState({type: props.isCompany})
         this.submitHandlerLogin = this.submitHandlerLogin.bind(this);
         
     }
@@ -31,14 +32,13 @@ class LoginForm extends Component {
 
     submitHandlerLogin = (event) => {
         event.preventDefault();
-        axios.post('http://localhost:2001/api/Authentification', {
+        axios.post('http://localhost:80/api/Authentification', {
             username: this.state.username,
             password: this.state.password,
             type: this.state.type
         })
         .then((res) => {
-            console.log(res);
-            this.props.onLoginChange('login');
+            this.props.onLoginChange(res.data);
         })
         .catch((err) => {
             console.log(err)
@@ -50,7 +50,6 @@ class LoginForm extends Component {
         let newtype = '';
         if(nextProps.isCompany) newtype='c'
         else newtype='f'
-        // You don't have to do this check first, but it can help prevent an unneeded render
         if (newtype !== this.state.type) {
           this.setState({ type: newtype });
         }
