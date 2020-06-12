@@ -54,7 +54,8 @@ CREATE TABLE company_account(
     surname VARCHAR(25)NOT NULL,
     gender VARCHAR(1) NOT NULL,
     is_active BOOLEAN DEFAULT TRUE,
-    comp_id int
+    comp_id int,
+    is_set DEFAULT TRUE
 );
 
 DROP TABLE IF EXISTS company;
