@@ -9,10 +9,12 @@ CREATE TABLE freelancer (
     name VARCHAR(25) NOT NULL,
     surname VARCHAR(25) NOT NULL,
     gender VARCHAR(1)NOT NULL,
+    date_of_birth DATE,
     street VARCHAR(30),
     number INTEGER,
     postcode integer,
     city VARCHAR(30),
+    country VARCHAR(30),
     resume_link VARCHAR(100),
     iban VARCHAR(28),
     ktn_owner VARCHAR(30),
@@ -59,11 +61,13 @@ DROP TABLE IF EXISTS company;
 
 CREATE TABLE company (
     comp_id SERIAL PRIMARY KEY,
-    name VARCHAR(50) NOT NULL,
+    name VARCHAR(50) UNIQUE NOT NULL,
     street VARCHAR(30),
     number INTEGER,
     postcode integer NOT NULL,
     city VARCHAR(30) NOT NULL,
+    country VARCHAR(30) NOT NULL, 
+    tel_no VARCHAR(20),
     street_bill VARCHAR(30),
     number_bill INTEGER,
     postcode_bill integer,
@@ -83,9 +87,9 @@ CREATE TABLE project (
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
     application_limit DATE NOT NULL,
-    comp_account_id int,
+    comp_id int,
     CONSTRAINT cmp_acc_fkey FOREIGN KEY (comp_account_id)
-      REFERENCES company_account (user_id) MATCH SIMPLE
+      REFERENCES company (comp_id) MATCH SIMPLE
       ON UPDATE CASCADE ON DELETE RESTRICT
 );
 
@@ -150,8 +154,8 @@ INSERT INTO prefences (pref_name)
 INSERT INTO prefence_assignment (user_id, pref_id)
     VALUES (1, 1);
 
-INSERT INTO company (name, postcode, city)
-    VALUES ('testcomany', '09342', 'testcity');
+INSERT INTO company (name, postcode, city, country)
+    VALUES ('testcomany', '09342', 'testcity', 'nowhere');
 
 INSERT INTO company_account (username, password, email, comp_id, name, surname, gender)
     VALUES('compt', 'test', 'none', 1, 't', 'est', 'u');
@@ -172,6 +176,8 @@ SELECT * FROM freelancer;
 SELECT * FROM company_account;
 DELETE FROM company_account WHERE username = 'testing';
 SELECT * FROM company_account JOIN company on company.comp_id=company_account.comp_id;
+SELECT * FROM company;
+DELETE FROM company WHERE name = 't1';
 
 SELECT pref_name FROM prefences;
 
