@@ -17,7 +17,7 @@ class MainContent extends Component {
         super();
         this.state = {
             Registration: false,
-            login: true,             //Change to false, in develeopment to circumvent login (true)
+            login: false,             //Change to false, in develeopment to circumvent login (true)
             auth: null
         }
         this.style={position: 'absolute', 

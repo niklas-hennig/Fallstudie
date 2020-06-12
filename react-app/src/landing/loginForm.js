@@ -11,8 +11,10 @@ class LoginForm extends Component {
             isError: false,
             username: '',
             password: '',
-            company:''
-        }
+            company:'',
+            type: ''
+        } 
+
 
         this.iconStyle = {
             position: 'relative',
@@ -29,9 +31,10 @@ class LoginForm extends Component {
 
     submitHandlerLogin = (event) => {
         event.preventDefault();
-        axios.post('http://192.168.178.33:80/api/Authentification', {
+        axios.post('http://localhost:80/api/Authentification', {
             username: this.state.username,
-            password: this.state.password
+            password: this.state.password,
+            type: this.state.type
         })
         .then((res) => {
             console.log(res);
@@ -42,6 +45,16 @@ class LoginForm extends Component {
             this.setState({isError: true})
         })
     }
+
+    componentWillReceiveProps(nextProps) {
+        let newtype = '';
+        if(nextProps.isCompany) newtype='c'
+        else newtype='f'
+        // You don't have to do this check first, but it can help prevent an unneeded render
+        if (newtype !== this.state.type) {
+          this.setState({ type: newtype });
+        }
+      }
 
     render(){
         let labelcompanyName = '';
