@@ -50,15 +50,63 @@ class RegistrationForm extends Component{
         }
     }
     render(){
-        let companyName = ''
-        let inputCompanyName = ''
+        
+        let person =''
+        let company =''
         if (this.props.isCompany) {
-            companyName = <label for='companyName'>
-                <p id="picture_company"></p>
-                <img src={companyIcon} alt="companyicon" style={this.iconStyle}/>
-            </label>
-            inputCompanyName = <input type="text" name="companyName" placeholder="Firmenname"  required></input>
+            company = 
+            <div>
+                <label for='companyName'>                
+                  <p id="picture_company"></p>
+                  <img src={companyIcon} alt="companyicon" style={this.iconStyle}/>
+                </label> 
+                <div class="registerField">
+                    <input type="text"required></input>
+                    <span class="label">Firmenname</span>
+                </div>
+
+                <div class="registerField">
+                    <input type="text"required></input>
+                    <span class="label">Postleitzahl</span>
+                </div>
+
+                <div class="registerField">
+                    <input type="text"required></input>
+                    <span class="label">Ort</span>
+                </div>
+
+                <div class="registerField">
+                    <input type="text"required></input>
+                    <span class="label">Straße</span>
+                </div>
+
+                <div class="registerField">
+                    <input type="text"required></input>
+                    <span class="label">Hausnummer</span>
+                </div>
+
+                <div class="registerField">
+                    <input type="text"required></input>
+                    <span class="label">Land</span>
+                </div>
+                
+            </div>
+        } else {
+            person =
+            <div>
+                <select id="gender" name="Geschlecht">
+                    <option value = "m">Männlich</option>
+                    <option value = "w">Weiblich</option>
+                    <option value = "d">Divers</option>
+                </select>  <br></br>
+                <input type="text" name="name" placeholder="Name" required></input><br></br>
+                <input type="text" name="surname" placeholder="Vorname" required></input><br></br>
+                <input type="text" name="email" placeholder="E-Mail" required></input><br></br>
+                <input type="text" name="username" placeholder="Nutzername"required></input><br></br>
+            </div>
+
         }
+        
 
         let passwordErrror = ''
         if (this.state.passwordError){
@@ -73,25 +121,26 @@ class RegistrationForm extends Component{
                 <p>Registierung erfolgreich</p>
             </div>
         }
-        return <div id='RegistrationForm' style={{width: '60%', left: '20%', top: '15%', position: 'relative'}}>
+        return <div class='RegistrationForm' style={{width: '60%', left: '20%', top: '15%', position: 'relative', paddingRight: '40px', paddingTop: '20px' }}>
                     <form onSubmit={this.submitHandler} style={{position: 'relative', top: '20%'}}>
-                        {companyName}
-                        {inputCompanyName}
-                        <div style={this.divStyle}>
-                        <input type="text" name="name" placeholder="Name" onChange={this.changeHandler}/>
-                        <input type="text" name="surname" placeholder="Vorname" onChange={this.changeHandler}/>
+                        
+                        {person}
+                        {company}
+
+                        <div class="registerField">
+                            <input type="password"required></input>
+                            <span class="label">Passwort</span>
                         </div>
-                        <div style={this.divStyle}>
-                            <input type="text" name="email" placeholder="E-Mail" onChange={this.changeHandler}/>
-                        </div>
-                        <div style={this.divStyle}>
-                            <input type="text" name="username" placeholder="Nutzername" onChange={this.changeHandler}/>
-                        </div>
-                        <div style={this.divStyle}>
-                            <input type="password" name="password" placeholder="Passwort" onChange={this.changeHandler}/>
-                            <input type="password" name="password" placeholder="Passwort erneut eingeben" onChange={this.changeHandler}/>
+
+                        <div class="registerField">
+                            <input type="password"required></input>
+                            <span class="label">Passwort wiederholen</span>
                             {passwordErrror}
                         </div>
+                        
+                       
+                            
+                        
                         {registered}
                         <button type="submit" id="button_login" class="button"><span>{registeredBtn}</span></button>
                     </form>
