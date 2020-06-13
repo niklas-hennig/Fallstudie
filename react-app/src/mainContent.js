@@ -62,8 +62,6 @@ class MainContent extends Component {
         this.setState({auth: event})
         axios.get('http://localhost:80/api/User/'+this.state.auth['username'] + '/'+ this.state.auth['type'], this.state.auth)
         .then(data => {
-            console.log('MC check')
-            console.log(data.data)
             if(data.data['is_set']){
                 this.setState({content: this.getHome()})
             }else{
