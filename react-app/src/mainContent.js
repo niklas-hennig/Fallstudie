@@ -63,7 +63,7 @@ class MainContent extends Component {
         axios.get('http://localhost:80/api/User/'+this.state.auth['username'] + '/'+ this.state.auth['type'], this.state.auth)
         .then(data => {
             console.log('MC check')
-            console.log(data.data['is_set'])
+            console.log(data.data)
             if(data.data['is_set']){
                 this.setState({content: this.getHome()})
             }else{
@@ -82,7 +82,7 @@ class MainContent extends Component {
     getSettings(){
         if(this.state.auth) this.setState({settingsIsFreelancer:true})
         else this.setState({settingsIsFreelancer:false})
-        return <CompleteProfile isFreelancerSetting={this.state.settingsIsFreelancer} comp_id={this.state.company_id}></CompleteProfile>
+        return <CompleteProfile isFreelancerSetting={this.state.settingsIsFreelancer} comp_id={this.state.company_id} userinfo={this.state.auth}></CompleteProfile>
     }
 
     getLogin(){

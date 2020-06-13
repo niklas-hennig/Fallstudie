@@ -55,7 +55,7 @@ CREATE TABLE company_account(
     gender VARCHAR(1) NOT NULL,
     is_active BOOLEAN DEFAULT TRUE,
     comp_id int,
-    is_set DEFAULT TRUE
+    is_set BOOLEAN DEFAULT TRUE
 );
 
 DROP TABLE IF EXISTS company;
@@ -89,7 +89,7 @@ CREATE TABLE project (
     end_date DATE NOT NULL,
     application_limit DATE NOT NULL,
     comp_id int,
-    CONSTRAINT cmp_acc_fkey FOREIGN KEY (comp_account_id)
+    CONSTRAINT cmp_acc_fkey FOREIGN KEY (comp_id)
       REFERENCES company (comp_id) MATCH SIMPLE
       ON UPDATE CASCADE ON DELETE RESTRICT
 );
