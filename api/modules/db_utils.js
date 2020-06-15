@@ -274,14 +274,14 @@ module.exports={
 
   getPersonalizedRoles: function(username){
     return new Promise((resolve, reject) => {
-      pool.query(`SELECT role.* FROM role 
+      pool.query(`SELECT role.role_id FROM role 
       JOIN prefences as p ON role.area=p.pref_id 
       JOIN prefence_assignment as pa ON p.pref_id=pa.pref_id 
       JOIN freelancer as f ON f.user_id=pa.user_id 
-      WHERE f.username=$1 AND role.id NOT IN (
-        SELECT role_id 
+      WHERE f.username=$1 AND role.role_id NOT IN (
+        SELECT a.role_id 
         FROM role
-        JOIN application as a ON role.role_id=a.role_id
+        JOIN applications as a ON role.role_id=a.role_id
         JOIN freelancer as f ON a.freelancer_id=f.user_id
         WHERE f.username=$1)`,
       [username])
@@ -291,10 +291,11 @@ module.exports={
   },
 
   getRole: function(role_id){
-    return new Promise((resolve, rejct) => {
-      pool.query('SELECT * FROM role WHERE role_id=$1')
-      .thend(data => resolve(data.rows))
-      .catch(err => reject.err)
+    return new Promise((resolve, reject) => {
+      pool.query('SELECT * FROM role WHERE role_id=$1', [role_id])
+      .then(data => resolve(data.rows))
+      .catch(err => {console.log(err)
+        reject(err)})
     })
   },
 

@@ -12,8 +12,7 @@ module.exports={
     },
 
     validateToken: function(token){
-        private = jwt.verify(token)
-        console.log(private)
+        private = jwt.verify(token, config.get('myprivatekey'))
         if(private['auth']) return true
         else return false
 
