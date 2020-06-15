@@ -109,15 +109,13 @@ class CompleteProfileCompany extends React.Component {
                 <input type="text" name="bill_city" placeholder="Stadt" onChange={this.changeHandler}/>
                 <input type="number" name="bill_tel_no" placeholder="Telefonnummer" onChange={this.changeHandler}/>
             </div>
-        let passwordErrror = ''
         if (this.state.passwordError){
-            passwordErrror = <p style={{color: 'red', position: 'relative', 'top': '10%'}}>Passwörter stimmen nicht überein</p>
+            passwordError = <p style={{color: 'red', position: 'relative', 'top': '10%'}}>Passwörter stimmen nicht überein</p>
         }
 
-        let mailError = ''
         if (this.state.mailError){
             mailError = <p style={{color: 'red', position: 'relative', 'top': '10%'}}>Keine gültige Mailaddresse</p>
-
+        }
 
         return(
             <div>
