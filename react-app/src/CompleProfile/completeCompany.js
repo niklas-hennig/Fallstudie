@@ -165,3 +165,5 @@ class CompleteProfileCompany extends React.Component {
         );
     }
 }
+
+export default CompleteProfileCompany;
