@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from "axios";
 import EmblaCarouselReact from 'embla-carousel-react'
 
 class Carousel extends Component {
@@ -14,21 +15,23 @@ class Carousel extends Component {
         }
         
     }
-    /*
-    componentDidMount() {
-        this.embla.on('select', () => {
-          console.log(
-            `Current index is ${this.embla.selectedScrollSnap()}`,
-          )
-        })
-      }
-*/
     getProjects(){
+        axios.get('http://localhost:80/api/Role', {
+
+        }).then(res => {
+            console.log(res)
+        })
+        .catch(err => console.error(err))
         //fetch projects from db
         //make div for every project 
         //inset divs into state
         this.setState({projects: {}})
     }
+
+    componentWillMount(){
+        this.getProjects()
+    }
+
 /*
     render() {
     return (
@@ -53,6 +56,17 @@ class Carousel extends Component {
     )
     }
     */
+
+    
+    /*
+    componentDidMount() {
+        this.embla.on('select', () => {
+          console.log(
+            `Current index is ${this.embla.selectedScrollSnap()}`,
+          )
+        })
+      }
+*/
    render() {
        return <p>Ich bin ein Karoussel</p>
    }

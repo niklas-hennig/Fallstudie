@@ -222,9 +222,9 @@ module.exports={
 
   createCompany: function(name, street, number, postcode, city, country){
     return new Promise ((resolve, reject) => 
-    pool.query('INSERT INTO company (name, street, number, postcode, city, country) VALUES($1, $2, $3, $4, $5, $6) RETURNING comp_id',
+    pool.query('INSERT INTO company (name, street, number, postcode, city, country) VALUES($1, $2, $3, $4, $5, $6) RETURNING name',
     [name, street, number, postcode, city, country])
-    .then(data => resolve(data.rows[0].comp_id))
+    .then(data => resolve(data.rows[0].name))
     .catch(err => {console.log(err)
       reject(err)})
     )

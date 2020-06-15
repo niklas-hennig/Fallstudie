@@ -36,6 +36,8 @@ class RegistrationForm extends Component{
                 country: this.state.country
             })
             .then((res) => {
+                console.log("respone")
+                console.log(res.data)
                 this.props.onRegistered(res.data);
             })
             .catch((err) => {
@@ -52,7 +54,7 @@ class RegistrationForm extends Component{
         axios.get('http://localhost:80/api/Company/Existence/'+this.state.name)
         .then((res) => {
             if(res.data){
-                this.props.onRegistered(true);
+                this.props.onRegistered(res.data.name);
             }else{
                 this.setState({registration: true})
             }

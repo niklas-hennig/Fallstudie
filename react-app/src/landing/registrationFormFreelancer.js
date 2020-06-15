@@ -12,7 +12,9 @@ class RegistrationForm extends Component{
             gender: 'f',
             username: '',
             password: '',
+            password_check: '',
             email: '',
+            mailError: false
         }
         this.iconStyle = {
             position: 'relative',
@@ -29,23 +31,33 @@ class RegistrationForm extends Component{
     }
     submitHandler = (event) => {
         event.preventDefault();
-        if (!this.state.registered){
-            axios.post('http://localhost:80/api/User/Freelancer', {
-                name: this.state.name,
-                surname: this.state.surname,
-                username: this.state.username,
-                gender: this.state.gender,
-                password: this.state.password,
-                email: this.state.email
-            })
-            .then((res) => {
-                this.setState({registered: true})
-            })
-            .catch((err) => {
-                console.error(err)
-            })
-        }else{
-            this.props.onRegistered(true);
+        console.log(this.state.email.includes('@'))
+        if(this.state.password!=this.state.password_check) {
+            this.setState({passwordError: true, mailError:false})
+            return
+        }else if(!this.state.email.includes('@')) {
+            this.setState({mailError: true, passwordError:false})
+            return
+        }else {
+            if (!this.state.registered){
+                this.setState({passwordError: false, mailError:false})
+                axios.post('http://localhost:80/api/User/Freelancer', {
+                    name: this.state.name,
+                    surname: this.state.surname,
+                    username: this.state.username,
+                    gender: this.state.gender,
+                    password: this.state.password,
+                    email: this.state.email
+                })
+                .then((res) => {
+                    this.setState({registered: true})
+                })
+                .catch((err) => {
+                    console.error(err)
+                })
+            }else{
+                this.props.onRegistered(true);
+            }
         }
     }
 
@@ -53,6 +65,11 @@ class RegistrationForm extends Component{
         let passwordErrror = ''
         if (this.state.passwordError){
             passwordErrror = <p style={{color: 'red', position: 'relative', 'top': '10%'}}>Passwörter stimmen nicht überein</p>
+        }
+
+        let mailError = ''
+        if (this.state.mailError){
+            mailError = <p style={{color: 'red', position: 'relative', 'top': '10%'}}>Keine gültige Mailaddresse</p>
         }
 
         let registeredBtn = 'Anmelden'
@@ -82,8 +99,9 @@ class RegistrationForm extends Component{
                         </div>
                         <div style={this.divStyle}>
                             <input type="password" name="password" placeholder="Passwort" onChange={this.changeHandler}/>
-                            <input type="password" name="password" placeholder="Passwort erneut eingeben" onChange={this.changeHandler}/>
+                            <input type="password" name="password_check" placeholder="Passwort erneut eingeben" onChange={this.changeHandler}/>
                             {passwordErrror}
+                            {mailError}
                         </div>
                         {registered}
                         <button type="submit" id="button_login" class="button"><span>{registeredBtn}</span></button>

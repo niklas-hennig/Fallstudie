@@ -11,6 +11,14 @@ module.exports={
         return cookie_content
     },
 
+    validateToken: function(token){
+        private = jwt.verify(token)
+        console.log(private)
+        if(private['auth']) return true
+        else return false
+
+    },
+
     getAuthentification: function(username, password, type){
         return new Promise((resolve, reject) => {
             db_utils.findUser(username, null, type)

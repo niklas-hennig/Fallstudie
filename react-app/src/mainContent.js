@@ -30,7 +30,8 @@ class MainContent extends Component {
             login: false,             //Change to false, in develeopment to circumvent login (true)
             auth: null,
             content: null,
-            settingsIsFreelancer: true
+            settingsIsFreelancer: true,
+            company_name: null
         }
         this.style={position: 'absolute', 
                     top: '8%',
@@ -43,6 +44,7 @@ class MainContent extends Component {
         this.handleRegister = this.handleRegister.bind(this);
         this.handleBack = this.handleBack.bind(this);
         this.handleCompanyComplete = this.handleCompanyComplete.bind(this);
+        this.handleSettingsComplete = this.handleSettingsComplete.bind(this);
     }
 
     componentDidMount(){
@@ -74,13 +76,20 @@ class MainContent extends Component {
     handleCompanyComplete = (event) =>{
         console.log('Handle Company')
         console.log(event)
-        this.setState({comp_id:event, content: this.getSettings(), settingsIsFreelancer:false})
+        this.setState({company_name:event, settingsIsFreelancer:false})
+        this.setState({content: this.getSettings()})
+    }
+
+    handleSettingsComplete = (event) => {
+        this.setState({content: this.getHome()})
     }
 
     getSettings(){
+        console.log('comp_id main c')
+        console.log(this.state.company_name)
         if(this.state.auth) this.setState({settingsIsFreelancer:true})
         else this.setState({settingsIsFreelancer:false})
-        return <CompleteProfile isFreelancerSetting={this.state.settingsIsFreelancer} comp_id={this.state.company_id} userinfo={this.state.auth}></CompleteProfile>
+        return <CompleteProfile isFreelancerSetting={this.state.settingsIsFreelancer} comp_name={this.state.company_name} userinfo={this.state.auth} onSubmit={this.handleSettingsComplete}></CompleteProfile>
     }
 
     getLogin(){

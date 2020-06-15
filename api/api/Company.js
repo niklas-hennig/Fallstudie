@@ -23,7 +23,7 @@ router.get('/:name', (req, res)=>{
 router.get('/Existence/:name', (req, res)=>{
     db_utils.getCompanyInfo(req.params.name)
     .then(data => {
-        if(data.rowCount>0) res.send(true)
+        if(data.rowCount>0) res.send(data.rows[0])
         else res.send(false)
     })
     .catch(err => {console.log(err)
@@ -46,16 +46,17 @@ router.post('/', (req, res) => {
 
     db_utils.createCompany(name, street, number, postcode, city, country)
     .then(data => {
-        res.send(String(data))})
+        console.log("created company")
+        console.log(data)
+        res.send(data)})
     .catch(err => {console.log('comp_err')
         console.log(err)
         res.send(500).send(String(err))})
 
 })
 
-router.put('/', (req, res) => {
-    if (!req.body.name) return res.status(400).send('No name provided')
-    name = req.body.name
+router.put('/:comp_name', (req, res) => {
+    name = req.params.comp_name
 
     infos = parseBody(req.body);
 

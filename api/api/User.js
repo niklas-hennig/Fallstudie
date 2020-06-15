@@ -62,6 +62,7 @@ router.post('/Freelancer', (req, res) => {
   )
 
   router.post('/CompanyUser', (req, res) => {
+    console.log(req.body)
     if (!req.body.username) return res.status(400).send('No username provided');
     username = req.body.username;
     if (!req.body.email) return res.status(400).send('No email provided');
