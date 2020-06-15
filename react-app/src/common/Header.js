@@ -24,7 +24,7 @@ class Header extends Component {
 
     render() {
         return(
-            <header class="header" style={this.style}>
+            <header className="header" style={this.style}>
                 <img src={logo} height='50%'/>
                 <p>Freelane - Die Jobbörse  Hallo {this.state.Auth}</p>
             </header>

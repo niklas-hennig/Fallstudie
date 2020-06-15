@@ -1,11 +1,22 @@
 import React, { Component } from 'react';
 import axios from "axios";
-import EmblaCarouselReact from 'embla-carousel-react'
 
-class Carousel extends Component {
+import Slider from 'infinite-react-carousel';
+
+import SlideProject from './slideProject'
+import SlideRole from './slideRole';
+import carousel from 'infinite-react-carousel/lib/carousel';
+
+class CarouselComp extends Component {
     constructor(props){
         super(props);
         this.state = {
+            username: this.props.username,
+            type: this.props.type,
+            token: this.props.token,
+
+            all_role_ids: [],
+            all_projects: []
         }
         this.style ={
             position: 'absolute',
@@ -13,62 +24,75 @@ class Carousel extends Component {
             width: '70%',
             height: '100%'
         }
+        this.handleSelectRole = this.handleSelectRole.bind(this);
         
     }
-    getProjects(){
-        axios.get('http://localhost:80/api/Role', {
-
-        }).then(res => {
-            console.log(res)
-        })
-        .catch(err => console.error(err))
-        //fetch projects from db
-        //make div for every project 
-        //inset divs into state
-        this.setState({projects: {}})
+    getIds(){
+        let projects = []
+        if(this.state.type=='f'){
+            axios.get('http://localhost:80/api/Role/'+this.state.username+'/f/'+this.state.token)
+            .then(res => {
+                let key = 0
+                for (key in res.data){
+                    projects.push(res.data[key].id)
+                }
+                this.setState({all_role_ids: projects})
+            })
+            .catch(err => console.error(err))
+        }else{
+            axios.get('http://localhost:80/api/Project/'+this.state.username+'/'+this.state.token)
+            .then(res => {
+                let key = 0
+                for (key in res.data){
+                    projects.push(res.data[key])
+                }
+                this.setState({all_projects: projects})
+            })
+        }
     }
 
     componentWillMount(){
-        this.getProjects()
+        this.getIds()
     }
 
-/*
+    componentWillReceiveProps(nextProps) {
+        this.setState({
+            username: this.props.username,
+            type: this.props.type,
+            token: this.props.token})
+    }
+
+    handleSelectRole = (event) =>{
+        this.props.onRoleSelect(event);
+    }
+
+
     render() {
+        console.log("car state:")
+        console.log(this.state)
+        let carousel = ''
+        if (this.state.all_role_ids.length>0){
+            carousel =
+            <Slider dots adaptiveHeight={true}>
+                {this.state.all_role_ids.map((id, index) => <SlideRole key={index} project={id} username={this.state.username} token={this.state.token} onSelect={this.handleSelectRole}></SlideRole>)}
+            </Slider>
+        }
+        if(this.state.all_projects.length>0){
+            carousel = 
+            <Slider dots>
+                {this.state.all_projects.map((info, index) => <SlideProject key={index} project_id={info.project_id} title={info.titel} start_date={info.start_date}></SlideProject>)}
+            </Slider>
+        }
     return (
         <div style={this.style}>
-        <EmblaCarouselReact
-            emblaRef={c => (this.embla = c)}
-            options={{ loop: true }}
-        >
-            <div id="slidecontainer"style={{ display: 'flex' }}>
-            {
-                this.state.projects.map((Child, index) => (
-                    <div className="embla__slide" key={index}>
-                        <div className="embla__slide__inner">{Child}</div>
-                    </div>
-                    ))
-            }
+            <div>
+                {carousel}
             </div>
-        </EmblaCarouselReact>
-        <button onClick={() => this.embla.scrollPrev()}>Prev</button>
-        <button onClick={() => this.embla.scrollNext()}>Next</button>
         </div>
     )
     }
-    */
 
-    
-    /*
     componentDidMount() {
-        this.embla.on('select', () => {
-          console.log(
-            `Current index is ${this.embla.selectedScrollSnap()}`,
-          )
-        })
       }
-*/
-   render() {
-       return <p>Ich bin ein Karoussel</p>
-   }
 }
-export default Carousel;
+export default CarouselComp;

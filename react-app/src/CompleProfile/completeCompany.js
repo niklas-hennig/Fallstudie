@@ -61,6 +61,7 @@ class CompleteProfileCompany extends React.Component {
             this.setState({passwordError: true, mailError:false})
             return
         }else if(!this.state.email.includes('@')) {
+            console.log(this.state.email)
             this.setState({mailError: true, passwordError:false})
             return
         }else {

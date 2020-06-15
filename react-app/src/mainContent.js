@@ -15,7 +15,14 @@ import CompleteProfile from './CompleProfile/completeProfile';
 import LeftBar from './homeScreen/leftBar';
 import RightBar from './homeScreen/rightBar';
 import Carousel from './homeScreen/carousel';
-import Axios from 'axios';
+
+
+//Freelancer-Only pages
+import RoleDetail from './Freelancer/role_detail';
+
+//Company-Only pages
+import ProjectDetail from './Company/project_detail';
+import CarouselComp from './homeScreen/carousel';
 
 
 const transport = axios.create({
@@ -45,11 +52,12 @@ class MainContent extends Component {
         this.handleBack = this.handleBack.bind(this);
         this.handleCompanyComplete = this.handleCompanyComplete.bind(this);
         this.handleSettingsComplete = this.handleSettingsComplete.bind(this);
+        this.handleRoleSelected=this.handleRoleSelected.bind(this);
+        this.handleProjectSelected = this.handleProjectSelected.bind(this);
     }
 
     componentDidMount(){
         this.setState({content: this.getLogin()});
-        console.log("cdm")
     }
 
 
@@ -74,19 +82,23 @@ class MainContent extends Component {
     }
 
     handleCompanyComplete = (event) =>{
-        console.log('Handle Company')
-        console.log(event)
         this.setState({company_name:event, settingsIsFreelancer:false})
         this.setState({content: this.getSettings()})
     }
 
     handleSettingsComplete = (event) => {
-        this.setState({content: this.getHome()})
+        this.setState({content: this.getLogin()})
+    }
+
+    handleRoleSelected(id){
+        this.setState({content: this.getRoleDetail(id)})
+    }
+
+    handleProjectSelected(id){
+        this.setState({content: this.getProjectDetail(id)})
     }
 
     getSettings(){
-        console.log('comp_id main c')
-        console.log(this.state.company_name)
         if(this.state.auth) this.setState({settingsIsFreelancer:true})
         else this.setState({settingsIsFreelancer:false})
         return <CompleteProfile isFreelancerSetting={this.state.settingsIsFreelancer} comp_name={this.state.company_name} userinfo={this.state.auth} onSubmit={this.handleSettingsComplete}></CompleteProfile>
@@ -109,11 +121,34 @@ class MainContent extends Component {
     }
 
     getHome(){
+        let username = null
+        let type='c'
+        let auth = null
+        let comp_id = null
+        username= this.state.auth['username']
+        type=this.state.auth['type']
+        auth= this.state.auth['private']
         return <div>
                     <LeftBar />
-                    <Carousel />
+                    <CarouselComp username={username} type={type} token={auth} comp_id={comp_id} onRoleSelect={this.handleRoleSelected} onProjectSelected={this.handleProjectSelected}/>
                     <RightBar />
                 </div>
+    }
+
+    getRoleDetail(role_id){
+        return <div>
+            <LeftBar />
+            <RoleDetail role_id={role_id}></RoleDetail>
+            <RightBar />
+        </div>
+    }
+
+    getProjectDetail(project_id){
+        return <div>
+        <LeftBar />
+        <ProjectDetail project_id={project_id}></ProjectDetail>
+        <RightBar />
+        </div>
     }
 
     render() {

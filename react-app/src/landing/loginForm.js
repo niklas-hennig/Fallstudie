@@ -62,7 +62,7 @@ class LoginForm extends Component {
         let margin = '20%';
         if (this.props.isCompany){
             margin = '15%';
-            labelcompanyName = <label for="company">
+            labelcompanyName = <label id="company">
             <p id="picture_company"></p>
             <img src={companyIcon} alt="companyicon" style={this.iconStyle}/>
             </label>
@@ -77,13 +77,13 @@ class LoginForm extends Component {
                     <form onSubmit={this.submitHandlerLogin} style={{position: 'relative', top: '20%'}}>
                         {labelcompanyName}
                         {inputCompanyName}
-                        <label for="user">
+                        <label id="user">
                             <p id="picture_user"></p>
                             <img src={mailIcon}  alt="mailicon" style={this.iconStyle}/>
                         </label>
                         <input type="text" name="username" placeholder="Nutzername"  onChange={this.changeHandler}/>
                     
-                        <label for="password">
+                        <label id="password">
                             <p id="picture_password"></p>
                             <img src={passwordIcon}  alt="passwortIcon" style={this.iconStyle}/>
                         </label>

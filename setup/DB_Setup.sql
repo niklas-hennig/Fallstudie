@@ -164,21 +164,30 @@ INSERT INTO company_account (username, password, email, comp_id, name, surname, 
 /*
 INSERT INTO project (titel, start_date, end_date)
     VALUES ('TESTPROJECT', '2020-06-01', '2013-06-02');
+*/
+INSERT INTO role (title, description, requirements, area, payment)
+    VALUES ('testrole', 'Es muss nur getestet werden', NULL, 1, 100);
+INSERT INTO role (title, description, requirements, area, payment)
+    VALUES ('testrole2', 'Es muss nur getestet werden, noch mehr', NULL, 1, 200);
 
-INSERT INTO role (title)
-    VALUES ('testrole');
+INSERT INTO project (titel, start_date, end_date, application_limit,comp_id)
+    VALUES ('Project 1', '2020-06-01', '2020-07-01', '2020-06-15', 4);
 
+INSERT INTO project (titel, start_date, end_date, application_limit,comp_id)
+    VALUES ('Project 2', '2020-07-01', '2020-08-01', '2020-07-15', 4);
+/*
 INSERT INTO role_assignment (role_id, project_id, number_of_freelancers, payment)
     VALUES (1, 1, 10, 0.01);
 */
 SELECT * FROM freelancer;
 DELETE FROM freelancer WHERE username = 'testing';
-SELECT * FROM freelancer;
+SELECT * FROM freelancer as f JOIN prefence_assignment as pa on pa.user_id=f.user_id JOIN prefences as p on pa.pref_id=p.pref_id;
 SELECT * FROM company_account;
 DELETE FROM company_account WHERE username = 'testing';
 SELECT * FROM company_account JOIN company on company.comp_id=company_account.comp_id;
 SELECT * FROM company;
 DELETE FROM company WHERE name != 'testcomany';
+SELECT * FROM role;
 
 UPDATE freelancer SET is_set=false WHERE username!='testuser';
 

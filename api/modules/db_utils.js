@@ -335,13 +335,17 @@ module.exports={
     })
   },
 
-  getAllProjects: function(comp_id){
-    return new Promise((resolve, rejecet) => {
-      pool.query(`SELECT projet.*
+  getAllProjects: function(comp_account){
+    return new Promise((resolve, reject) => {
+      pool.query(`SELECT project.*
                   FROM project
-                  WHERE comp_id = $1`, [comp_id])
+                  JOIN company_account as ca
+                  ON project.comp_id = ca.comp_id
+                  WHERE ca.username = $1`, [comp_account])
       .then(data => resolve(data.rows))
-      rejecet(err => reject(err))
+      .catch(err => {console.log('db:')
+        console.log(err)
+        reject(err)})
     })
   },
 
@@ -349,7 +353,9 @@ module.exports={
     return new Promise((resolve, reject) => {
       pool.query('SELECT * FROM project WHERE project_id=$1', [project_id])
       .then(data=>resolve(data.rows))
-      .catch(err=>reject(err))
+      .catch(err=>{
+        console.log(err)
+      })
     })
   },
 

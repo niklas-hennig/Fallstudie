@@ -1,25 +1,25 @@
 const express = require('express');
 
 const db_utils = require('../modules/db_utils');
+const auth_utils = require('../modules/auth_utils')
 
 router = express.Router();
 
-router.get('/:comp_id', (req, res) => {
-    if (!req.cookies['Auth']) return res.status(401).send("Not signed in")
-    if(req.cookies['Auth']['type']=='f') return res.status(403).send("Not allowed")
-
-    db_utils.getAllProjects(req.params.comp_id)
+router.get('/:comp_user/:token', (req, res) => {
+    console.log(req)
+    if(!auth_utils.validateToken(req.params.token)) return res.status(401).send('not signed in')
+    
+    db_utils.getAllProjects(req.params.comp_user)
     .then(data => res.send(data))
-    .catch(err => res.status(500).send(err))
+    .catch(err => {res.status(500).send(err)})
 })
 
-router.get('/ID/:project id', (req, res) => {
-    if (!req.cookies['Auth']) return res.status(401).send("Not signed in")
-    if(req.cookies['Auth']['type']!='f') return res.status(403).send("Not allowed")
-
+router.get('/ID/:id/test/:test', (req, res) => {
+    console.log(req)
+    //if(!auth_utils.validateToken(req.params.token)) return res.status(401).send('not signed in')
     db_utils.getProjectInfo(req.params.project_id)
     .then(data => res.send(data))
-    .catch(err=> res.status(500).send(err))
+    .catch(err=> console.log(err))
 
 })
 

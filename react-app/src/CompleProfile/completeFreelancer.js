@@ -35,12 +35,11 @@ class CompleteProfileFreelancer extends React.Component {
         let key = ''
         axios.get('http://localhost:80/api/Prefence/')
         .then(res => {
-            console.log(res.data)
             for(key in res.data){
-                console.log(res.data[key])
                 pref.push(res.data[key]['pref_name'])
             }
-            this.setState({prefences_available: pref})
+            this.setState({prefences_available: pref, prefence:pref[0]})
+
         })
     }
 
@@ -48,7 +47,7 @@ class CompleteProfileFreelancer extends React.Component {
         event.preventDefault();
 
         axios.put('http://localhost:80/api/User/Freelancer', {
-        username: this.props.userinfo['username'],
+        username: this.props.username,
         date_of_birth: this.state.date_of_birth,
         street: this.state.street,
         number: this.state.number,
