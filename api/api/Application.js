@@ -42,4 +42,13 @@ router.get('/Freelancer/:username/:token', (req, res) => {
     })
 })
 
+router.delete('/:role_id/:username/:token',(req, res)=>{
+    if(!auth_utils.validateToken(req.params.token)) return res.status(401).send('not signed in')
+    db_utils.deleteApplication(req.params.role_id, req.params.username)
+    .then(data => res.send(data))
+    .catch(err=> {console.log(err)
+        res.status(500).send(err)})
+
+})
+
 module.exports = router;

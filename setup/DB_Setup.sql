@@ -155,82 +155,31 @@ CREATE TABLE freelancer_assignment (
       ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-
-
 INSERT INTO freelancer (username, password, email, name, surname, gender)
     VALUES ('testuser', 'test', 'none', 'user', 'test', 'u');
-
 INSERT INTO prefences (pref_name)
     VALUES ('Design');
 
-INSERT INTO prefences (pref_name)
-    VALUES ('testprefence');
-
-INSERT INTO prefence_assignment (user_id, pref_id)
-    VALUES (1, 1);
 
 INSERT INTO company (name, postcode, city, country)
     VALUES ('testcomany', '09342', 'testcity', 'nowhere');
-
 INSERT INTO company_account (username, password, email, comp_id, name, surname, gender)
     VALUES('compt', 'test', 'none', 1, 't', 'est', 'u');
 
 INSERT INTO role (title, description, requirements, area, payment)
-    VALUES ('testrole', 'Es muss nur getestet werden', NULL, 1, 100);
-INSERT INTO role (title, description, requirements, area, payment)
-    VALUES ('testrole2', 'Es muss nur getestet werden, noch mehr', NULL, 1, 200);
-
+    VALUES ('testrole', 'Es muss nur getestet werden', NULL, 1, 100),
+    ('testrole2', 'Es muss nur getestet werden, noch mehr', NULL, 1, 200),
+    ('testrole3', 'Ich bin für Pojekt 2 hier', NULL, 1, 200);
 INSERT INTO project (titel, start_date, end_date, application_limit,comp_id)
-    VALUES ('Project 1', '2020-06-01', '2020-07-01', '2020-06-15', 1);
-
-INSERT INTO project (titel, start_date, end_date, application_limit,comp_id)
-    VALUES ('Project 2', '2020-07-01', '2020-08-01', '2020-07-15', 1);
-
-INSERT INTO role_assignment (role_id, project_id, number_of_freelancers)
-    VALUES (1, 1, 10);
-INSERT INTO role_assignment (role_id, project_id, number_of_freelancers)
-    VALUES (1, 1, 5);
-INSERT INTO freelancer_assignment (freelancer_id, role_id)
-    VALUES (1, 1);
+    VALUES ('Project 1', '2020-06-01', '2020-07-01', '2020-06-15', 1),
+    ('Project 2', '2020-07-01', '2020-08-01', '2020-07-15', 1);
+INSERT INTO role_assignment (role_id, project_id, number_of_freelancers) VALUES 
+    (1, 1, 10), 
+    (2, 1, 5), 
+    (3, 2, 1);
 
 INSERT INTO applications (freelancer_id, role_id, com_id)
-    VALUES (1, 1, 1);
+    VALUES (1, 3, 1);
 
-SELECT * FROM freelancer;
-DELETE FROM freelancer WHERE username != 'testuser';
-SELECT * FROM freelancer as f JOIN prefence_assignment as pa on pa.user_id=f.user_id JOIN prefences as p on pa.pref_id=p.pref_id;
-SELECT * FROM company_account;
-DELETE FROM company_account WHERE username = 'testing';
-SELECT * FROM company_account JOIN company on company.comp_id=company_account.comp_id;
-SELECT * FROM company;
-DELETE FROM company WHERE name != 'testcomany';
-SELECT * FROM project;
-
-SELECT * FROM prefence_assignment
-
-SELECT DISTINCT ra.role_id, p.start_date, p.end_date
-        FROM project as p
-        JOIN role_assignment as ra ON p.project_id=ra.project_id
-        JOIN freelancer_assignment as fa ON fa.role_id=ra.role_id 
-        JOIN freelancer as f ON fa.freelancer_id=f.user_id
-        WHERE p.start_date >= '2020-06-16'
-        AND f.username = 'testuser';
-
-SELECT * 
-        FROM project as p
-        JOIN role_assignment as ra ON ra.project_id=p.project_id
-        JOIN role as r ON r.role_id=ra.role_id
-        JOIN applications as a ON r.role_id=a.role_id
-        JOIN freelancer as f ON f.user_id=a.freelancer_id;
-
-SELECT * FROM role_assignment INNER JOIN project ON role_assignment.project_id=project.project_id;
-                  
-
-UPDATE freelancer SET is_set=false WHERE username!='testuser';
-
-SELECT r.* FROM role as r JOIN applications as a ON r.role_id=a.role_id JOIN freelancer as f ON f.user_id=a.freelancer_id;
-
-SELECT pref_name FROM prefences;
-SELECT * FROM role JOIN prefences ON prefences.pref_id=role.area;
-
-SELECT a.username, c.pref_name FROM freelancer as a JOIN prefence_assignment as b ON a.user_id=b.user_id JOIN prefences as c ON b.pref_id=c.pref_id;
+INSERT INTO freelancer_assignment (freelancer_id, role_id)
+    VALUES (1, 2);

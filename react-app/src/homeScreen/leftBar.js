@@ -27,6 +27,7 @@ class LeftBar extends Component {
     }
 
     handleRoleClick = (event) => {
+        console.log("handeling"+event)
         this.props.onRoleSelect(event);
     }
 
@@ -66,7 +67,7 @@ class LeftBar extends Component {
             {calTitle}
             {cal}
             <h2>Ihre Projekte</h2>
-            {this.state.projects.map((roleInfo, index) => <RoleListItem key={index} role_id={roleInfo.role_id} title={roleInfo.title} start_date={roleInfo.start_date} handleClick={this.handleRoleClick}></RoleListItem>
+            {this.state.projects.map((roleInfo, index) => <RoleListItem key={index} role_id={roleInfo.role_id} title={roleInfo.title} start_date={roleInfo.start_date} handleClick={this.handleRoleClick} mode="left"></RoleListItem>
             )}
             {noProjects}
         </div>

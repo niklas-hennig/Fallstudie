@@ -405,6 +405,18 @@ module.exports={
       .then(data => resolve(data))
       .catch(err => reject(err))
     })
+  },
+
+  deleteApplication: function(role_id, username){
+    return new Promise((resolve, reject) =>{
+      pool.query('SELECT user_id FROM freelancer WHERE username=$1', [username])
+      .then(data=>{
+        pool.query('DELETE FROM applications WHERE freelancer_id=$1 AND role_id=$2', [data.rows[0].user_id, role_id])
+        .then(data => resolve(data))
+        .catch(err => reject(err))
+      })
+      .catch(err => reject(err))
+    })
   }
   
 }

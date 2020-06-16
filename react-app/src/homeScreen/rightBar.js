@@ -20,13 +20,25 @@ class RightBar extends Component {
             height: '100%',
             backgroundColor: '#F4B41A',
         }
+        this.setProjects=this.setProjects.bind(this);
+    }
+
+    setProjects(){
+        axios.get('http://localhost:80/api/Application/Freelancer/'+this.state.username+'/'+this.state.token)
+        .then(res => {
+            this.setState({applications: res.data})
+        })
+        .catch(err => {
+            console.log(err)
+        })
     }
 
     render(){
         let applications = ''
+        console.log("right bar state:")
         console.log(this.state)
         if (this.state.applications.length>0){
-            applications = this.state.applications.map((appInfo, index) => <RoleListItem key={index} role_id={appInfo.role_id} title={appInfo.title}> </RoleListItem>)
+            applications = this.state.applications.map((appInfo, index) => <RoleListItem key={index} role_id={appInfo.role_id} title={appInfo.title} mode="right" token={this.state.token} username={this.state.username} onChange={this.setProjects}> </RoleListItem>)
         }
         return <div style={this.style}>
             <h2>Ihre ausstehenden Bewerbungen</h2>
@@ -35,14 +47,7 @@ class RightBar extends Component {
     }
 
     componentDidMount(){
-        axios.get('http://localhost:80/api/Application/Freelancer/'+this.state.username+'/'+this.state.token)
-        .then(res => {
-            console.log(res.data)
-            this.setState({applications: res.data})
-        })
-        .catch(err => {
-            console.log(err)
-        })
+        this.setProjects();
     }
 }
 export default RightBar;

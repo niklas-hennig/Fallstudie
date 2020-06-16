@@ -14,6 +14,7 @@ class RoleDetail extends Component {
             height: '100%'
         }
         this.handleBack=this.handleBack.bind(this);
+        console.log("creating new role detail")
     }
 
     handleBack = (event) =>{
@@ -21,10 +22,17 @@ class RoleDetail extends Component {
     }
 
     render(){
+        console.log("rendering detail: ")
+        console.log(this.state)
         return <div style={this.style}>
             <button onClick={this.handleBack}>Zurück</button>
-            <p>Ich informiere über Rolle: {this.state.role_id}</p>
+            <p>Ich informiere über Rolle: {this.props.role_id}</p>
         </div>
+    }
+
+    componentWillReceiveProps(){
+        if(this.state.role_id!=this.props.role_id)
+            this.setState({role_id: this.props.role_id})
     }
 }
 

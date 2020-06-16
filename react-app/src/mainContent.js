@@ -94,7 +94,11 @@ class MainContent extends Component {
     }
 
     handleRoleSelected(id){
-        this.setState({content: this.getRoleDetail(id)})
+        console.log("changing to " + id)
+        this.setState({content: null})
+        let cont = this.getRoleDetail(id)
+        console.log(cont)
+        this.setState({content: cont})
     }
 
     handleProjectSelected(id){
@@ -152,6 +156,7 @@ class MainContent extends Component {
     }
 
     getRoleDetail(role_id){
+        console.log("showing role"+role_id)
         let username = null
         let type='c'
         let auth = null
@@ -197,6 +202,8 @@ class MainContent extends Component {
     }
 
     render() {
+        console.log("rendering:")
+        console.log(this.state.content)
         let cont = this.state.content
         return (
             <div id='MainContainer' style={this.style}>
