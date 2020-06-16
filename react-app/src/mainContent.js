@@ -129,7 +129,7 @@ class MainContent extends Component {
         type=this.state.auth['type']
         auth= this.state.auth['private']
         return <div>
-                    <LeftBar />
+                    <LeftBar username={username} type={type} token={auth} comp_id={comp_id} onRoleSelect={this.handleRoleSelected}/>
                     <CarouselComp username={username} type={type} token={auth} comp_id={comp_id} onRoleSelect={this.handleRoleSelected} onProjectSelected={this.handleProjectSelected}/>
                     <RightBar />
                 </div>

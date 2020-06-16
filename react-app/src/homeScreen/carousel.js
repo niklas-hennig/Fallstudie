@@ -16,7 +16,9 @@ class CarouselComp extends Component {
             token: this.props.token,
 
             all_role_ids: [],
-            all_projects: []
+            all_projects: [],
+
+            height: 0
         }
         this.style ={
             position: 'absolute',
@@ -34,7 +36,7 @@ class CarouselComp extends Component {
             .then(res => {
                 let key = 0
                 for (key in res.data){
-                    projects.push(res.data[key].id)
+                    projects.push(res.data[key].role_id)
                 }
                 this.setState({all_role_ids: projects})
             })
@@ -68,24 +70,48 @@ class CarouselComp extends Component {
 
 
     render() {
-        console.log("car state:")
-        console.log(this.state)
         let carousel = ''
+        let title = ''
+        if (this.state.type=='f') title="Ihre vorgeschlagenen Projekte"
+        else title="Ihre aktiven Projekte"
+        let settings = {
+            dots: true,
+            centerMode: true,
+            centerPadding: 30,
+        }
         if (this.state.all_role_ids.length>0){
             carousel =
-            <Slider dots adaptiveHeight={true}>
-                {this.state.all_role_ids.map((id, index) => <SlideRole key={index} project={id} username={this.state.username} token={this.state.token} onSelect={this.handleSelectRole}></SlideRole>)}
+            <Slider  {...settings}>
+                {this.state.all_role_ids.map((id, index) => <SlideRole key={index} project={id} username={this.state.username} token={this.state.token} height={this.state.height} onSelect={this.handleSelectRole}></SlideRole>)}
             </Slider>
         }
         if(this.state.all_projects.length>0){
             carousel = 
-            <Slider dots>
-                {this.state.all_projects.map((info, index) => <SlideProject key={index} project_id={info.project_id} title={info.titel} start_date={info.start_date}></SlideProject>)}
+            <Slider {...settings}>
+                {this.state.all_projects.map((info, index) => <SlideProject key={index} project_id={info.project_id} title={info.titel} start_date={info.start_date} height={this.state.height}></SlideProject>)}
             </Slider>
         }
+        if(this.state.type=='f'&&this.state.all_role_ids.length==0){
+            carousel = 
+            <div>
+                <h2>Keine Projekte vorhanden</h2>
+            </div>
+        }
+        if(this.state.type=="c"&&this.state.all_projects.length==0){
+            console.log("new mehtod")
+            carousel = 
+            <div>
+                <h1>Keine Projekte angelegt</h1>
+            </div>
+        }
+        console.log("carousel state:")
+        console.log(this.state)
+        if(this.state.type=="c") console.log("test1")
+        if(this.state.all_projects.length==0) console.log("test2")
     return (
         <div style={this.style}>
-            <div>
+            <h1>{title}</h1>
+            <div className="carousel_container" ref={ (divElement) => { this.divElement = divElement } } style={{height: '90%'}}>
                 {carousel}
             </div>
         </div>
@@ -93,6 +119,8 @@ class CarouselComp extends Component {
     }
 
     componentDidMount() {
+        const height = this.divElement.clientHeight;
+        this.setState({ height });
       }
 }
 export default CarouselComp;

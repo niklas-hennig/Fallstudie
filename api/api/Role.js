@@ -22,7 +22,20 @@ router.get('/:id/:token', (req, res) => {
     .then(data => res.send(data))
     .catch(err => {
         console.log(err)
-        //res.status(500).send(err)
+        res.status(500).send(err)
+    })
+})
+
+router.get('/Timeline/:username/:token/:start_day', (req, res) => {
+    if(!auth_utils.validateToken(req.params.token)) return res.status(401).send('not signed in')
+    db_utils.getRoleTimeline(req.params.username, req.params.start_day)
+    .then(data => {
+        console.log(data.rows)
+        res.send(data.rows)
+    })
+    .catch(err => {
+        console.log(err)
+        res.status(500).send(err)
     })
 })
 

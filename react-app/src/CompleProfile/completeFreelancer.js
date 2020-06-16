@@ -60,6 +60,7 @@ class CompleteProfileFreelancer extends React.Component {
         experience: this.state.experience,
         is_set:this.state.is_set
         }).then(res =>{
+            console.log("created freelancer with prefence" + this.state.prefence)
             axios.put('http://localhost:80/api/Prefence/'+this.state.username, {
                 prefence: this.state.prefence
             }).then(this.props.onSubmit('f'))
@@ -106,7 +107,7 @@ class CompleteProfileFreelancer extends React.Component {
                     <div id="details">Details<br />
                         <textarea rows="10" cols="50" name="experience" placeholder="Schreiben Sie etwas über sich" onChange={this.changeHandler}/><br />
                         <span>Wählen Sie eine oder mehrere Kategorien für die Sie sich interessieren</span><br />
-                        <select name="prefence">
+                        <select name="prefence" onChange={this.changeHandler}>
                             {this.state.prefences_available.map((name) => <option key={name}>{name}</option>)}
                         </select>                            
                         <span>Laden Sie ihren Lebenslauf hier hoch</span><br />

@@ -354,8 +354,27 @@ module.exports={
       pool.query('SELECT * FROM project WHERE project_id=$1', [project_id])
       .then(data=>resolve(data.rows))
       .catch(err=>{
-        console.log(err)
+        reject(err)
       })
+    })
+  },
+
+  getRoleTimeline: function(username, start_date){
+    console.log("db:")
+    console.log(username)
+    console.log(start_date)
+    return new Promise((resolve, reject) => {
+      pool.query(`SELECT DISTINCT r.*, p.start_date, p.end_date
+        FROM project as p
+        JOIN role_assignment as ra ON p.project_id=ra.project_id
+        JOIN role as r on r.role_id=ra.role_id
+        JOIN freelancer_assignment as fa ON fa.role_id=ra.role_id 
+        JOIN freelancer as f ON fa.freelancer_id=f.user_id
+        WHERE p.start_date >= $1 
+        AND f.username = $2
+      `, [start_date, username])
+      .then(data => resolve(data))
+      .catch(err => reject(err))
     })
   },
 
