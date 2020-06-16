@@ -27,6 +27,8 @@ class CarouselComp extends Component {
             height: '100%'
         }
         this.handleSelectRole = this.handleSelectRole.bind(this);
+        this.handleSelectProject=this.handleSelectProject.bind(this);
+        this.handleProjektCreate=this.handleProjektCreate.bind(this);
         
     }
     getIds(){
@@ -64,16 +66,30 @@ class CarouselComp extends Component {
             token: this.props.token})
     }
 
+    handleProjektCreate = (event) => {
+        this.props.onProjectCreate();
+    }
+
     handleSelectRole = (event) =>{
         this.props.onRoleSelect(event);
+    }
+
+    handleSelectProject = (event) =>{
+        this.props.onProjectSelected(event)
     }
 
 
     render() {
         let carousel = ''
         let title = ''
+        let create = ''
         if (this.state.type=='f') title="Ihre vorgeschlagenen Projekte"
-        else title="Ihre aktiven Projekte"
+        else {
+            title="Ihre aktiven Projekte"
+            create = <div>
+                <button onClick={this.handleProjektCreate}>Neues Projekt erstellen</button>
+            </div>
+        }
         let settings = {
             dots: true,
             centerMode: true,
@@ -88,7 +104,7 @@ class CarouselComp extends Component {
         if(this.state.all_projects.length>0){
             carousel = 
             <Slider {...settings}>
-                {this.state.all_projects.map((info, index) => <SlideProject key={index} project_id={info.project_id} title={info.titel} start_date={info.start_date} height={this.state.height}></SlideProject>)}
+                {this.state.all_projects.map((info, index) => <SlideProject key={index} project_id={info.project_id} title={info.titel} start_date={info.start_date} height={this.state.height} onSelect={this.handleSelectProject} ></SlideProject>)}
             </Slider>
         }
         if(this.state.type=='f'&&this.state.all_role_ids.length==0){
@@ -98,22 +114,19 @@ class CarouselComp extends Component {
             </div>
         }
         if(this.state.type=="c"&&this.state.all_projects.length==0){
-            console.log("new mehtod")
             carousel = 
             <div>
                 <h1>Keine Projekte angelegt</h1>
             </div>
         }
-        console.log("carousel state:")
-        console.log(this.state)
-        if(this.state.type=="c") console.log("test1")
-        if(this.state.all_projects.length==0) console.log("test2")
     return (
         <div style={this.style}>
             <h1>{title}</h1>
             <div className="carousel_container" ref={ (divElement) => { this.divElement = divElement } } style={{height: '90%'}}>
                 {carousel}
+                {create}
             </div>
+            
         </div>
     )
     }

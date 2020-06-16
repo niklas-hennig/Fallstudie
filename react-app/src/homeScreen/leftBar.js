@@ -49,7 +49,6 @@ class LeftBar extends Component {
             date = {start: start, end: end}
             dates.push(date)
         }
-        console.log(dates)
         this.setState({dates:dates})
     }
 
@@ -76,7 +75,6 @@ class LeftBar extends Component {
     componentDidMount(){
         if(this.state.type=='f'){
             let date = new Date()
-            console.log(date);
             Axios.get('http://localhost:80/api/Role/Timeline/'+this.state.username+'/'+this.state.token+'/2020-05-16')
             .then(res => {
                 this.setState({projects: res.data})

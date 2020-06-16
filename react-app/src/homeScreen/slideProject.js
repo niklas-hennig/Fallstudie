@@ -20,7 +20,7 @@ class SlideProject extends Component {
         let content = ''
         if (this.state.title){
             content = 
-            <div onClick={this.clickHandler} style={{ flex: '0 0 100%', backgroundColor: 'gray', width: '80%', marginLeft: '10%', height: this.props.height }}>
+            <div onClick={this.clickHandler} style={{ flex: '0 0 100%', backgroundColor: 'gray', width: '80%', marginLeft: '10%', height: this.props.height*0.65 }}>
                 <p>Titel: {this.state.title}</p><br />
                 <p>Start: {this.state.start_date}</p>
             </div>
@@ -31,8 +31,6 @@ class SlideProject extends Component {
                 <p></p>
             </div>
         }
-        console.log('Project slide state:')
-        console.log(this.state)
         return content
     }
 

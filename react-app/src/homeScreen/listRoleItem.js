@@ -12,14 +12,18 @@ class RoleListItem extends Component {
     }
 
     clickHandler = (event) => {
-        this.props.handleClick(this.state.id);
+        if(this.props.handleClick)
+            this.props.handleClick(this.state.id);
     }
 
 
     render(){
+        let date = ''
+        if(this.state.start_date)
+        date = <p>Start: {this.state.start_date.substring(8,10)}.{this.state.start_date.substring(5,7)}.{this.state.start_date.substring(0,4)}</p>
         return <div onClick={this.clickHandler} style={{backgroundColor: 'gray'}}>
         <h3>{this.state.title}</h3>
-        <p>Start: {this.state.start_date.substring(8,10)}.{this.state.start_date.substring(5,7)}.{this.state.start_date.substring(0,4)}</p>
+        {date}
         </div>
     }
 }

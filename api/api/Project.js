@@ -14,10 +14,8 @@ router.get('/:comp_user/:token', (req, res) => {
     .catch(err => {res.status(500).send(err)})
 })
 
-router.get('/ID/:id/test/:test', (req, res) => {
-    console.log(req)
-    //if(!auth_utils.validateToken(req.params.token)) return res.status(401).send('not signed in')
-    db_utils.getProjectInfo(req.params.project_id)
+router.get('/:id', (req, res) => {
+    db_utils.getProjectInfo(req.params.id)
     .then(data => res.send(data))
     .catch(err=> console.log(err))
 

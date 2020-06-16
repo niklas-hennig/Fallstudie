@@ -193,6 +193,9 @@ INSERT INTO role_assignment (role_id, project_id, number_of_freelancers)
 INSERT INTO freelancer_assignment (freelancer_id, role_id)
     VALUES (1, 1);
 
+INSERT INTO applications (freelancer_id, role_id, com_id)
+    VALUES (1, 1, 1);
+
 SELECT * FROM freelancer;
 DELETE FROM freelancer WHERE username != 'testuser';
 SELECT * FROM freelancer as f JOIN prefence_assignment as pa on pa.user_id=f.user_id JOIN prefences as p on pa.pref_id=p.pref_id;
@@ -213,8 +216,19 @@ SELECT DISTINCT ra.role_id, p.start_date, p.end_date
         WHERE p.start_date >= '2020-06-16'
         AND f.username = 'testuser';
 
+SELECT * 
+        FROM project as p
+        JOIN role_assignment as ra ON ra.project_id=p.project_id
+        JOIN role as r ON r.role_id=ra.role_id
+        JOIN applications as a ON r.role_id=a.role_id
+        JOIN freelancer as f ON f.user_id=a.freelancer_id;
+
+SELECT * FROM role_assignment INNER JOIN project ON role_assignment.project_id=project.project_id;
+                  
+
 UPDATE freelancer SET is_set=false WHERE username!='testuser';
 
+SELECT r.* FROM role as r JOIN applications as a ON r.role_id=a.role_id JOIN freelancer as f ON f.user_id=a.freelancer_id;
 
 SELECT pref_name FROM prefences;
 SELECT * FROM role JOIN prefences ON prefences.pref_id=role.area;

@@ -22,7 +22,7 @@ import RoleDetail from './Freelancer/role_detail';
 
 //Company-Only pages
 import ProjectDetail from './Company/project_detail';
-import CarouselComp from './homeScreen/carousel';
+import ProjectCreate from './Company/project_create';
 
 
 const transport = axios.create({
@@ -54,6 +54,9 @@ class MainContent extends Component {
         this.handleSettingsComplete = this.handleSettingsComplete.bind(this);
         this.handleRoleSelected=this.handleRoleSelected.bind(this);
         this.handleProjectSelected = this.handleProjectSelected.bind(this);
+        this.handleRoleApplicationSelected=this.handleRoleApplicationSelected.bind(this);
+        this.handleBackToHome=this.handleBackToHome.bind(this);
+        this.handleProjectCreate = this.handleProjectCreate.bind(this);
     }
 
     componentDidMount(){
@@ -98,6 +101,19 @@ class MainContent extends Component {
         this.setState({content: this.getProjectDetail(id)})
     }
 
+    //not used
+    handleRoleApplicationSelected(id){
+        console.log("selected application: "+id)
+    }
+
+    handleBackToHome(){
+        this.setState({content:this.getHome()})
+    }
+
+    handleProjectCreate(){
+        this.setState({content: this.getProjectCreation()})
+    }
+
     getSettings(){
         if(this.state.auth) this.setState({settingsIsFreelancer:true})
         else this.setState({settingsIsFreelancer:false})
@@ -130,24 +146,53 @@ class MainContent extends Component {
         auth= this.state.auth['private']
         return <div>
                     <LeftBar username={username} type={type} token={auth} comp_id={comp_id} onRoleSelect={this.handleRoleSelected}/>
-                    <CarouselComp username={username} type={type} token={auth} comp_id={comp_id} onRoleSelect={this.handleRoleSelected} onProjectSelected={this.handleProjectSelected}/>
-                    <RightBar />
+                    <Carousel username={username} type={type} token={auth} comp_id={comp_id} onRoleSelect={this.handleRoleSelected} onProjectSelected={this.handleProjectSelected} onProjectCreate={this.handleProjectCreate}/>
+                    <RightBar username={username} type={type} token={auth} comp_id={comp_id} onApplicationSelect={this.handleRoleApplicationSelected}/>
                 </div>
     }
 
     getRoleDetail(role_id){
+        let username = null
+        let type='c'
+        let auth = null
+        let comp_id = null
+        username= this.state.auth['username']
+        type=this.state.auth['type']
+        auth= this.state.auth['private']
         return <div>
-            <LeftBar />
-            <RoleDetail role_id={role_id}></RoleDetail>
-            <RightBar />
+            <LeftBar username={username} type={type} token={auth} comp_id={comp_id} onRoleSelect={this.handleRoleSelected}/>
+            <RoleDetail role_id={role_id} token={auth} onBack={this.handleBackToHome}></RoleDetail>
+            <RightBar username={username} type={type} token={auth} comp_id={comp_id} onApplicationSelect={this.handleRoleApplicationSelected}/>
         </div>
     }
 
     getProjectDetail(project_id){
+        let username = null
+        let type='c'
+        let auth = null
+        let comp_id = null
+        username= this.state.auth['username']
+        type=this.state.auth['type']
+        auth= this.state.auth['private']
         return <div>
-        <LeftBar />
-        <ProjectDetail project_id={project_id}></ProjectDetail>
-        <RightBar />
+        <LeftBar username={username} type={type} token={auth} comp_id={comp_id} onRoleSelect={this.handleRoleSelected}/>
+        <ProjectDetail project_id={project_id} token={auth} onBack={this.handleBackToHome}></ProjectDetail>
+        <RightBar username={username} type={type} token={auth} comp_id={comp_id} onApplicationSelect={this.handleRoleApplicationSelected}/>
+        </div>
+    }
+
+    getProjectCreation(){
+        let username = null
+        let type='c'
+        let auth = null
+        let comp_id = null
+        username= this.state.auth['username']
+        type=this.state.auth['type']
+        auth= this.state.auth['private']
+        return <div>
+            <LeftBar username={username} type={type} token={auth} comp_id={comp_id} onRoleSelect={this.handleRoleSelected}/>
+            <ProjectCreate></ProjectCreate>
+            <RightBar username={username} type={type} token={auth} comp_id={comp_id} onApplicationSelect={this.handleRoleApplicationSelected}/>
         </div>
     }
 

@@ -326,12 +326,15 @@ module.exports={
       pool.query(`SELECT ra.role_id, freelancer.* 
                   FROM project as p
                   JOIN role_assignment as ra
-                  ON p.project_id = ra.project.id
+                  ON p.project_id = ra.project_id
                   JOIN applications as a
                   ON ra.role_id = a.role_id
+                  JOIN freelancer ON freelancer.user_id=a.freelancer_id
                   WHERE p.project_id=$1`, [project_id])
       .then(data => resolve(data.rows))
-      .catch(err => reject(err))
+      .catch(err => {
+        
+        reject(err)})
     })
   },
 
@@ -351,7 +354,12 @@ module.exports={
 
   getProjectInfo: function(project_id){
     return new Promise((resolve, reject) => {
-      pool.query('SELECT * FROM project WHERE project_id=$1', [project_id])
+      pool.query(`SELECT * 
+        FROM project as p
+        JOIN role_assignment as ra ON ra.project_id=p.project_id
+        JOIN role as r ON r.role_id=ra.role_id
+        JOIN applications as a ON r.role_id=a.role_id
+        WHERE p.project_id=$1`, [project_id])
       .then(data=>resolve(data.rows))
       .catch(err=>{
         reject(err)
@@ -383,6 +391,18 @@ module.exports={
       pool.query(`DELETE FROM project WHERE project_id=$1 AND comp_id=(SELECT MAX(comp_id) FROM company_account WHERE username=$2)`,
       [project_id, username])
       .then(data=>resolve(data))
+      .catch(err => reject(err))
+    })
+  },
+
+  getApplicationsFreelancer: function(username){
+    return new Promise((resolve, reject) => {
+      pool.query(`SELECT r.* 
+      FROM role as r 
+      JOIN applications as a ON r.role_id=a.role_id 
+      JOIN freelancer as f ON f.user_id=a.freelancer_id
+      WHERE f.username=$1`, [username])
+      .then(data => resolve(data))
       .catch(err => reject(err))
     })
   }

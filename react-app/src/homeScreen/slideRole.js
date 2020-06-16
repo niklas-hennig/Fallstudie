@@ -23,8 +23,6 @@ class SlideRole extends Component {
         if(this.state.project_id>0){
             axios.get('http://localhost:80/api/Role/'+this.state.project_id+'/'+this.state.token)
             .then(res=>{
-                console.log("slide fetched")
-                console.log(res.data[0])
                 this.setState({title: res.data[0].title, description: res.data[0].description, requirements: res.data[0].requirements, payment: res.data[0].payment})
             })
             .catch(err => console.error(err))
@@ -43,8 +41,6 @@ class SlideRole extends Component {
 
     render(){
         let content = ''
-        console.log('slide state:')
-        console.log(this.state)
         if(this.state.title){
             content = <div onClick={this.clickHandler} style={{ backgroundColor: 'gray',  width: '80%', marginLeft: '10%', height: this.props.height*0.75  }}>
             <h1>title: {this.state.title}</h1><br />
