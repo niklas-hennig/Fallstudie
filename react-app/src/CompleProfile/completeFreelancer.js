@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import axios from "axios";
 
 
-class CompleteProfileFreelancer extends React.Component {
+class CompleteProfileFreelancer extends Component {
     constructor(props){
         super(props)
             this.state = {
@@ -75,9 +75,9 @@ class CompleteProfileFreelancer extends React.Component {
 
     render() {
         let anrede = "Lieber"
-        if(this.props.gender=='f') {
+        if(this.props.gender==='f') {
             anrede= 'Liebe'
-        } if(this.props.gender == 'd') {
+        } if(this.props.gender === 'd') {
             anrede='Hallo'
         } 
 

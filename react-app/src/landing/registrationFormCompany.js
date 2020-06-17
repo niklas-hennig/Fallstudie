@@ -26,7 +26,7 @@ class RegistrationForm extends Component{
 
     submitHandler = (event) => {
         event.preventDefault();
-        if (this.state.registration==true){
+        if (this.state.registration===true){
             axios.post('http://localhost:80/api/Company', {
                 name: this.state.name,
                 street: this.state.street,
@@ -66,10 +66,6 @@ class RegistrationForm extends Component{
     }
 
     render(){
-        let passwordErrror = ''
-        if (this.state.passwordError){
-            passwordErrror = <p style={{color: 'red', position: 'relative', 'top': '10%'}}>Passwörter stimmen nicht überein</p>
-        }
 
         let registeredBtn = 'Suchen'
         let registered = ''

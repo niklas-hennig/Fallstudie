@@ -6,7 +6,6 @@ const auth_utils = require('../modules/auth_utils')
 router = express.Router();
 
 router.get('/:comp_user/:token', (req, res) => {
-    console.log(req)
     if(!auth_utils.validateToken(req.params.token)) return res.status(401).send('not signed in')
     
     db_utils.getAllProjects(req.params.comp_user)
@@ -15,8 +14,10 @@ router.get('/:comp_user/:token', (req, res) => {
 })
 
 router.get('/:id', (req, res) => {
+    console.log(req.params.id)
     db_utils.getProjectInfo(req.params.id)
-    .then(data => res.send(data))
+    .then(data => {console.log(data)
+        res.send(data)})
     .catch(err=> console.log(err))
 
 })

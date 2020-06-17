@@ -35,8 +35,6 @@ class RightBar extends Component {
 
     render(){
         let applications = ''
-        console.log("right bar state:")
-        console.log(this.state)
         if (this.state.applications.length>0){
             applications = this.state.applications.map((appInfo, index) => <RoleListItem key={index} role_id={appInfo.role_id} title={appInfo.title} mode="right" token={this.state.token} username={this.state.username} onChange={this.setProjects}> </RoleListItem>)
         }

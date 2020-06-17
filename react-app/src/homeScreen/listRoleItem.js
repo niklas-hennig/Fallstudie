@@ -16,7 +16,7 @@ class RoleListItem extends Component {
     }
 
     clickHandler = (event) => {
-        if(this.state.mode=="left")
+        if(this.state.mode==="left")
             this.props.handleClick(this.state.id);
         else
             axios.delete('http://localhost:80/api/Application/'+this.state.id+'/'+this.state.username+'/'+this.state.token)
@@ -29,7 +29,7 @@ class RoleListItem extends Component {
         console.log("listItem state:")
         console.log(this.state)
         let delBtn = ''
-        if(this.state.mode!="left")
+        if(this.state.mode!=="left")
         delBtn = <button onClick={this.clickHandler}>Löschen</button>
         let date = ''
         if(this.state.start_date)

@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from "axios";
 
 class RoleDetail extends Component {
     constructor(props){
@@ -31,7 +30,7 @@ class RoleDetail extends Component {
     }
 
     componentWillReceiveProps(){
-        if(this.state.role_id!=this.props.role_id)
+        if(this.state.role_id!==this.props.role_id)
             this.setState({role_id: this.props.role_id})
     }
 }

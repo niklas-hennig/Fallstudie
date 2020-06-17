@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Cookies from 'js-cookie';
 import axios from "axios";
 
 //Landing page imports
@@ -23,11 +22,6 @@ import RoleDetail from './Freelancer/role_detail';
 //Company-Only pages
 import ProjectDetail from './Company/project_detail';
 import ProjectCreate from './Company/project_create';
-
-
-const transport = axios.create({
-    withCredentials: true
-  })
 
 class MainContent extends Component {
     constructor(){
@@ -149,7 +143,7 @@ class MainContent extends Component {
         type=this.state.auth['type']
         auth= this.state.auth['private']
         return <div>
-                    <LeftBar username={username} type={type} token={auth} comp_id={comp_id} onRoleSelect={this.handleRoleSelected}/>
+                    <LeftBar username={username} type={type} token={auth} comp_id={comp_id} onRoleSelect={this.handleRoleSelected} onProjectSelected={this.handleProjectSelected}/>
                     <Carousel username={username} type={type} token={auth} comp_id={comp_id} onRoleSelect={this.handleRoleSelected} onProjectSelected={this.handleProjectSelected} onProjectCreate={this.handleProjectCreate}/>
                     <RightBar username={username} type={type} token={auth} comp_id={comp_id} onApplicationSelect={this.handleRoleApplicationSelected}/>
                 </div>
@@ -165,7 +159,7 @@ class MainContent extends Component {
         type=this.state.auth['type']
         auth= this.state.auth['private']
         return <div>
-            <LeftBar username={username} type={type} token={auth} comp_id={comp_id} onRoleSelect={this.handleRoleSelected}/>
+            <LeftBar username={username} type={type} token={auth} comp_id={comp_id} onRoleSelect={this.handleRoleSelected} onProjectSelected={this.handleProjectSelected}/>
             <RoleDetail role_id={role_id} token={auth} onBack={this.handleBackToHome}></RoleDetail>
             <RightBar username={username} type={type} token={auth} comp_id={comp_id} onApplicationSelect={this.handleRoleApplicationSelected}/>
         </div>
@@ -180,7 +174,7 @@ class MainContent extends Component {
         type=this.state.auth['type']
         auth= this.state.auth['private']
         return <div>
-        <LeftBar username={username} type={type} token={auth} comp_id={comp_id} onRoleSelect={this.handleRoleSelected}/>
+        <LeftBar username={username} type={type} token={auth} comp_id={comp_id} onRoleSelect={this.handleRoleSelected} onProjectSelected={this.handleProjectSelected}/>
         <ProjectDetail project_id={project_id} token={auth} onBack={this.handleBackToHome}></ProjectDetail>
         <RightBar username={username} type={type} token={auth} comp_id={comp_id} onApplicationSelect={this.handleRoleApplicationSelected}/>
         </div>
@@ -195,15 +189,13 @@ class MainContent extends Component {
         type=this.state.auth['type']
         auth= this.state.auth['private']
         return <div>
-            <LeftBar username={username} type={type} token={auth} comp_id={comp_id} onRoleSelect={this.handleRoleSelected}/>
+            <LeftBar username={username} type={type} token={auth} comp_id={comp_id} onRoleSelect={this.handleRoleSelected} onProjectSelected={this.handleProjectSelected}/>
             <ProjectCreate></ProjectCreate>
             <RightBar username={username} type={type} token={auth} comp_id={comp_id} onApplicationSelect={this.handleRoleApplicationSelected}/>
         </div>
     }
 
     render() {
-        console.log("rendering:")
-        console.log(this.state.content)
         let cont = this.state.content
         return (
             <div id='MainContainer' style={this.style}>

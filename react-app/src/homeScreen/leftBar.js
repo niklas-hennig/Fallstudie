@@ -3,6 +3,7 @@ import Calendar from 'react-calendar'
 import Axios from 'axios';
 
 import RoleListItem from './listRoleItem';
+import ListProjectItem from './listProjectItem';
 
 class LeftBar extends Component {
     constructor(props){
@@ -24,11 +25,16 @@ class LeftBar extends Component {
         this.makeRoleDivs = this.makeRoleDivs.bind(this);
         this.convertToDates=this.convertToDates.bind(this);
         this.handleRoleClick=this.handleRoleClick.bind(this);
+        this.handleProjectClick=this.handleProjectClick.bind(this);
     }
 
     handleRoleClick = (event) => {
         console.log("handeling"+event)
         this.props.onRoleSelect(event);
+    }
+
+    handleProjectClick = (event) => {
+        this.props.onProjectSelected(event);
     }
 
     makeRoleDivs(roleInfo){
@@ -62,24 +68,31 @@ class LeftBar extends Component {
         }
         let noProjects = ''
         if (this.state.projects.length==0) noProjects=<div><h3>Keine Projekte vorhanden</h3></div>
-        let roleInfo = null
+        let children = null
+        if(this.state.type==="f") children = this.state.projects.map((roleInfo, index) => <RoleListItem key={index} role_id={roleInfo.role_id} title={roleInfo.title} start_date={roleInfo.start_date} handleClick={this.handleRoleClick} mode="left"></RoleListItem>)
+        else children = this.state.projects.map((project, index) => <ListProjectItem key={index} project_id={project.project_id} title={project.titel} start_date={project.start_date} handleClick={this.handleProjectClick}></ListProjectItem>)
         return <div style={this.style}>
             {calTitle}
             {cal}
             <h2>Ihre Projekte</h2>
-            {this.state.projects.map((roleInfo, index) => <RoleListItem key={index} role_id={roleInfo.role_id} title={roleInfo.title} start_date={roleInfo.start_date} handleClick={this.handleRoleClick} mode="left"></RoleListItem>
-            )}
+            {children}
             {noProjects}
         </div>
     }
 
     componentDidMount(){
-        if(this.state.type=='f'){
+        if(this.state.type==='f'){
             let date = new Date()
             Axios.get('http://localhost:80/api/Role/Timeline/'+this.state.username+'/'+this.state.token+'/2020-05-16')
             .then(res => {
                 this.setState({projects: res.data})
                 this.convertToDates();
+            })
+            .catch(err => console.log(err))
+        }else{
+            Axios.get('http://localhost:80/api/Project/'+this.state.username+'/'+this.state.token)
+            .then(res => {
+                this.setState({projects: res.data})
             })
             .catch(err => console.log(err))
         }

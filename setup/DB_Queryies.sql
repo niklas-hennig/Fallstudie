@@ -1,10 +1,6 @@
 SELECT * FROM freelancer as f LEFT JOIN prefence_assignment as pa ON pa.user_id=f.user_id LEFT JOIN prefences as p on p.pref_id=pa.pref_id;
 
-
-SELECT r.* 
-      FROM role as r 
-      JOIN applications as a ON r.role_id=a.role_id 
-      JOIN freelancer as f ON f.user_id=a.freelancer_id
+SELECT * FROM applications as a JOIN freelancer ON freelancer.user_id=a.freelancer_id
 
 SELECT * FROM freelancer;
 DELETE FROM freelancer WHERE username != 'testuser';

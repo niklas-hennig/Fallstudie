@@ -16,11 +16,10 @@ router.post('/:role_id', (req, res) => {
     
 })
 
-router.get('/:project_id', (req, res) => {
+router.get('/:role_id', (req, res) => {
     //if (!req.cookies['Auth']) return res.status(401).send("Not signed in")
     //if(req.cookies['Auth']['type']=='f') return res.status(403).send("Not allowed")
-
-    db_utils.getApplication(req.params.project_id)
+    db_utils.getApplication(req.params.role_id)
     .then(data => res.send(data))
     .catch(err => {
         console.log(err)

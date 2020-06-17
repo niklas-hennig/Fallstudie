@@ -1,6 +1,4 @@
 import React, {Component} from "react";
-import mailIcon from '../media/mailIcon.png';
-import passwordIcon from '../media/passwordIcon.png';
 import axios from "axios";
 
 class RegistrationForm extends Component{
@@ -32,7 +30,7 @@ class RegistrationForm extends Component{
     submitHandler = (event) => {
         event.preventDefault();
         console.log(this.state.email.includes('@'))
-        if(this.state.password!=this.state.password_check) {
+        if(this.state.password!==this.state.password_check) {
             this.setState({passwordError: true, mailError:false})
             return
         }else if(!this.state.email.includes('@')) {

@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import axios from "axios";
 
-class CompleteProfileCompany extends React.Component {
+class CompleteProfileCompany extends Component {
     constructor(props){
         super(props)
         this.state = {

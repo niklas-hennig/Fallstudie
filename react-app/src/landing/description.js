@@ -8,7 +8,6 @@ class Description extends Component {
             width: '50%',
             marginLeft: '2.5%',
             marginTop: '2.5%',
-            backgroundColor: 'white',
             height: '50%',
             backgroundColor: "#D9D9D9",
             borderRadius: '50px',

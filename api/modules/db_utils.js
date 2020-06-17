@@ -323,14 +323,9 @@ module.exports={
 
   getApplication: function(project_id){
     return new Promise((resolve, reject) => {
-      pool.query(`SELECT ra.role_id, freelancer.* 
-                  FROM project as p
-                  JOIN role_assignment as ra
-                  ON p.project_id = ra.project_id
-                  JOIN applications as a
-                  ON ra.role_id = a.role_id
-                  JOIN freelancer ON freelancer.user_id=a.freelancer_id
-                  WHERE p.project_id=$1`, [project_id])
+      pool.query(`SELECT * FROM applications as a 
+                JOIN freelancer ON freelancer.user_id=a.freelancer_id
+                  WHERE a.role_id=$1`, [project_id])
       .then(data => resolve(data.rows))
       .catch(err => {
         
@@ -358,7 +353,6 @@ module.exports={
         FROM project as p
         JOIN role_assignment as ra ON ra.project_id=p.project_id
         JOIN role as r ON r.role_id=ra.role_id
-        JOIN applications as a ON r.role_id=a.role_id
         WHERE p.project_id=$1`, [project_id])
       .then(data=>resolve(data.rows))
       .catch(err=>{
