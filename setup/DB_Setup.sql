@@ -130,6 +130,7 @@ CREATE TABLE applications (
     freelancer_id int NOT NULL,
     role_id int NOT NULL,
     com_id int NOT NULL,
+    appText VARCHAR(300),
     CONSTRAINT freelancer_id_fkey FOREIGN KEY (freelancer_id)
       REFERENCES freelancer (user_id) MATCH SIMPLE
       ON UPDATE CASCADE ON DELETE CASCADE,
@@ -154,6 +155,7 @@ CREATE TABLE freelancer_assignment (
       REFERENCES role_assignment (assign_id) MATCH SIMPLE
       ON UPDATE CASCADE ON DELETE CASCADE
 );
+
 
 INSERT INTO freelancer (username, password, email, name, surname, gender)
     VALUES ('testuser', 'test', 'none', 'user', 'test', 'u');

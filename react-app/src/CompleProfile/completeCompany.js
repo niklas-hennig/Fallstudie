@@ -17,7 +17,7 @@ class CompleteProfileCompany extends Component {
             number_bill: null,
             postcode_bill: null,
             city_bill: null,
-            description: null,
+            description: '',
             is_set: "true",
             //User Info
             name: null,

@@ -20,14 +20,30 @@ class CompleteProfileFreelancer extends Component {
                 resume_link: null,
                 iban: null,
                 ktn_owner: null,
-                experience: null,
+                experience: '',
                 is_set: "true",
                 prefences_available: [],
-                prefence: null 
+                prefence: null,
+                datei: null
             }
+            this.uploadHandler=this.uploadHandler.bind(this);
     }
     changeHandler = (event) => {
         this.setState({[event.target.name]: event.target.value});
+    }
+
+    fileHandler = event =>{
+        console.log(event.target.files[0])
+        this.setState({datei: event.target.files[0]})
+    }
+
+    uploadHandler(){
+        const data = new FormData()
+        data.append('file', this.state.datei)
+        axios.post('http://localhost:80/api/File/'+this.state.username, data, {
+
+        }).then(res => console.log(res))
+        .catch(err => console.log(err))
     }
 
     fetchPrefences() {
@@ -111,8 +127,8 @@ class CompleteProfileFreelancer extends Component {
                             {this.state.prefences_available.map((name) => <option key={name}>{name}</option>)}
                         </select>                            
                         <span>Laden Sie ihren Lebenslauf hier hoch</span><br />
-                        <input name="datei" type="file" size="50" accept="text/*" onChange={this.changeHandler}/><br />
-                        <button>Hochladen</button><br />
+                        <input name="datei" type="file" size="50" onChange={this.fileHandler}/><br />
+                        <button onClick={this.uploadHandler}>Hochladen</button>
                     </div>
                     <button type="submit">Speichern</button>
                 </form>

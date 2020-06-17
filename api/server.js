@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const { Pool, Client} = require('pg');
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
-//const fileUpload = require('express-fileupload');
+const fileUpload = require('express-fileupload');
 
 const User = require('./api/User');
 const Authentification = require('./api/Authentification');
@@ -14,6 +14,7 @@ const Company = require('./api/Company')
 const Role = require('./api/Role')
 const Project = require('./api/Project');
 const Application = require('./api/Application')
+const FileEp = require('./api/File');
 const Test = require('./api/Test');
 
 const API_PORT = 80;
@@ -31,7 +32,7 @@ const pool = new Pool({
     port: 5432,
   })
 
-
+app.use(fileUpload());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
@@ -73,11 +74,13 @@ app.use('/api', router);
 app.use('/api/User', User);
 app.use('/api/Authentification', Authentification);
 app.use('/api/Prefence', Prefence);
-app.use('/api/Company', Company)
+app.use('/api/Company', Company);
 app.use('/api/Role', Role);
-app.use('/api/Project', Project)
-app.use('/api/Application', Application)
+app.use('/api/Project', Project);
+app.use('/api/Application', Application);
+app.use('/api/File', FileEp);
 app.use('/api/Test', Test);
 app.use('/', htmlRouter);
+
 
 app.listen(API_PORT, () => console.log(`LISTENING ON PORT ${API_PORT}`));

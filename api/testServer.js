@@ -1,6 +1,7 @@
 const express = require('express')
 const cookieParser = require('cookie-parser');
 const axios = require('axios');
+const fs = require('fs');
 
 const testUser = require('./tests/testUser')
 const testPrefence = require('./tests/testPrefence');
@@ -11,11 +12,19 @@ app.use(cookieParser());
 
 async function test (t) {
 
-    await testUser.test();
+    const path = require("path");
+    console.log('testing File; Method: post => 200')
+    file = fs.readFileSync("C:\\Users\\NHG\\Documents\\DHBW\\Webprogrammierung\\Fallstudie\\Fallstudie\\api\\testDocument.docx")
+    console.log(file)
+    await axios.post('http://localhost:80/api/File', file).then((test) => {
+        if (!test.status==200) console.error(test); else console.log('passed')
+    }).catch((err) => {console.error(err)})
 
-    await testPrefence.test();
+    //await testUser.test();
 
-    await testCompany.test();
+    //await testPrefence.test();
+
+    //await testCompany.test();
     
 
 

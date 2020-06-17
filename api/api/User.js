@@ -12,6 +12,7 @@ function parseBody(body){
     return infos;
 };
 
+
 router.get('/:username/:type', (req, res)=>{
   username = req.params.username
   type = req.params.type
