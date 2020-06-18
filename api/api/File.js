@@ -9,27 +9,12 @@ const router = express.Router();
 
 router.get('/:username/:token', (req, res) => {
     if(!auth_utils.validateToken(req.params.token)) return res.status(401).send('not signed in')
-    new Promise ((resolve, reject) => {
-        fs.readdir(req.params.username,function(err, list){
-            file = list[0] //kein ordnen nach Datum möglich sowhl mtime als auch ctime in fs.statSync(file) sind undeined, rest ist gesetzt
-            fs.readFile(req.params.username+'/'+ file, (err, data) => {
-                if(err) reject(err)
-                else resolve(data)
-            })
-        })
+    fs.readdir('./files/'+req.params.username ,function(err, list){
+        console.log(list)
+        file = list[0] //kein ordnen nach Datum möglich sowhl mtime als auch ctime in fs.statSync(file) sind undeined, rest ist gesetzt
+        res.download('./files/'+req.params.username+'/'+file)
     })
-    .then(data => {
-        FileType.fromBuffer(data)
-        .then(type => {
-            res.setHeader('Content-Type', type.mime);
-            res.send(data)
-            console.log(type.mime)
-        })
-    })
-    .catch(err => {
-        console.log(err)
-        res.status(500).send(err)
-    })
+    
 })
 
 router.post('/:username/:token', (req, res)=>{
@@ -41,7 +26,7 @@ router.post('/:username/:token', (req, res)=>{
         }
         FileType.fromBuffer(req.files.file.data)
         .then(type => {
-            fs.writeFile(req.params.username+'/resume.'+type.ext, req.files.file.data, (err) => {
+            fs.writeFile('files/'+req.params.username+'/resume_'+req.params.username+'.'+type.ext, req.files.file.data, (err) => {
                 if(err) reject(err)
                 else resolve()
             })
