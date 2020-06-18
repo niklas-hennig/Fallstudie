@@ -18,6 +18,7 @@ class CarouselComp extends Component {
             all_role_ids: [],
             all_projects: [],
 
+            updated: null,
             height: 0
         }
         this.style ={
@@ -64,6 +65,8 @@ class CarouselComp extends Component {
             username: this.props.username,
             type: this.props.type,
             token: this.props.token})
+        if(this.state.updated!=nextProps.updated) this.getIds()
+        
     }
 
     handleProjektCreate = (event) => {

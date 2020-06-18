@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from "axios";
 import ProjectRoleDetail from './RoleListItem';
 import ApplicationListItem from './ApplicationListItem';
+import AcceptedListItem from './AcceptedListItem';
 
 class ProjectDetail extends Component {
     constructor(props){
@@ -11,6 +12,7 @@ class ProjectDetail extends Component {
             token: this.props.token,
             info: null,
             applications: [],
+            accepted: [],
             fetched: null
         }
         this.style ={
@@ -21,6 +23,8 @@ class ProjectDetail extends Component {
         }
         this.handleBack=this.handleBack.bind(this);
         this.handleExpand=this.handleExpand.bind(this);
+        this.handleUpdate=this.handleUpdate.bind(this);
+        this.fetchAccepted=this.fetchAccepted.bind(this);
     }
 
     fetchInfo(){
@@ -47,29 +51,64 @@ class ProjectDetail extends Component {
         }
     }
 
+    fetchAccepted(id){
+        axios.get('http://localhost:80/api/Role/Accepted/All/'+id+'/'+this.state.token)
+        .then(res => {
+            console.log(res.data.rows)
+            this.setState({accepted: res.data.rows})})
+        .catch(err => console.log(err))
+    }
+
+    handleUpdate = (id) =>{
+        console.log(id)
+        axios.get('http://localhost:80/api/Application/'+id)
+        .then(res => {
+            this.setState({applications: res.data})
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+
     handleBack = (event) =>{
         this.props.onBack()
     }
 
-    handleExpand = (event) => {
-        console.log("handeling expand" + event)
+    handleExpand = (event, id) => {
+        console.log("handeling expand")
+        console.log(event)
+        console.log(id)
+        this.fetchAccepted(id)
         this.setState({applications: event})
     }
 
     render(){
         let project_info = null
         let appHead = ''
+        let acceptedHead = ''
         if(this.state.applications.length>0)
         appHead = <thead>
-        <tr>
-            <th>Nutzername</th>
-            <th>Erfahung</th>
-            <th>Email</th>
-            <th>Lebenslauf</th>
-            <th>Annehmen</th>
-            <th>Bewerbung löschen</th>
-        </tr>
-    </thead>
+            <tr>
+                <th>Nutzername</th>
+                <th>Erfahung</th>
+                <th>Email</th>
+                <th>Lebenslauf</th>
+                <th>Annehmen</th>
+                <th>Bewerbung löschen</th>
+            </tr>
+        </thead>
+        if(this.state.accepted.length>0){
+        acceptedHead = <thead>
+            <tr>
+                <th>Nutzername</th>
+                <th>Erfahung</th>
+                <th>Email</th>
+                <th>Lebenslauf</th>
+            </tr>
+        </thead>
+        }
+        console.log("rendering detail with state:")
+        console.log(this.state)
         if(this.state.info) {
             if (this.state.info.length>0){
                 project_info = this.state.info[0]
@@ -89,14 +128,21 @@ class ProjectDetail extends Component {
                             <th>Anzahl</th>
                             <th>Beschreibung</th>
                             <th>Neue Bewerbungen</th>
+                            <th>Bisher angenommene Bewerbungen</th>
                         </tr>
                     </thead>
-                    {this.state.info.map((role, index) => <ProjectRoleDetail key={index} info={role} handleExpand={this.handleExpand}></ProjectRoleDetail>)}
+                    {this.state.info.map((role, index) => <ProjectRoleDetail key={index} info={role} token={this.state.token} handleExpand={this.handleExpand}></ProjectRoleDetail>)}
                 </table>
                 <table>
                     {appHead}
+                    {this.state.applications.map((app, index) => <ApplicationListItem key={index} info={app} token={this.state.token} onReject={this.handleUpdate}></ApplicationListItem>)}
                 </table>
-                    {this.state.applications.map((app, index) => <ApplicationListItem key={index} info={app}></ApplicationListItem>)}
+                <h3>Ihre angenommenen Bewerbungen</h3>
+                <table>
+                    {acceptedHead}
+                    {this.state.accepted.map((freelancer_info, index) => <AcceptedListItem key={index} info={freelancer_info} ></AcceptedListItem>)}
+                </table>
+                    
                 </div>
             }
         }
@@ -115,7 +161,7 @@ class ProjectDetail extends Component {
     componentWillReceiveProps(nextProps){
         if(this.state.project_id!==nextProps.project_id)
             this.fetchSpecific(nextProps.project_id);
-            this.setState({project_id: nextProps.project_id})
+            this.setState({project_id: nextProps.project_id, applications: [], accepted:[]})
 
             
     }

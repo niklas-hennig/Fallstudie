@@ -18,10 +18,11 @@ class RoleListItem extends Component {
     clickHandler = (event) => {
         if(this.state.mode==="left")
             this.props.handleClick(this.state.id);
-        else
+        else if(this.props.type==="f")
             axios.delete('http://localhost:80/api/Application/'+this.state.id+'/'+this.state.username+'/'+this.state.token)
             .then(res=>this.props.onChange())
             .catch(err => console.log(err))
+
     }
 
 

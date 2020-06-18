@@ -299,10 +299,22 @@ module.exports={
     })
   },
 
+  getRoleFull: function(role_id){
+    return new Promise((resolve, reject) => {
+      pool.query(`SELECT * FROM role as r
+          JOIN role_assignment as ra on ra.role_id=r.role_id
+          JOIN project as p ON p.project_id=ra.project_id
+          WHERE r.role_id=$1`, [role_id])
+      .then(data => resolve(data.rows[0]))
+      .catch(err => {console.log(err)
+        reject(err)})
+    })
+  },
+
   assignApplication: function(username, role_id){
     return new Promise((resolve,reject)=>{
-      pool.query(`SELECT comp_id FROM company as c
-      JOIN project as p ON c.company_id = p.comp_id
+      pool.query(`SELECT c.comp_id FROM company as c
+      JOIN project as p ON c.comp_id = p.comp_id
       JOIN role_assignment as ra ON p.project_id = ra.project_id
       JOIN role as r ON r.role_id=ra.role_id
       WHERE r.role_id = $1`, [role_id])
@@ -311,8 +323,10 @@ module.exports={
         pool.query('SELECT user_id FROM freelancer WHERE username=$1', [username])
         .then(data => {
           user_id = data.rows[0].user_id
-          pool.query('INSERT INTO applications (freelancer_id, role_id, comp_id) VALUES($1, $2, $3)', [user_id, role_id, comp_id])
-          .then(data => resolve())
+          pool.query('INSERT INTO applications (freelancer_id, role_id, com_id) VALUES($1, $2, $3)', [user_id, role_id, comp_id])
+          .then(data => {
+            console.log(data)
+            resolve()})
           .catch(err => reject(err))
         })
         .catch(err => reject(err))
@@ -401,6 +415,15 @@ module.exports={
     })
   },
 
+  getApplicationsCompany: function(comp_id){
+    return new Promise((resolve, reject) => {
+      pool.query('SELECT f.*, a.role_id FROM freelancer as f JOIN applications as a ON f.user_id=a.freelancer_id WHERE a.com_id=$1',
+      [comp_id])
+      .then(data => resolve(data.rows))
+      .catch(err => reject(err))
+    })
+  },
+
   deleteApplication: function(role_id, username){
     return new Promise((resolve, reject) =>{
       pool.query('SELECT user_id FROM freelancer WHERE username=$1', [username])
@@ -408,6 +431,29 @@ module.exports={
         pool.query('DELETE FROM applications WHERE freelancer_id=$1 AND role_id=$2', [data.rows[0].user_id, role_id])
         .then(data => resolve(data))
         .catch(err => reject(err))
+      })
+      .catch(err => reject(err))
+    })
+  },
+
+  acceptApplication: function(role_id, user_id, username){
+    return new Promise((resolve, reject) => {
+      pool.query('INSERT INTO freelancer_assignment (freelancer_id, role_id) VALUES($1, $2)', [user_id, role_id])
+      .then(data =>{
+        this.deleteApplication(role_id, username)
+        .then(data => resolve())
+        .catch(err => reject(err))
+      })
+      .catch(err => reject(err))
+    })
+  },
+
+  getAccepted: function(role_id){
+    return new Promise((resolve, reject) =>{
+      pool.query('SELECT f.* FROM freelancer as f JOIN freelancer_assignment as fa ON f.user_id=fa.freelancer_id WHERE fa.role_id=$1', 
+      [role_id])
+      .then(data => {
+        resolve(data)
       })
       .catch(err => reject(err))
     })

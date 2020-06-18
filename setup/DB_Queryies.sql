@@ -14,25 +14,38 @@ SELECT * FROM project;
 
 SELECT * FROM prefence_assignment
 
-SELECT DISTINCT ra.role_id, p.start_date, p.end_date
-        FROM project as p
-        JOIN role_assignment as ra ON p.project_id=ra.project_id
-        JOIN freelancer_assignment as fa ON fa.role_id=ra.role_id 
-        JOIN freelancer as f ON fa.freelancer_id=f.user_id
-        WHERE p.start_date >= '2020-06-16'
-        AND f.username = 'testuser';
+SELECT role.role_id FROM role 
+      JOIN prefences as p ON role.area=p.pref_id 
+      JOIN prefence_assignment as pa ON p.pref_id=pa.pref_id 
+      JOIN freelancer as f ON f.user_id=pa.user_id 
+      WHERE f.username='testuser' AND role.role_id NOT IN (
+        SELECT a.role_id 
+        FROM role
+        JOIN applications as a ON role.role_id=a.role_id
+        JOIN freelancer as f ON a.freelancer_id=f.user_id
+        WHERE f.username='testuser');
 
-SELECT * 
+SELECT r.*, f.*
         FROM project as p
         JOIN role_assignment as ra ON ra.project_id=p.project_id
         JOIN role as r ON r.role_id=ra.role_id
-        JOIN applications as a ON r.role_id=a.role_id
+        JOIN freelancer_assignment as a ON r.role_id=a.role_id
         JOIN freelancer as f ON f.user_id=a.freelancer_id;
+
+SELECT * FROM applications
+SELECT * from project;
+DELETE FROM role WHERE role_id>3
+
+
+
+SELECT * FROM role as r
+          JOIN role_assignment as ra on ra.role_id=r.role_id
+          JOIN project as p ON p.project_id=ra.project_id
 
 SELECT * FROM role_assignment INNER JOIN project ON role_assignment.project_id=project.project_id;
                   
 
-UPDATE freelancer SET is_set=false WHERE username!='testuser';
+UPDATE freelancer SET resume_link='testuser' WHERE username='testuser';
 
 SELECT r.* FROM role as r JOIN applications as a ON r.role_id=a.role_id JOIN freelancer as f ON f.user_id=a.freelancer_id;
 

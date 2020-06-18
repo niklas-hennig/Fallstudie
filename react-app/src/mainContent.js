@@ -31,6 +31,8 @@ class MainContent extends Component {
             login: false,             //Change to false, in develeopment to circumvent login (true)
             auth: null,
             content: null,
+            leftContent: null,
+            rightContent:null,
             settingsIsFreelancer: true,
             company_name: null
         }
@@ -42,6 +44,7 @@ class MainContent extends Component {
                     display: "flex", 
                     flexDirection:"row"                    
                 }
+                this.handleApplied=this.handleApplied.bind(this);
         this.handleRegister = this.handleRegister.bind(this);
         this.handleBack = this.handleBack.bind(this);
         this.handleCompanyComplete = this.handleCompanyComplete.bind(this);
@@ -57,6 +60,11 @@ class MainContent extends Component {
         this.setState({content: this.getLogin()});
     }
 
+    handleApplied = (event) => {
+        console.log("application handle")
+        this.setState({content:this.getHome()})
+    }
+
 
     handleRegister = (event) => {
         this.setState({content: this.getRegistration()});
@@ -70,7 +78,7 @@ class MainContent extends Component {
         axios.get('http://localhost:80/api/User/'+this.state.auth['username'] + '/'+ this.state.auth['type'], this.state.auth)
         .then(data => {
             if(data.data['is_set']){
-                this.setState({content: this.getHome()})
+                this.setState({content: this.getHome(), comp_id:data.comp_id})
             }else{
                 this.setState({content: this.getSettings(), settingsIsFreelancer:true})
             }
@@ -134,18 +142,23 @@ class MainContent extends Component {
                 </div>
     }
 
+    getBars(){
+        let username = this.state.auth['username']
+        let type=this.state.auth['type']
+        let auth = this.state.auth['private']
+        let comp_id = this.state.comp_id
+
+    }
+
     getHome(){
-        let username = null
-        let type='c'
-        let auth = null
-        let comp_id = null
-        username= this.state.auth['username']
-        type=this.state.auth['type']
-        auth= this.state.auth['private']
+        let username = this.state.auth['username']
+        let type=this.state.auth['type']
+        let auth = this.state.auth['private']
+        let comp_id = this.state.comp_id
         return <div>
-                    <LeftBar username={username} type={type} token={auth} comp_id={comp_id} onRoleSelect={this.handleRoleSelected} onProjectSelected={this.handleProjectSelected}/>
-                    <Carousel username={username} type={type} token={auth} comp_id={comp_id} onRoleSelect={this.handleRoleSelected} onProjectSelected={this.handleProjectSelected} onProjectCreate={this.handleProjectCreate}/>
-                    <RightBar username={username} type={type} token={auth} comp_id={comp_id} onApplicationSelect={this.handleRoleApplicationSelected}/>
+                    <LeftBar username={username} type={type} token={auth} comp_id={comp_id} update={new Date()} onRoleSelect={this.handleRoleSelected} onProjectSelected={this.handleProjectSelected}/>
+                    <Carousel username={username} type={type} token={auth} comp_id={comp_id} update={new Date()} onRoleSelect={this.handleRoleSelected} onProjectSelected={this.handleProjectSelected} onProjectCreate={this.handleProjectCreate}/>
+                    <RightBar username={username} type={type} token={auth} comp_id={comp_id} update={new Date()} onApplicationSelect={this.handleRoleApplicationSelected}/>
                 </div>
     }
 
@@ -154,14 +167,14 @@ class MainContent extends Component {
         let username = null
         let type='c'
         let auth = null
-        let comp_id = null
+        let comp_id = this.state.comp_id
         username= this.state.auth['username']
         type=this.state.auth['type']
         auth= this.state.auth['private']
         return <div>
-            <LeftBar username={username} type={type} token={auth} comp_id={comp_id} onRoleSelect={this.handleRoleSelected} onProjectSelected={this.handleProjectSelected}/>
-            <RoleDetail role_id={role_id} token={auth} onBack={this.handleBackToHome}></RoleDetail>
-            <RightBar username={username} type={type} token={auth} comp_id={comp_id} onApplicationSelect={this.handleRoleApplicationSelected}/>
+            <LeftBar username={username} type={type} token={auth} comp_id={comp_id} update={new Date()} onRoleSelect={this.handleRoleSelected} onProjectSelected={this.handleProjectSelected}/>
+            <RoleDetail role_id={role_id} username={username} token={auth} onBack={this.handleBackToHome} onApply={this.handleApplied}></RoleDetail>
+            <RightBar username={username} type={type} token={auth} comp_id={comp_id} update={new Date()} onApplicationSelect={this.handleRoleApplicationSelected}/>
         </div>
     }
 
@@ -169,14 +182,14 @@ class MainContent extends Component {
         let username = null
         let type='c'
         let auth = null
-        let comp_id = null
+        let comp_id = this.state.comp_id
         username= this.state.auth['username']
         type=this.state.auth['type']
         auth= this.state.auth['private']
         return <div>
-        <LeftBar username={username} type={type} token={auth} comp_id={comp_id} onRoleSelect={this.handleRoleSelected} onProjectSelected={this.handleProjectSelected}/>
+        <LeftBar username={username} type={type} token={auth} comp_id={comp_id} update={new Date()} onRoleSelect={this.handleRoleSelected} onProjectSelected={this.handleProjectSelected}/>
         <ProjectDetail project_id={project_id} token={auth} onBack={this.handleBackToHome}></ProjectDetail>
-        <RightBar username={username} type={type} token={auth} comp_id={comp_id} onApplicationSelect={this.handleRoleApplicationSelected}/>
+        <RightBar username={username} type={type} token={auth} comp_id={comp_id} update={new Date()} onApplicationSelect={this.handleRoleApplicationSelected}/>
         </div>
     }
 
@@ -184,7 +197,7 @@ class MainContent extends Component {
         let username = null
         let type='c'
         let auth = null
-        let comp_id = null
+        let comp_id = this.state.comp_id
         username= this.state.auth['username']
         type=this.state.auth['type']
         auth= this.state.auth['private']
@@ -196,10 +209,14 @@ class MainContent extends Component {
     }
 
     render() {
+        let lftcon = this.state.leftContent
         let cont = this.state.content
+        let rghcon = this.state.rightContent
         return (
             <div id='MainContainer' style={this.style}>
+                {lftcon}
                 {cont}
+                {rghcon}
             </div>
         )
     }

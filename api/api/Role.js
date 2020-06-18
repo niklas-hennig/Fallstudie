@@ -26,6 +26,17 @@ router.get('/:id/:token', (req, res) => {
     })
 })
 
+router.get('/Freelancer/All/:id/:token', (req, res) => {
+    console.log(req.params.id)
+    if(!auth_utils.validateToken(req.params.token)) return res.status(401).send('not signed in')
+    db_utils.getRoleFull(req.params.id)
+    .then(data => res.send(data))
+    .catch(err => {
+        console.log(err)
+        res.status(500).send(err)
+    })
+})
+
 router.get('/Timeline/:username/:token/:start_day', (req, res) => {
     if(!auth_utils.validateToken(req.params.token)) return res.status(401).send('not signed in')
     db_utils.getRoleTimeline(req.params.username, req.params.start_day)
@@ -37,6 +48,16 @@ router.get('/Timeline/:username/:token/:start_day', (req, res) => {
         console.log(err)
         res.status(500).send(err)
     })
+})
+
+router.get('/Accepted/All/:role_id/:token', (req, res) =>{
+    if(!auth_utils.validateToken(req.params.token)) return res.status(401).send('not signed in')
+    db_utils.getAccepted(req.params.role_id)
+    .then(data => {
+        console.log(data)
+        res.send(data)
+    })
+    .catch(err => res.status(500).send(err))
 })
 
 module.exports = router;

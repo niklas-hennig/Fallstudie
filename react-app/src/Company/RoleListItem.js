@@ -8,9 +8,19 @@ class ProjectRoleDetail extends Component {
         this.state={
             info: this.props.info,
             applications: [],
-            showApplications: false
+            showApplications: false,
+            accepted: [],
+            token: this.props.token
         }
         this.fetchApplications=this.fetchApplications.bind(this);
+    }
+
+    fetchAccepted(id){
+        axios.get('http://localhost:80/api/Role/Accepted/All/'+id+'/'+this.state.token)
+        .then(res => {
+            console.log(res.data.rows)
+            this.setState({accepted: res.data.rows})})
+        .catch(err => console.log(err))
     }
 
     fetchApplications(){
@@ -34,7 +44,7 @@ class ProjectRoleDetail extends Component {
     }
 
     handleClick = (event) =>{
-        this.props.handleExpand(this.state.applications)
+        this.props.handleExpand(this.state.applications, this.state.info.role_id)
     }
 
     render(){
@@ -45,6 +55,7 @@ class ProjectRoleDetail extends Component {
                         <td>{this.state.info.number_of_freelancers}</td>
                         <td>{this.state.info.description}</td>
                         <td>{this.state.applications.length}</td>
+                        <td>{this.state.accepted.length}</td>
                 </tr>
             </tbody>
         )
@@ -52,11 +63,13 @@ class ProjectRoleDetail extends Component {
 
     componentDidMount(){
         this.fetchApplications();
+        this.fetchAccepted(this.state.info.role_id)
     }
 
     componentWillReceiveProps(nextProps){
         this.setState({info: this.props.info})
         this.fetchApplicationsSpecific(nextProps.info.role_id)
+        this.fetchAccepted(nextProps.info.role_id)
     }
 }
 

@@ -14,7 +14,8 @@ class LeftBar extends Component {
             token: this.props.token,
             comp_id: this.props.comp_id,
             projects: [],
-            dates: []
+            dates: [],
+            updated: null
         }
         this.style = {
             position: 'absolute',
@@ -22,26 +23,36 @@ class LeftBar extends Component {
             height: '100%',
             backgroundColor: '#F4B41A',
         }
-        this.makeRoleDivs = this.makeRoleDivs.bind(this);
+        this.fetchInfo=this.fetchInfo.bind(this);
         this.convertToDates=this.convertToDates.bind(this);
         this.handleRoleClick=this.handleRoleClick.bind(this);
         this.handleProjectClick=this.handleProjectClick.bind(this);
     }
 
+    fetchInfo(){
+        if(this.state.type==='f'){
+            let date = new Date()
+            Axios.get('http://localhost:80/api/Role/Timeline/'+this.state.username+'/'+this.state.token+'/2020-05-16')
+            .then(res => {
+                this.setState({projects: res.data})
+                this.convertToDates();
+            })
+            .catch(err => console.log(err))
+        }else{
+            Axios.get('http://localhost:80/api/Project/'+this.state.username+'/'+this.state.token)
+            .then(res => {
+                this.setState({projects: res.data})
+            })
+            .catch(err => console.log(err))
+        }
+    }
+
     handleRoleClick = (event) => {
-        console.log("handeling"+event)
         this.props.onRoleSelect(event);
     }
 
     handleProjectClick = (event) => {
         this.props.onProjectSelected(event);
-    }
-
-    makeRoleDivs(roleInfo){
-        return <div onClick={this.handleRoleClick(roleInfo.role_id)}>
-            <h3>{roleInfo.title}</h3>
-            <p>{roleInfo.start_date}</p>
-        </div>
     }
 
     convertToDates(){
@@ -81,20 +92,13 @@ class LeftBar extends Component {
     }
 
     componentDidMount(){
-        if(this.state.type==='f'){
-            let date = new Date()
-            Axios.get('http://localhost:80/api/Role/Timeline/'+this.state.username+'/'+this.state.token+'/2020-05-16')
-            .then(res => {
-                this.setState({projects: res.data})
-                this.convertToDates();
-            })
-            .catch(err => console.log(err))
-        }else{
-            Axios.get('http://localhost:80/api/Project/'+this.state.username+'/'+this.state.token)
-            .then(res => {
-                this.setState({projects: res.data})
-            })
-            .catch(err => console.log(err))
+        this.fetchInfo();
+    }
+
+    componentWillReceiveProps(nextProps){
+        if(this.state.updated!=nextProps.updated){
+            this.fetchInfo()
+            this.setState({updated: nextProps.updated})
         }
     }
 }
