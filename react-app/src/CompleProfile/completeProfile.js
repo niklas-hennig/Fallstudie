@@ -15,6 +15,7 @@ class CompleteProfile extends Component{
                 postcode: null,
                 city: null,
                 country: null,
+                token: this.props.token,
                 //Freelancer
                 username: this.props.userinfo['username'],
                 type: this.props.userinfo['type'],
@@ -103,7 +104,7 @@ class CompleteProfile extends Component{
             return (
                 <div>
                     <p>Profilvervollständigung für Freelancer</p>
-                    <CompleteProfileFreelancer username={this.state.username} email={this.state.email} name={this.state.name} surname={this.state.surname} gender={this.state.gender} onSubmit={this.handleSubmit}/>
+                    <CompleteProfileFreelancer token={this.state.token} username={this.state.username} email={this.state.email} name={this.state.name} surname={this.state.surname} gender={this.state.gender} onSubmit={this.handleSubmit}/>
                 </div>
                 );
         }else{

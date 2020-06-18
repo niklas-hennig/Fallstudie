@@ -27,8 +27,6 @@ class RoleListItem extends Component {
 
 
     render(){
-        console.log("listItem state:")
-        console.log(this.state)
         let delBtn = ''
         if(this.state.mode!=="left")
         delBtn = <button onClick={this.clickHandler}>Löschen</button>

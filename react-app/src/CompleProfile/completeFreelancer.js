@@ -24,7 +24,8 @@ class CompleteProfileFreelancer extends Component {
                 is_set: "true",
                 prefences_available: [],
                 prefence: null,
-                datei: null
+                datei: null,
+                token: this.props.token
             }
             this.uploadHandler=this.uploadHandler.bind(this);
     }
@@ -40,7 +41,7 @@ class CompleteProfileFreelancer extends Component {
     uploadHandler(){
         const data = new FormData()
         data.append('file', this.state.datei)
-        axios.post('http://localhost:80/api/File/'+this.state.username, data, {
+        axios.post('http://localhost:80/api/File/'+this.state.username+'/'+this.state.token, data, {
 
         }).then(res => console.log(res))
         .catch(err => console.log(err))

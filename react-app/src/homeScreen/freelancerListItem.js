@@ -17,7 +17,7 @@ class FreelancerListItem extends Component {
     }
 
     clickHandler = (event) => {
-        axios.delete('http://localhost:80/api/Application/'+this.state.id+'/'+this.state.username+'/'+this.state.token)
+        axios.delete('http://localhost:80/api/Application/'+this.state.id+'/'+this.state.freelancer_user+'/'+this.state.token)
         .then(res=>this.props.onChange())
         .catch(err => console.log(err))
             

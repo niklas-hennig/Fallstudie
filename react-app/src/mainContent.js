@@ -34,7 +34,9 @@ class MainContent extends Component {
             leftContent: null,
             rightContent:null,
             settingsIsFreelancer: true,
-            company_name: null
+            company_name: null,
+            update: null,
+            mainContent: null
         }
         this.style={position: 'absolute', 
                     top: '8%',
@@ -44,7 +46,8 @@ class MainContent extends Component {
                     display: "flex", 
                     flexDirection:"row"                    
                 }
-                this.handleApplied=this.handleApplied.bind(this);
+        this.getBars=this.getBars.bind(this);
+        this.handleApplied=this.handleApplied.bind(this);
         this.handleRegister = this.handleRegister.bind(this);
         this.handleBack = this.handleBack.bind(this);
         this.handleCompanyComplete = this.handleCompanyComplete.bind(this);
@@ -54,6 +57,7 @@ class MainContent extends Component {
         this.handleRoleApplicationSelected=this.handleRoleApplicationSelected.bind(this);
         this.handleBackToHome=this.handleBackToHome.bind(this);
         this.handleProjectCreate = this.handleProjectCreate.bind(this);
+        this.handleUpdate=this.handleUpdate.bind(this);
     }
 
     componentDidMount(){
@@ -63,6 +67,7 @@ class MainContent extends Component {
     handleApplied = (event) => {
         console.log("application handle")
         this.setState({content:this.getHome()})
+        this.getBars();
     }
 
 
@@ -78,7 +83,9 @@ class MainContent extends Component {
         axios.get('http://localhost:80/api/User/'+this.state.auth['username'] + '/'+ this.state.auth['type'], this.state.auth)
         .then(data => {
             if(data.data['is_set']){
-                this.setState({content: this.getHome(), comp_id:data.comp_id})
+                let comp_id_new = data.data.comp_id
+                this.setState({content: this.getHome(), comp_id: comp_id_new})
+                this.getBars()
             }else{
                 this.setState({content: this.getSettings(), settingsIsFreelancer:true})
             }
@@ -99,12 +106,19 @@ class MainContent extends Component {
         console.log("changing to " + id)
         this.setState({content: null})
         let cont = this.getRoleDetail(id)
-        console.log(cont)
+        this.getBars();
         this.setState({content: cont})
     }
 
     handleProjectSelected(id){
+        this.getBars();
         this.setState({content: this.getProjectDetail(id)})
+    }
+
+    handleUpdate(){
+        console.log("updating")
+        this.setState({update: new Date()})
+        if(this.state.mainContent==="h") this.setState({content: this.getHome()})
     }
 
     //not used
@@ -113,17 +127,24 @@ class MainContent extends Component {
     }
 
     handleBackToHome(){
+        this.getBars();
         this.setState({content:this.getHome()})
     }
 
     handleProjectCreate(){
+        this.getBars();
         this.setState({content: this.getProjectCreation()})
     }
 
     getSettings(){
-        if(this.state.auth) this.setState({settingsIsFreelancer:true})
+        let token = null
+        if(this.state.auth) {
+            token=this.state.auth['private']
+            this.setState({settingsIsFreelancer:true})
+        }
         else this.setState({settingsIsFreelancer:false})
-        return <CompleteProfile isFreelancerSetting={this.state.settingsIsFreelancer} comp_name={this.state.company_name} userinfo={this.state.auth} onSubmit={this.handleSettingsComplete}></CompleteProfile>
+        
+        return <CompleteProfile isFreelancerSetting={this.state.settingsIsFreelancer} token={token} comp_name={this.state.company_name} userinfo={this.state.auth} onSubmit={this.handleSettingsComplete}></CompleteProfile>
     }
 
     getLogin(){
@@ -147,7 +168,9 @@ class MainContent extends Component {
         let type=this.state.auth['type']
         let auth = this.state.auth['private']
         let comp_id = this.state.comp_id
-
+        this.setState({update: new Date()})
+        this.setState({leftContent: <LeftBar username={username} type={type} token={auth} comp_id={comp_id} update={this.state.update} onRoleSelect={this.handleRoleSelected} onProjectSelected={this.handleProjectSelected}/> })
+        this.setState({rightContent: <RightBar username={username} type={type} token={auth} comp_id={comp_id} update={this.state.update} onApplicationSelect={this.handleRoleApplicationSelected} onChange={this.handleUpdate}/>})
     }
 
     getHome(){
@@ -155,10 +178,9 @@ class MainContent extends Component {
         let type=this.state.auth['type']
         let auth = this.state.auth['private']
         let comp_id = this.state.comp_id
+        this.setState({ mainContent: "h"})
         return <div>
-                    <LeftBar username={username} type={type} token={auth} comp_id={comp_id} update={new Date()} onRoleSelect={this.handleRoleSelected} onProjectSelected={this.handleProjectSelected}/>
-                    <Carousel username={username} type={type} token={auth} comp_id={comp_id} update={new Date()} onRoleSelect={this.handleRoleSelected} onProjectSelected={this.handleProjectSelected} onProjectCreate={this.handleProjectCreate}/>
-                    <RightBar username={username} type={type} token={auth} comp_id={comp_id} update={new Date()} onApplicationSelect={this.handleRoleApplicationSelected}/>
+                    <Carousel username={username} type={type} token={auth} comp_id={comp_id} update={this.state.update} onRoleSelect={this.handleRoleSelected} onProjectSelected={this.handleProjectSelected} onProjectCreate={this.handleProjectCreate}/>
                 </div>
     }
 
@@ -171,10 +193,9 @@ class MainContent extends Component {
         username= this.state.auth['username']
         type=this.state.auth['type']
         auth= this.state.auth['private']
+        this.setState({ mainContent: "rd"})
         return <div>
-            <LeftBar username={username} type={type} token={auth} comp_id={comp_id} update={new Date()} onRoleSelect={this.handleRoleSelected} onProjectSelected={this.handleProjectSelected}/>
             <RoleDetail role_id={role_id} username={username} token={auth} onBack={this.handleBackToHome} onApply={this.handleApplied}></RoleDetail>
-            <RightBar username={username} type={type} token={auth} comp_id={comp_id} update={new Date()} onApplicationSelect={this.handleRoleApplicationSelected}/>
         </div>
     }
 
@@ -186,10 +207,9 @@ class MainContent extends Component {
         username= this.state.auth['username']
         type=this.state.auth['type']
         auth= this.state.auth['private']
+        this.setState({ mainContent: "pd"})
         return <div>
-        <LeftBar username={username} type={type} token={auth} comp_id={comp_id} update={new Date()} onRoleSelect={this.handleRoleSelected} onProjectSelected={this.handleProjectSelected}/>
-        <ProjectDetail project_id={project_id} token={auth} onBack={this.handleBackToHome}></ProjectDetail>
-        <RightBar username={username} type={type} token={auth} comp_id={comp_id} update={new Date()} onApplicationSelect={this.handleRoleApplicationSelected}/>
+            <ProjectDetail project_id={project_id} token={auth} onBack={this.handleBackToHome}></ProjectDetail>
         </div>
     }
 
@@ -201,10 +221,9 @@ class MainContent extends Component {
         username= this.state.auth['username']
         type=this.state.auth['type']
         auth= this.state.auth['private']
+        this.setState({ mainContent: "pc"})
         return <div>
-            <LeftBar username={username} type={type} token={auth} comp_id={comp_id} onRoleSelect={this.handleRoleSelected} onProjectSelected={this.handleProjectSelected}/>
             <ProjectCreate></ProjectCreate>
-            <RightBar username={username} type={type} token={auth} comp_id={comp_id} onApplicationSelect={this.handleRoleApplicationSelected}/>
         </div>
     }
 

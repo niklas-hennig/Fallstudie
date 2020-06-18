@@ -23,7 +23,7 @@ class RoleDetail extends Component {
 
     fetchInfo(role_id){
         axios.get('http://localhost:80/api/Role/Freelancer/All/'+role_id+'/'+this.state.token)
-        .then(res => {console.log(res)
+        .then(res => {
             this.setState({info: res.data})
         })
         .catch(err => console.error(err))
@@ -34,7 +34,6 @@ class RoleDetail extends Component {
     }
 
     handleApply = (event)=>{
-        console.log("beworben")
         axios.post('http://localhost:80/api/Application/'+this.state.role_id+'/'+this.state.username+'/'+this.state.token)
         .then(res => this.props.onApply())
         .catch(err => console.error(err))
@@ -42,8 +41,6 @@ class RoleDetail extends Component {
     }
 
     render(){
-        console.log("rendering detail: ")
-        console.log(this.state)
         let project_title = ''
         let start_date = ''
         let end_date = ''

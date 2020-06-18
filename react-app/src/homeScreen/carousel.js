@@ -65,7 +65,7 @@ class CarouselComp extends Component {
             username: this.props.username,
             type: this.props.type,
             token: this.props.token})
-        if(this.state.updated!=nextProps.updated) this.getIds()
+            this.getIds()
         
     }
 

@@ -7,7 +7,8 @@ const FileType = require('file-type');
 
 const router = express.Router();
 
-router.get('/:username', (req, res) => {
+router.get('/:username/:token', (req, res) => {
+    if(!auth_utils.validateToken(req.params.token)) return res.status(401).send('not signed in')
     new Promise ((resolve, reject) => {
         fs.readdir(req.params.username,function(err, list){
             file = list[0] //kein ordnen nach Datum möglich sowhl mtime als auch ctime in fs.statSync(file) sind undeined, rest ist gesetzt
@@ -31,10 +32,12 @@ router.get('/:username', (req, res) => {
     })
 })
 
-router.post('/:username', (req, res)=>{
+router.post('/:username/:token', (req, res)=>{
+    if(!auth_utils.validateToken(req.params.token)) return res.status(401).send('not signed in')
     new Promise((resolve, reject) => {
         if (!fs.existsSync(req.params.username)){
-            fs.mkdir(req.params.username, (err) => reject(err))
+            fs.mkdir(req.params.username, (err) => {console.log("1")
+                reject(err)})
         }
         FileType.fromBuffer(req.files.file.data)
         .then(type => {

@@ -32,7 +32,7 @@ class ApplicationListItem extends Component {
         console.log("Aplication rendering state:")
         console.log(this.state)
         let resumeBtn = 'Kein Lebenslauf gefunden'
-        if (this.state.info.resume_link) resumeBtn = <a target="_blank" href={'http://localhost:80/api/File/'+this.state.info.username}>Lebenslauf</a>
+        if (this.state.info.resume_link) resumeBtn = <a target="_blank" href={'http://localhost:80/api/File/'+this.state.info.username+'/'+this.state.token}>Lebenslauf</a>
         return <tbody>
             <tr>
                 <td>{this.state.info.username}</td>
