@@ -2,26 +2,26 @@ import React, { Component } from 'react';
 import axios from "axios";
 
 //Landing page imports
-import Description from './landing/description';
-import Login from './landing/login';
-import Registration from './landing/registration';
-import login_background from './media/login_background.jpg';
+import Description from '../landing/description';
+import Login from '../landing/login';
+import Registration from '../landing/registration';
+import login_background from '../media/login_background.jpg';  //'./media/login_background.jpg';
 
 //Complete Profile
-import CompleteProfile from './CompleProfile/completeProfile';
+import CompleteProfile from '../CompleProfile/completeProfile';
 
 //Home-Screen imports
-import LeftBar from './homeScreen/leftBar';
-import RightBar from './homeScreen/rightBar';
-import Carousel from './homeScreen/carousel';
+import LeftBar from '../homeScreen/leftBar';
+import RightBar from '../homeScreen/rightBar';
+import Carousel from '../homeScreen/carousel';
 
 
 //Freelancer-Only pages
-import RoleDetail from './Freelancer/role_detail';
+import RoleDetail from '../Freelancer/role_detail';
 
 //Company-Only pages
-import ProjectDetail from './Company/project_detail';
-import ProjectCreate from './Company/project_create';
+import ProjectDetail from '../Company/project_detail';
+import ProjectCreate from '../Company/project_create';
 
 class MainContent extends Component {
     constructor(){
@@ -80,6 +80,7 @@ class MainContent extends Component {
 
     handleLogin = (event) => {
         this.setState({auth: event})
+        this.props.onLogin(event)
         axios.get('http://localhost:80/api/User/'+this.state.auth['username'] + '/'+ this.state.auth['type'], this.state.auth)
         .then(data => {
             if(data.data['is_set']){
@@ -136,15 +137,16 @@ class MainContent extends Component {
         this.setState({content: this.getProjectCreation()})
     }
 
-    getSettings(){
+    getSettings(isChange){
         let token = null
-        if(this.state.auth) {
+        if(this.state.auth&&isChange!==true) {
             token=this.state.auth['private']
             this.setState({settingsIsFreelancer:true})
         }
-        else this.setState({settingsIsFreelancer:false})
-        
-        return <CompleteProfile isFreelancerSetting={this.state.settingsIsFreelancer} token={token} comp_name={this.state.company_name} userinfo={this.state.auth} onSubmit={this.handleSettingsComplete}></CompleteProfile>
+        else if(isChange!=true) this.setState({settingsIsFreelancer:false})
+        else token=this.state.auth['private']
+        this.setState({ mainContent: "s"})
+        return <CompleteProfile isFreelancerSetting={this.state.settingsIsFreelancer} token={token} comp_name={this.state.company_name} userinfo={this.state.auth} isChange={isChange} onSubmit={this.handleSettingsComplete}></CompleteProfile>
     }
 
     getLogin(){
@@ -234,6 +236,12 @@ class MainContent extends Component {
                 {rghcon}
             </div>
         )
+    }
+
+    componentWillReceiveProps(nextProps){
+        console.log(nextProps)
+        console.log(this.state.mainContent)
+        if(nextProps.goToSettings===true&&this.state.mainContent!=="s") this.setState({content: this.getSettings(true), leftContent: '', rightContent: ''})
     }
 }
 export default MainContent;
