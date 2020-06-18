@@ -214,16 +214,12 @@ class MainContent extends Component {
     }
 
     getProjectCreation(){
-        let username = null
-        let type='c'
-        let auth = null
+        let username = this.state.auth['username']
+        let auth = this.state.auth['private']
         let comp_id = this.state.comp_id
-        username= this.state.auth['username']
-        type=this.state.auth['type']
-        auth= this.state.auth['private']
         this.setState({ mainContent: "pc"})
         return <div>
-            <ProjectCreate></ProjectCreate>
+            <ProjectCreate username={username} token={auth} comp_id={comp_id} onBack={this.handleBackToHome}></ProjectCreate>
         </div>
     }
 

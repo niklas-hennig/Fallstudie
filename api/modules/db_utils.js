@@ -272,17 +272,47 @@ module.exports={
     })
   },
 
+  createRole: function(title, description, requirements, area, payment){
+    return new Promise((resolve, reject) => {
+      pool.query('SELECT pref_id FROM prefences WHERE pref_name=$1', [area])
+      .then(data => 
+        pool.query(`INSERT INTO role (title, description, requirements, area, payment) 
+        VALUES ($1, $2, $3, $4, $5) RETURNING role_id`,
+        [title, description, requirements, data.rows[0].pref_id, payment])
+        .then(data => resolve(data.rows[0]))
+        .catch(err => reject(err))
+      )
+      .catch(err => reject(err))
+    })
+  },
+
+  assignRoleToProject: function(project_id, role_id, numOfFreelancers){
+    return new Promise((resolve, reject) => {
+      pool.query('INSERT INTO role_assignment (role_id, project_id, number_of_freelancers) VALUES($1, $2, $3)',
+      [role_id, project_id, numOfFreelancers])
+      .then(data => resolve(data))
+      .catch(err => console.log(err))
+    })
+  },
+
   getPersonalizedRoles: function(username){
     return new Promise((resolve, reject) => {
       pool.query(`SELECT role.role_id FROM role 
       JOIN prefences as p ON role.area=p.pref_id 
       JOIN prefence_assignment as pa ON p.pref_id=pa.pref_id 
       JOIN freelancer as f ON f.user_id=pa.user_id 
-      WHERE f.username=$1 AND role.role_id NOT IN (
+      WHERE f.username=$1 
+      AND role.role_id NOT IN (
         SELECT a.role_id 
         FROM role
         JOIN applications as a ON role.role_id=a.role_id
         JOIN freelancer as f ON a.freelancer_id=f.user_id
+        WHERE f.username=$1)
+      AND role.role_id NOT IN (
+        SELECT fa.role_id 
+        FROM role
+        JOIN freelancer_assignment as fa ON role.role_id=fa.role_id
+        JOIN freelancer as f ON fa.freelancer_id=f.user_id
         WHERE f.username=$1)`,
       [username])
       .then(data => resolve(data.rows))
@@ -358,6 +388,18 @@ module.exports={
       .catch(err => {console.log('db:')
         console.log(err)
         reject(err)})
+    })
+  },
+
+  createProject: function(title, start_date, end_date, app_limit, comp_id){
+    console.log(title)
+    return new Promise((resolve, reject) => {
+    pool.query('INSERT INTO project (titel, start_date, end_date, application_limit, comp_id) VALUES($1, $2, $3, $4, $5) RETURNING project_id', 
+    [title, start_date, end_date, app_limit, comp_id])
+    .then(data=>{console.log(data.rows[0].project_id)
+      resolve(data.rows[0].project_id)})
+      .catch(err=>{ reject(err)
+      })
     })
   },
 

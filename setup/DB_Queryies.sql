@@ -25,7 +25,7 @@ SELECT role.role_id FROM role
         JOIN freelancer as f ON a.freelancer_id=f.user_id
         WHERE f.username='testuser');
 
-SELECT r.*, f.*
+SELECT *
         FROM project as p
         JOIN role_assignment as ra ON ra.project_id=p.project_id
         JOIN role as r ON r.role_id=ra.role_id
