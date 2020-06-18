@@ -3,6 +3,7 @@
 # dependencies
 /node_modules
 /api/node_modules
+/api/files
 /.pnp
 .pnp.js
 
@@ -22,3 +23,5 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+api/file.docx
+api/testDocument.docx
