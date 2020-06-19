@@ -85,7 +85,7 @@ class MainContent extends Component {
         .then(data => {
             if(data.data['is_set']){
                 let comp_id_new = data.data.comp_id
-                this.setState({content: this.getHome(), comp_id: comp_id_new})
+                this.setState({content: this.getHome(), comp_id: comp_id_new, company_name: data.data.company_name})
                 this.getBars()
             }else{
                 this.setState({content: this.getSettings(), settingsIsFreelancer:true})
@@ -104,7 +104,6 @@ class MainContent extends Component {
     }
 
     handleRoleSelected(id){
-        console.log("changing to " + id)
         this.setState({content: null})
         let cont = this.getRoleDetail(id)
         this.getBars();
@@ -117,7 +116,6 @@ class MainContent extends Component {
     }
 
     handleUpdate(){
-        console.log("updating")
         this.setState({update: new Date()})
         if(this.state.mainContent==="h") this.setState({content: this.getHome()})
     }
@@ -139,14 +137,24 @@ class MainContent extends Component {
 
     getSettings(isChange){
         let token = null
+        let isFreelancer = null
+        let username = null
         if(this.state.auth&&isChange!==true) {
             token=this.state.auth['private']
-            this.setState({settingsIsFreelancer:true})
+            isFreelancer = true
         }
-        else if(isChange!=true) this.setState({settingsIsFreelancer:false})
-        else token=this.state.auth['private']
+        else if(isChange!=true) isFreelancer=false
+        else {
+            token=this.state.auth['private']
+            username = this.state.auth['username']
+            console.log("settings with user:")
+            console.log(username)
+            if(this.state.auth['type']==="f") isFreelancer= true
+            else isFreelancer=false
+        }   
+    
         this.setState({ mainContent: "s"})
-        return <CompleteProfile isFreelancerSetting={this.state.settingsIsFreelancer} token={token} comp_name={this.state.company_name} userinfo={this.state.auth} isChange={isChange} onSubmit={this.handleSettingsComplete}></CompleteProfile>
+        return <CompleteProfile username={username} onBack={this.handleBackToHome} isFreelancerSetting={isFreelancer} token={token} comp_name={this.state.company_name} userinfo={this.state.auth} isChange={isChange} onSubmit={this.handleSettingsComplete}></CompleteProfile>
     }
 
     getLogin(){
@@ -211,7 +219,7 @@ class MainContent extends Component {
         auth= this.state.auth['private']
         this.setState({ mainContent: "pd"})
         return <div>
-            <ProjectDetail project_id={project_id} token={auth} onBack={this.handleBackToHome}></ProjectDetail>
+            <ProjectDetail project_id={project_id} token={auth} onBack={this.handleBackToHome} onUpdate={this.getBars}></ProjectDetail>
         </div>
     }
 

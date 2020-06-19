@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Navbar, Nav}  from 'react-bootstrap';
 
 class Footer extends Component {
     constructor(){
@@ -22,9 +23,8 @@ class Footer extends Component {
                 <table id="navigation_footer">
                     <tbody>
                         <tr>
-                            <td><a href="html\ueber_uns.html">Über uns</a></td>
-                            <td><a href="html\faq.html">FAQ</a></td>
-                            <td><a href="html\impressum.html" >Impressum</a></td>
+                            <td><a href="/about.html">Über uns</a></td>
+                            <td><a href="/impressum.html" >Impressum</a></td>
                             <td><a href="html\datenschutz.html">Datenschutzhinweise</a></td>
                             <td><a href="html\kontakt.html">Kontakt</a></td>
                         </tr>

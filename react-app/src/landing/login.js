@@ -32,6 +32,7 @@ class Login extends Component {
                             top: '10%',
                             borderRadius: '200px'
                             }
+        this.handlePasswordForgotten= this.handlePasswordForgotten.bind(this);
         
     }
     switchToCompany = () => {
@@ -47,6 +48,9 @@ class Login extends Component {
     handleLogin = (event) => {
         this.setState({isLogin: true})
         this.props.onLogin(event);
+    }
+    handlePasswordForgotten(){
+
     }
 
 
@@ -64,7 +68,7 @@ class Login extends Component {
 				    <button type="button" id="button_register" onClick={this.submitHandlerRegister}>Registrieren</button>
 		        </div>
                 <div style={this.resetStyle}>
-                    <a>Passwort vergessen</a>
+                    <button onClick={this.handlePasswordForgotten}>Passwort vergessen</button>
                 </div>
 	        </div>
         )

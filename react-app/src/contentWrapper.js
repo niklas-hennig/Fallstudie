@@ -17,12 +17,10 @@ class ContentWrapper extends Component{
     }
 
     handleLogin = (event) => {
-        console.log(event)
         this.setState({auth: event, username: event['username']})
     }
 
     handleSettings = (event) => {
-        console.log("handeling settings")
         this.setState({toSettings: true})
     }
 

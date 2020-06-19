@@ -11,21 +11,22 @@ class CompleteProfileFreelancer extends Component {
                 name: this.props.name,
                 surname: this.props.surname,
                 gender: this.props.gender,           
-                date_of_birth: null,
-                street: null,
-                number: null,
-                postcode: null,
-                city: null,
-                country: null,
+                date_of_birth: this.props.date_of_birth,
+                street: this.props.street,
+                number: this.props.number,
+                postcode: this.props.postcode,
+                city: this.props.city,
+                country: this.props.country,
                 resume_link: null,
-                iban: null,
-                ktn_owner: null,
-                experience: '',
+                iban: this.props.iban,
+                ktn_owner: this.props.ktn_owner,
+                experience: this.props.experience,
                 is_set: "true",
                 prefences_available: [],
                 prefence: null,
                 datei: null,
-                token: this.props.token
+                token: this.props.token,
+                isChange: this.props.isChange
             }
             this.uploadHandler=this.uploadHandler.bind(this);
     }
@@ -77,7 +78,6 @@ class CompleteProfileFreelancer extends Component {
         experience: this.state.experience,
         is_set:this.state.is_set
         }).then(res =>{
-            console.log("created freelancer with prefence" + this.state.prefence)
             axios.put('http://localhost:80/api/Prefence/'+this.state.username, {
                 prefence: this.state.prefence
             }).then(this.props.onSubmit('f'))
@@ -97,6 +97,8 @@ class CompleteProfileFreelancer extends Component {
         } if(this.props.gender === 'd') {
             anrede='Hallo'
         } 
+        let disable = ''
+        if(!this.state.isChange) disable='disabled'
 
         return(
             <div>
@@ -104,25 +106,25 @@ class CompleteProfileFreelancer extends Component {
                 <div class="completeProfileBox">
                 <form id="completeFreelancer" onSubmit={this.submitHandler}>
                     <div id="personal">Persönliches<br />
-                        <input type="text" disabled name="name" placeholder= {this.props.name}/><br />
-                        <input type="text" disabled name="surname" placeholder= {this.props.surname} /><br />
-                        <input type="date" name="date_of_birth" placeholder="Geburtsdatum" onChange={this.changeHandler} required/><br />
+                        <input type="text" {...disable} name={this.state.name} placeholder= {this.props.name}/><br />
+                        <input type="text" {...disable} name={this.state.surname} placeholder= {this.props.surname} /><br />
+                        <input type="date" name="date_of_birth" placeholder={this.state.date_of_birth} onChange={this.changeHandler} required/><br />
                     </div><br />
 
                     <div id="address">Adresse<br />
-                        <input type="text" name="street" placeholder="Straße" onChange={this.changeHandler} required/><br />
-                        <input type="number" name="number" placeholder="Hausnummer" onChange={this.changeHandler} required/><br />
-                        <input type="number" name="postcode" placeholder="Postleitzahl" onChange={this.changeHandler} required/><br />
-                        <input type="text" name="city" placeholder="Stadt" onChange={this.changeHandler} required/>
+                        <input type="text" name="street" placeholder={this.state.street} onChange={this.changeHandler} required/><br />
+                        <input type="number" name="number" placeholder={this.state.number} onChange={this.changeHandler} required/><br />
+                        <input type="number" name="postcode" placeholder={this.state.postcode} onChange={this.changeHandler} required/><br />
+                        <input type="text" name="city" placeholder={this.state.city} onChange={this.changeHandler} required/>
                     </div><br />
 
                     <div id="banking">Bankdaten<br />
-                        <input type="text" name="iban" placeholder="IBAN" onChange={this.changeHandler}/><br />
-                        <input type="text" name="ktn_owner" placeholder="Kontoinhaber" onChange={this.changeHandler}/>
+                        <input type="text" name="iban" placeholder={this.state.iban} onChange={this.changeHandler}/><br />
+                        <input type="text" name="ktn_owner" placeholder={this.state.ktn_owner} onChange={this.changeHandler}/>
                     </div><br />
 
                     <div id="details">Details<br />
-                        <textarea rows="10" cols="50" name="experience" placeholder="Schreiben Sie etwas über sich" onChange={this.changeHandler}/><br />
+                        <textarea rows="10" cols="50" name="experience" placeholder={this.state.experience} onChange={this.changeHandler}/><br />
                         <span>Wählen Sie eine oder mehrere Kategorien für die Sie sich interessieren</span><br />
                         <select name="prefence" onChange={this.changeHandler}>
                             {this.state.prefences_available.map((name) => <option key={name}>{name}</option>)}
@@ -136,6 +138,28 @@ class CompleteProfileFreelancer extends Component {
                 </div>
             </div>
         );
+    }
+
+    componentWillReceiveProps(nextProps){
+        console.log("recieving props")
+        console.log(nextProps)
+        this.setState({
+            username: nextProps.username,
+            email: nextProps.email,
+            name: nextProps.name,
+            surname: nextProps.surname,
+            gender: nextProps.gender,           
+            date_of_birth: nextProps.date_of_birth,
+            street: nextProps.street,
+            number: nextProps.number,
+            postcode: nextProps.postcode,
+            city: nextProps.city,
+            country: nextProps.country,
+            //resume_link: null,
+            iban: nextProps.iban,
+            ktn_owner: nextProps.ktn_owner,
+            experience: nextProps.experience
+        })
     }
 }
 

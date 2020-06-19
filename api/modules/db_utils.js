@@ -21,7 +21,7 @@ module.exports={
             reject(data)
           }
       })
-      .catch(err => rejct(err))
+      .catch(err => reject(err))
       
     })
   },
@@ -144,11 +144,51 @@ module.exports={
   },
 
   getUserInfo: function(username, isFreelancer) {
-    if (isFreelancer) table = 'freelancer'
-    else table = 'company_account'
+    if (isFreelancer) table = 'freelancer as t'
+    else table = 'company_account as t'
+    let compInfo = ''
+    let select = ''
+    if (!isFreelancer) {
+      compInfo = ' LEFT JOIN company as c ON c.comp_id=t.comp_id '
+      select = ', c.name AS company_name'
+    }
     return new Promise((resolve, reject)=> {
-      pool.query('SELECT * FROM '+ table + ' WHERE username=$1', [username])
+      pool.query('SELECT t.*'+ select + ' FROM '+ table + compInfo+ ' WHERE t.username=$1', [username])
       .then(data => resolve(data.rows[0]))
+      .catch(err => reject(err))
+    })
+  },
+
+  setPasswordToken: function(username, type) {
+    let token = 0
+    token = Math.round(Math.random()*1000)
+    let col = ''
+    if (type==="f") col="freelancer_user"
+    else col="comp_user_user"
+    return new Promise((resolve, reject) => {
+      pool.query('INSERT INTO password_token ('+col+', token) VALUES ($1, $2) RETURNING token', [username, token])
+      .then(data => resolve(data))
+      .catch(err => reject(err))
+    })
+  },
+
+  setNewPassword: function(username, type, token, new_password){
+    let col = ''
+    if (type==="f") col="freelancer_user"
+    else col="comp_user_user"
+    return new Promise((resolve, reject) => {
+      pool.query('SELECT token FROM password_token WHERE '+col+'=$1', [username])
+      .then(data => {
+        console.log(data.rows[0].token)
+        if (token=data.rows[0].token){
+          let table = ''
+          if(type==="f") table='freelancer'
+          else table='company_account'
+          pool.query('UPDATE '+table+' SET password = $1 WHERE username=$2', [new_password, username])
+          .then(data => resolve(data))
+          .catch(err => reject(err))
+        }
+      })
       .catch(err => reject(err))
     })
   },

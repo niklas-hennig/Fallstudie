@@ -3,6 +3,7 @@ import axios from "axios";
 
 import CompleteProfileFreelancer from './completeFreelancer';
 import CompleteProfileCompany from './completeCompany';
+import RightBar from "../homeScreen/rightBar";
 
 class CompleteProfile extends Component{
     constructor(props){
@@ -47,15 +48,21 @@ class CompleteProfile extends Component{
                 postcode_bill: null,
                 city_bill: null,
                 description: null,
+                username: this.props.username
             }
 
         } 
-        this.handleSubmit = this.handleSubmit.bind(this);      
+        this.handleSubmit = this.handleSubmit.bind(this);    
+        this.handleBack=this.handleBack.bind(this);  
 
     }
 
     handleSubmit(type){
         this.props.onSubmit();
+    }
+
+    handleBack(){
+        this.props.onBack();
     }
 
     componentDidMount() {
@@ -100,18 +107,22 @@ class CompleteProfile extends Component{
     }
 
     render(){
+        let backBtn = ''
+        if(this.state.isChange) backBtn=<button onClick={this.handleBack}>Zurück</button>
         if (this.props.isFreelancerSetting){
             return (
                 <div>
                     <p>Profilvervollständigung für Freelancer</p>
-                    <CompleteProfileFreelancer token={this.state.token} username={this.state.username} email={this.state.email} name={this.state.name} surname={this.state.surname} gender={this.state.gender} onSubmit={this.handleSubmit}/>
+                    {backBtn}
+                    <CompleteProfileFreelancer isChange={this.props.isChange} token={this.state.token} username={this.state.username} email={this.state.email} name={this.state.name} surname={this.state.surname} gender={this.state.gender} date_of_birth={this.state.date_of_birth} street={this.state.street} number={this.state.number} postcode={this.state.postcode} city={this.state.city} country={this.state.country} iban={this.state.iban} ktn_owner={this.state.ktn_owner} experience={this.state.experience} onBack={this.handleBack} onSubmit={this.handleSubmit}/>
                 </div>
                 );
         }else{
             return (
                 <div>
                     <p>Profilvervollständigung für Unternehmen</p>
-                    <CompleteProfileCompany comp_id={this.state.comp_id} name={this.state.name} street={this.state.street} number={this.state.number} postcode={this.state.postcode} city={this.state.city} country={this.state.country} onSubmit={this.handleSubmit}/>
+                    {backBtn}
+                    <CompleteProfileCompany username={this.state.username} tel_no={this.state.tel_no} description={this.state.description} isChange={this.props.isChange} comp_id={this.state.comp_id} name={this.state.name} street={this.state.street} number={this.state.number} postcode={this.state.postcode} city={this.state.city} country={this.state.country} street_bill={this.state.street_bill} number_bill={this.state.number_bill} city_bill={this.state.city_bill} postcode_bill={this.state.postcode_bill} onBack={this.handleBack} onSubmit={this.handleSubmit}/>
                 </div>
                 );
         }

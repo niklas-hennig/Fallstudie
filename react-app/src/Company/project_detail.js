@@ -60,9 +60,11 @@ class ProjectDetail extends Component {
     }
 
     handleUpdate = (id) =>{
+        console.log("updating with id:")
         console.log(id)
         axios.get('http://localhost:80/api/Application/'+id)
         .then(res => {
+            this.props.onUpdate();
             this.setState({applications: res.data})
         })
         .catch(err => {

@@ -156,6 +156,21 @@ CREATE TABLE freelancer_assignment (
       ON UPDATE CASCADE ON DELETE CASCADE
 );
 
+DROP TABLE IF EXISTS password_token;
+
+CREATE TABLE password_token (
+  reset_id SERIAL PRIMARY KEY,
+  freelancer_user VARCHAR,
+  comp_user_user VARCHAR,
+  token int NOT NULL,
+  CONSTRAINT freelancer_fkey FOREIGN KEY (freelancer_user)
+      REFERENCES freelancer (username) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE CASCADE,
+  CONSTRAINT comp_user_id FOREIGN KEY (comp_user_user)
+    REFERENCES company_account (username) MATCH SIMPLE
+    ON UPDATE CASCADE ON DELETE CASCADE
+);
+
 
 INSERT INTO freelancer (username, password, email, name, surname, gender)
     VALUES ('testuser', 'test', 'none', 'user', 'test', 'u');

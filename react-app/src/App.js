@@ -1,24 +1,25 @@
 import React, { Component } from 'react';
-import './style.css'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import ContentWrapper from './contentWrapper';
+import About from './staticPages/about';
+import Impressum from './staticPages/impressum';
+import Datenschutz from './staticPages/datenschutz';
+import NotFound from './staticPages/notFound';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React now
-          </a>
-        </header>
-      </div>
+      <React.Fragment>
+        <Router>
+          <Switch>
+            <Route exact path="/" component={ContentWrapper} />
+            <Route path="/about" component={About} />
+            <Route path="/impressum" component={Impressum} />
+            <Route path="/datenschutz" component={Datenschutz} />
+            <Route component={NotFound} />
+          </Switch>
+        </Router>
+      </React.Fragment>
     );
   }
 }

@@ -88,6 +88,25 @@ router.post('/Freelancer', (req, res) => {
 
   }
   )
+
+  router.post('/Password/:username/:type', (req, res) => {
+    db_utils.checkIfUserExists(req.params.username, req.params.type)
+    .then(data => {
+      db_utils.setPasswordToken(req.params.username, req.params.type)
+      .then(data => {
+        console.log(data)
+        res.send("token created")
+      })
+      .catch(err => res.status(500).send(err))
+    })
+    .catch(err => res.status(500).send(err))
+  })
+
+  router.put('/Password/:username/:type/:token/:password', (req, res) => {
+    db_utils.setNewPassword(req.params.username, req.params.type, req.params.token, req.params.password)
+    .then(data => res.send('password updated'))
+    .catch(err => res.status(500).send(err))
+  })
   
   router.delete('/:username/:type', (req, res) => {
     cookie = req.cookies["Auth"]
