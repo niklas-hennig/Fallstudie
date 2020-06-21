@@ -29,7 +29,6 @@ class RoleCreationItem extends Component {
     }
 
     render(){
-        console.log(this.state)
         return <tbody>
             <tr>
                 <td><input type="text" name="title" onChange={this.onChange} autoComplete={this.state.title}/></td>
@@ -46,8 +45,6 @@ class RoleCreationItem extends Component {
     }
 
     componentWillReceiveProps(nextProps){
-        console.log("received props")
-        console.log(nextProps)
         this.props.onChange(this.state.id, "area", nextProps.prefences[0]);
         this.setState({prefences: nextProps.prefences, id: nextProps.id, area: nextProps.prefences[0]})
     }

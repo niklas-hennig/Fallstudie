@@ -510,6 +510,7 @@ module.exports={
     return new Promise((resolve, reject) =>{
       pool.query('SELECT user_id FROM freelancer WHERE username=$1', [username])
       .then(data=>{
+        console.log("found user")
         console.log(data)
         console.log(username)
         pool.query('DELETE FROM applications WHERE freelancer_id=$1 AND role_id=$2', [data.rows[0].user_id, role_id])

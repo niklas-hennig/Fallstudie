@@ -49,7 +49,7 @@ class RightBar extends Component {
             applications = this.state.applications.map((appInfo, index) => <RoleListItem type={this.state.type} key={index} role_id={appInfo.role_id} title={appInfo.title} mode="right" token={this.state.token} username={this.state.username} onChange={this.setProjects}> </RoleListItem>)
         }
         if (this.state.applications.length>0 && this.state.type==="c"){
-            applications = this.state.applications.map((appInfo, index) => <FreelancerListItem role_id={appInfo.role_id} name={appInfo.name} surname={appInfo.surname} resume_link={appInfo.resume_link} token={this.state.token} freelancer_user={appInfo.username} username={this.state.username} onChange={this.setProjects}></FreelancerListItem>)
+            applications = this.state.applications.map((appInfo, index) => <FreelancerListItem key={appInfo.role_id+appInfo.username} role_id={appInfo.role_id} name={appInfo.name} surname={appInfo.surname} resume_link={appInfo.resume_link} token={this.state.token} freelancer_user={appInfo.username} username={this.state.username} onChange={this.setProjects}></FreelancerListItem>)
         }
         return <div style={this.style}>
             <h2>Ihre ausstehenden Bewerbungen</h2>

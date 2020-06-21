@@ -50,7 +50,7 @@ class Login extends Component {
         this.props.onLogin(event);
     }
     handlePasswordForgotten(){
-
+        this.props.onPasswordForgotten();
     }
 
 

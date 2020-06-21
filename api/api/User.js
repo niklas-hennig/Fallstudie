@@ -94,7 +94,7 @@ router.post('/Freelancer', (req, res) => {
     .then(data => {
       db_utils.setPasswordToken(req.params.username, req.params.type)
       .then(data => {
-        console.log(data)
+        console.log(data.rows[0].token)
         res.send("token created")
       })
       .catch(err => res.status(500).send(err))

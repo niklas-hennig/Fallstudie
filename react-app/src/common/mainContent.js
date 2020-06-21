@@ -4,6 +4,7 @@ import axios from "axios";
 //Landing page imports
 import Description from '../landing/description';
 import Login from '../landing/login';
+import PasswordReset from '../landing/PasswordReset';
 import Registration from '../landing/registration';
 import login_background from '../media/login_background.jpg';  //'./media/login_background.jpg';
 
@@ -49,6 +50,7 @@ class MainContent extends Component {
         this.getBars=this.getBars.bind(this);
         this.handleApplied=this.handleApplied.bind(this);
         this.handleRegister = this.handleRegister.bind(this);
+        this.handlePasswordForgotten=this.handlePasswordForgotten.bind(this);
         this.handleBack = this.handleBack.bind(this);
         this.handleCompanyComplete = this.handleCompanyComplete.bind(this);
         this.handleSettingsComplete = this.handleSettingsComplete.bind(this);
@@ -92,6 +94,10 @@ class MainContent extends Component {
             }
         })
         .catch(err => console.log(err))
+    }
+
+    handlePasswordForgotten = (event) => {
+        this.setState({content: this.getPasswordReset()})
     }
 
     handleCompanyComplete = (event) =>{
@@ -158,18 +164,23 @@ class MainContent extends Component {
     }
 
     getLogin(){
-        let func = <Login onRegister={this.handleRegister} onLogin={this.handleLogin} />
         return <div id='backgroundImage' style={{backgroundImage: `url(${login_background})`}}>
                     <Description />
-                    {func}
+                    <Login onRegister={this.handleRegister} onLogin={this.handleLogin} onPasswordForgotten={this.handlePasswordForgotten}/>
                 </div>
     }
 
+    getPasswordReset(){
+        return <div id='backgroundImage' style={{backgroundImage: `url(${login_background})`}}>
+            <Description />
+            <PasswordReset onBack={this.handleBack}/>
+        </div>
+    }
+
     getRegistration(){
-        let func = <Registration onBack={this.handleBack} onCompanyComplete={this.handleCompanyComplete}/>
         return <div id='backgroundImage' style={{backgroundImage: `url(${login_background})`}}>
                     <Description />
-                    {func}
+                    <Registration onBack={this.handleBack} onCompanyComplete={this.handleCompanyComplete}/>
                 </div>
     }
 

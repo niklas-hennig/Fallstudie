@@ -18,7 +18,7 @@ class ProjectCreate extends Component {
             application_limit: null,
 
             //Roles
-            roles: [{title: '', description: '', requirements: '', payment: '', area: '', numberOfFreeancers: 0}],
+            roles: [{title: '', description: '', requirements: '', payment: '', area: '', numberOfFreeancers: 0, internal_id: 0}],
 
             //Functional
             prefences: []
@@ -42,21 +42,21 @@ class ProjectCreate extends Component {
     }
 
     roleChangeHandler = (id, name, value) => {
+        if (id<this.state.roles.length){
         let roles = this.state.roles
         roles[id][name] = value
+        }
     } 
 
     roleDeleteHandler = (id)=>{
         let roles = this.state.roles
-        console.log(this.state.roles)
         roles.splice(id, 1)
-        console.log(roles)
         this.setState({roles: roles})
     }
 
     addRole(){
         let roles = this.state.roles
-        roles.push({title: null, description: null, requirements: null, payment: null, area: null, numberOfFreeancers:null})
+        roles.push({title: null, description: null, requirements: null, payment: null, area: null, numberOfFreeancers:null, internal_id: roles.length})
         this.setState({roles: roles})
     }
 
@@ -74,9 +74,6 @@ class ProjectCreate extends Component {
     }
 
     submitAll(){
-        console.log("submitting:")
-        console.log(this.state)
-        
         axios.post('http://localhost:80/api/Project/'+this.state.token, {
             title: this.state.pr_titel,
             start_date: this.state.start_date,
@@ -85,8 +82,6 @@ class ProjectCreate extends Component {
             comp_id: this.state.comp_id
         })
         .then(res => {
-            console.log("created Project, id:")
-            console.log(res.data)
             let promises = []
             this.state.roles.forEach((role) => {
                 promises.push(axios.post('http://localhost:80/api/Role/'+this.state.token,{
@@ -100,7 +95,6 @@ class ProjectCreate extends Component {
                 }))
             })
             Promise.all(promises).then((res) => {
-                console.log(res)
                 this.props.onBack()
             })
             .catch(err => console.log(err))
@@ -117,11 +111,11 @@ class ProjectCreate extends Component {
             <button onClick={this.props.onBack}>Zurück</button>
             <form style={{backgroundColor:"gray"}}>
                 <input type="text" placeholder="Projekttitel" name="pr_titel" onChange={this.changeHandler}/>
-                <label for="start_date">Start:</label>
+                <label htmlFor="start_date">Start:</label>
                 <input type="date" name="start_date" onChange={this.changeHandler}/>
-                <label for="end_date">Start:</label>
+                <label htmlFor="end_date">Start:</label>
                 <input type="date" name="end_date" onChange={this.changeHandler}/><br></br>
-                <label for="application_limit">Start:</label><br></br>
+                <label htmlFor="application_limit">Start:</label><br></br>
                 <input type="date" name="application_limit" onChange={this.changeHandler}/>
             </form>
             <button onClick={this.addRole}>Neue Rolle</button>
@@ -136,9 +130,9 @@ class ProjectCreate extends Component {
                         <th>Anzahl</th>
                     </tr>
                 </thead>
-                {this.state.roles.map((role, index) => <RoleCreationItem key={index} id={index} prefences={this.state.prefences} onChange={this.roleChangeHandler} onDelete={this.roleDeleteHandler}></RoleCreationItem>)}
+                {this.state.roles.map((role, index) => <RoleCreationItem key={role.internal_id} id={index} prefences={this.state.prefences} onChange={this.roleChangeHandler} onDelete={this.roleDeleteHandler}></RoleCreationItem>)}
             </table>
-            <button onClick={this.submitAll} on>Anlegen</button>
+            <button onClick={this.submitAll} >Anlegen</button>
         </div>
     }
 
