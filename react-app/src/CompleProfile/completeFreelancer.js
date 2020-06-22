@@ -26,7 +26,9 @@ class CompleteProfileFreelancer extends Component {
                 prefence: null,
                 datei: null,
                 token: this.props.token,
-                isChange: this.props.isChange
+                isChange: this.props.isChange,
+
+                showUploadBtn: true
             }
             this.uploadHandler=this.uploadHandler.bind(this);
     }
@@ -39,12 +41,14 @@ class CompleteProfileFreelancer extends Component {
         this.setState({datei: event.target.files[0]})
     }
 
-    uploadHandler(){
+    uploadHandler=(event)=>{
+        event.preventDefault();
         const data = new FormData()
         data.append('file', this.state.datei)
         axios.post('http://localhost:80/api/File/'+this.state.username+'/'+this.state.token, data, {
 
-        }).then(res => console.log(res))
+        }).then(res => {console.log(res)
+        this.setState({showUploadBtn: false})})
         .catch(err => console.log(err))
     }
 
@@ -100,6 +104,9 @@ class CompleteProfileFreelancer extends Component {
         let disable = ''
         if(!this.state.isChange) disable='disabled'
 
+        let uploadBtn = 'Hochladen erfolgreich'
+        if(this.state.showUploadBtn===true) uploadBtn= <button onClick={this.uploadHandler}>Hochladen</button>
+
         return(
             <div>
                 <h2>{anrede} {this.props.surname} {this.props.name }, vervollständige doch dein Profil um gefunden zu werden</h2>
@@ -131,7 +138,7 @@ class CompleteProfileFreelancer extends Component {
                         </select>                            
                         <span>Laden Sie ihren Lebenslauf hier hoch</span><br />
                         <input name="datei" type="file" size="50" onChange={this.fileHandler}/><br />
-                        <button onClick={this.uploadHandler}>Hochladen</button>
+                        {uploadBtn}
                     </div>
                     <button type="submit">Speichern</button>
                 </form>

@@ -18,7 +18,6 @@ class ProjectRoleDetail extends Component {
     fetchAccepted(id){
         axios.get('http://localhost:80/api/Role/Accepted/All/'+id+'/'+this.state.token)
         .then(res => {
-            console.log(res.data.rows)
             this.setState({accepted: res.data.rows})})
         .catch(err => console.log(err))
     }

@@ -20,9 +20,9 @@ router.get('/:username/:token', (req, res) => {
 router.post('/:username/:token', (req, res)=>{
     if(!auth_utils.validateToken(req.params.token)) return res.status(401).send('not signed in')
     new Promise((resolve, reject) => {
-        if (!fs.existsSync(req.params.username)){
-            fs.mkdir(req.params.username, (err) => {console.log("1")
-                reject(err)})
+        if (!fs.existsSync('files/'+req.params.username)){
+            fs.mkdir('files/'+req.params.username, (err) => {
+                if(err) reject(err)})
         }
         FileType.fromBuffer(req.files.file.data)
         .then(type => {

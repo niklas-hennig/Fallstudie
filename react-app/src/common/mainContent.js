@@ -63,7 +63,19 @@ class MainContent extends Component {
     }
 
     componentDidMount(){
-        this.setState({content: this.getLogin()});
+        if(window.localStorage.getItem("auth") == null) this.setState({content: this.getLogin()});
+        else {
+            let auth = JSON.parse(window.localStorage.getItem("auth"))
+            this.setState({auth: auth})
+            this.props.onLogin(auth)
+            axios.get('http://localhost:80/api/User/'+auth['username'] + '/'+ auth['type'], auth)
+            .then(data => {
+                    let comp_id_new = data.data.comp_id
+                    this.setState({content: this.getHome(), comp_id: comp_id_new, company_name: data.data.company_name})
+                    this.getBars()
+        })
+        .catch(err => console.log(err))
+        }
     }
 
     handleApplied = (event) => {
@@ -89,6 +101,7 @@ class MainContent extends Component {
                 let comp_id_new = data.data.comp_id
                 this.setState({content: this.getHome(), comp_id: comp_id_new, company_name: data.data.company_name})
                 this.getBars()
+                window.localStorage.setItem("auth", JSON.stringify(event))
             }else{
                 this.setState({content: this.getSettings(), settingsIsFreelancer:true})
             }

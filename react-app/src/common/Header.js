@@ -20,10 +20,16 @@ class Header extends Component {
             background: "#F4B41A"
         }
         this.handleSettings=this.handleSettings.bind(this);
+        this.handleLogout=this.handleLogout.bind(this);
     }
 
     handleSettings(){
         this.props.onSettings();
+    }
+
+    handleLogout(){
+        window.localStorage.removeItem("auth")
+        window.open('/', "_self")
     }
 
 
@@ -34,15 +40,15 @@ class Header extends Component {
         let menu = ''
         if (this.state.user) 
         menu = <Dropdown>
-        <Dropdown.Toggle variant="success" id="dropdown-basic">
-            Dropdown Button
-        </Dropdown.Toggle>
+                <Dropdown.Toggle variant="success" id="dropdown-basic">
+                    Menu
+                </Dropdown.Toggle>
 
-        <Dropdown.Menu>
-            <Dropdown.Item onClick={this.handleSettings}>Settings</Dropdown.Item>
-            <Dropdown.Item href="/">Logout</Dropdown.Item>
-        </Dropdown.Menu>
-    </Dropdown>
+                <Dropdown.Menu>
+                    <Dropdown.Item onClick={this.handleSettings}>Settings</Dropdown.Item>
+                    <Dropdown.Item onClick={this.handleLogout}>Logout</Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown>
         return<header className="header" style={this.style}>
                 <img src={logo} alt="logo" height='50%'/>
                 <p>Freelane - Die Jobbörse</p>

@@ -166,8 +166,13 @@ module.exports={
     if (type==="f") col="freelancer_user"
     else col="comp_user_user"
     return new Promise((resolve, reject) => {
-      pool.query('INSERT INTO password_token ('+col+', token) VALUES ($1, $2) RETURNING token', [username, token])
-      .then(data => resolve(data))
+      pool.query('DELETE FROM password_token WHERE '+col+'=$1', [username])
+      .then(data => 
+        pool.query('INSERT INTO password_token ('+col+', token) VALUES ($1, $2) RETURNING token', [username, token])
+        .then(data => resolve(data))
+        .catch(err => reject(err))
+      )
+      
       .catch(err => reject(err))
     })
   },
