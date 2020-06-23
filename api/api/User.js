@@ -1,6 +1,7 @@
 const express = require('express');
 
 const db_utils = require('../modules/db_utils')
+const db_user = require('../modules/db_utils_user')
 
 const router = express.Router();
 
@@ -18,7 +19,7 @@ router.get('/:username/:type', (req, res)=>{
   type = req.params.type
   if (type=='f') isFreelancer=true
   else isFreelancer=false
-  db_utils.getUserInfo(username, isFreelancer)
+  db_user.getUserInfo(username, isFreelancer)
   .then(data => {
     res.send(data)
   })
@@ -41,20 +42,20 @@ router.post('/Freelancer', (req, res) => {
     if (!req.body.gender) return res.status(400).send('No gender provided')
     gender = req.body.gender
 
-    db_utils.findUser(username, null, true)
+    db_user.findUser(username, null, true)
     .then(id => {
       if (id){
         if (id.length>0){
           res.status(400).send('User already exists')
         }else{
-          db_utils.createFreelancer(username, email, password, name, surname, gender)
+          db_user.createFreelancer(username, email, password, name, surname, gender)
           .then(id => res.send(id.toString()))
           .catch(err => {
             res.status(200).send(err)
           })
         }
       }else{
-        db_utils.createFreelancer(username, email, password, name, surname, gender)
+        db_user.createFreelancer(username, email, password, name, surname, gender)
           .then(id =>res.send(id.toString()))
           .catch(err => res.status(200).send(err))
       }
@@ -80,7 +81,7 @@ router.post('/Freelancer', (req, res) => {
     
     db_utils.checkIfCompanyExists(req.body.company_name)
     .then(comp_id =>{
-      db_utils.createCompUser(username, email, password, name, surname, gender, comp_id)
+      db_user.createCompUser(username, email, password, name, surname, gender, comp_id)
       .then(id => res.status(200).send('created successful'))
       .catch(err => res.status(500).send(err))
     })
@@ -90,7 +91,7 @@ router.post('/Freelancer', (req, res) => {
   )
 
   router.post('/Password/:username/:type', (req, res) => {
-    db_utils.checkIfUserExists(req.params.username, req.params.type)
+    db_user.checkIfUserExists(req.params.username, req.params.type)
     .then(data => {
       db_utils.setPasswordToken(req.params.username, req.params.type)
       .then(data => {
@@ -114,7 +115,7 @@ router.post('/Freelancer', (req, res) => {
     username = req.params.username
     type = req.params.type
   
-    db_utils.deleteUser(username, type)
+    db_user.deleteUser(username, type)
     .then(res.send('User deleted'))
     .catch(err => {res.status(500).send(err);
       res.status(500).send('Unable to delete User')
@@ -129,7 +130,7 @@ router.post('/Freelancer', (req, res) => {
 
     infos = parseBody(req.body);
 
-    db_utils.updateFreelancer(username, req.body.password, req.body.email, infos)
+    db_user.updateFreelancer(username, req.body.password, req.body.email, infos)
     .then(res.send('User Information updated'))
     .catch(err => {
       if (!err) res.status(400).send('Please Provide Information to update')

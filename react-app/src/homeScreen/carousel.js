@@ -74,7 +74,7 @@ class CarouselComp extends Component {
     }
 
     handleSelectRole = (event) =>{
-        this.props.onRoleSelect(event);
+        this.props.onRoleSelect(event, true);
     }
 
     handleSelectProject = (event) =>{
@@ -101,13 +101,13 @@ class CarouselComp extends Component {
         if (this.state.all_role_ids.length>0){
             carousel =
             <Slider  {...settings}>
-                {this.state.all_role_ids.map((id, index) => <SlideRole key={index} project={id} username={this.state.username} token={this.state.token} height={this.state.height} onSelect={this.handleSelectRole}></SlideRole>)}
+                {this.state.all_role_ids.map((id, index) => <SlideRole key={id} project={id} username={this.state.username} token={this.state.token} height={this.state.height} onSelect={this.handleSelectRole}></SlideRole>)}
             </Slider>
         }
         if(this.state.all_projects.length>0){
             carousel = 
             <Slider {...settings}>
-                {this.state.all_projects.map((info, index) => <SlideProject key={index} project_id={info.project_id} title={info.titel} start_date={info.start_date} height={this.state.height} onSelect={this.handleSelectProject} ></SlideProject>)}
+                {this.state.all_projects.map((info, index) => <SlideProject key={info.project_id} project_id={info.project_id} title={info.titel} start_date={info.start_date} height={this.state.height} onSelect={this.handleSelectProject} ></SlideProject>)}
             </Slider>
         }
         if(this.state.type=='f'&&this.state.all_role_ids.length==0){

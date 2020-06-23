@@ -1,6 +1,7 @@
 const express = require('express');
 
 const db_utils = require('../modules/db_utils')
+const db_company = require('../modules/db_utils_company')
 
 const router = express.Router();
 
@@ -15,13 +16,13 @@ function parseBody(body){
 router.get('/:name', (req, res)=>{
     if(!req.params.name) return res.status(400).send('No name provided')
 
-    db_utils.getCompanyInfo(req.params.name)
+    db_company.getCompanyInfo(req.params.name)
     .then(data => res.send(data.rows[0]))
     .catch(err => res.send(500).send(err))
 })
 
 router.get('/Existence/:name', (req, res)=>{
-    db_utils.getCompanyInfo(req.params.name)
+    db_company.getCompanyInfo(req.params.name)
     .then(data => {
         if(data.rowCount>0) res.send(data.rows[0])
         else res.send(false)
@@ -44,7 +45,7 @@ router.post('/', (req, res) => {
     if (!req.body.country) return res.status(400).send('No country provided')
     country = req.body.country
 
-    db_utils.createCompany(name, street, number, postcode, city, country)
+    db_company.createCompany(name, street, number, postcode, city, country)
     .then(data => {
         console.log("created company")
         console.log(data)
@@ -60,7 +61,7 @@ router.put('/:comp_name', (req, res) => {
 
     infos = parseBody(req.body);
 
-    db_utils.updateCompanyInfo(infos)
+    db_company.updateCompanyInfo(infos)
     .then(res.send('Infos updated'))
     .catch(err => res.status(500).send(err))
 
@@ -69,7 +70,7 @@ router.put('/:comp_name', (req, res) => {
 
 router.delete('/:name', (req, res) => {
 
-    db_utils.deleteCompany(name)
+    db_company.deleteCompany(name)
     .then(res.send('Company deleted'))
     .catch(err => res.status(500).send(err))
 })

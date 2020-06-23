@@ -123,6 +123,7 @@ class CompleteProfileFreelancer extends Component {
                         <input type="number" name="number" placeholder={this.state.number} onChange={this.changeHandler} required/><br />
                         <input type="number" name="postcode" placeholder={this.state.postcode} onChange={this.changeHandler} required/><br />
                         <input type="text" name="city" placeholder={this.state.city} onChange={this.changeHandler} required/>
+                        <input type="text" name="country" onChange={this.changeHandler} />
                     </div><br />
 
                     <div id="banking">Bankdaten<br />

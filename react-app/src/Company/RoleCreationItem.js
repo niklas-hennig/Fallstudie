@@ -16,7 +16,10 @@ class RoleCreationItem extends Component {
         }
         this.onChange=this.onChange.bind(this);
         
-        if(this.props.prefences.lenght>0) this.props.onChange(this.state.id, "area", this.props.prefences[0]); 
+        if(this.props.prefences.lenght>0) {
+            console.log("updating in constructor")
+            this.props.onChange(this.state.id, "area", this.props.prefences[0]); 
+        }
     }
 
     onChange = (event) =>{
@@ -45,6 +48,8 @@ class RoleCreationItem extends Component {
     }
 
     UNSAFE_componentWillReceiveProps(nextProps){
+        console.log(this.state.id)
+        console.log(nextProps.prefences[0])
         this.props.onChange(this.state.id, "area", nextProps.prefences[0]);
         this.setState({prefences: nextProps.prefences, id: nextProps.id, area: nextProps.prefences[0]})
     }

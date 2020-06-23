@@ -145,6 +145,7 @@ class CompleteProfileCompany extends Component {
                         <input type="number" {...disable} name="number" placeholder={this.props.number}/><br />
                         <input type="number" {...disable} name="postcode" placeholder={this.props.postcode}/><br />
                         <input type="text" {...disable} name="city" placeholder={this.props.city}/><br />
+                        <input type="text" name="country" onChange={this.changeHandler} />
                         <input type="number" name="tel_no" placeholder={this.props.tel_no} onChange={this.changeHandler}/>
                     </div><br />
 

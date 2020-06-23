@@ -89,7 +89,7 @@ class LoginForm extends Component {
                         </label>
                         <input type="password" name="password" placeholder="Password" id="password" onChange={this.changeHandler}/>
                     
-                        <button type="submit" id="button_login" class="button"><span>Login</span></button>
+                        <button type="submit" id="button_login" className="button"><span>Login</span></button>
                     </form>
                     {error}
                 </div>

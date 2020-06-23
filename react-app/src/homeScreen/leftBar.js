@@ -52,7 +52,7 @@ class LeftBar extends Component {
     }
 
     handleRoleClick = (event) => {
-        this.props.onRoleSelect(event);
+        this.props.onRoleSelect(event, false);
     }
 
     handleProjectClick = (event) => {
@@ -91,13 +91,8 @@ class LeftBar extends Component {
                 dates_full.push(res[i])
         }
         this.setState({dates:dates_full})
-        console.log("set dates")
-        console.log(dates)
-        console.log(dates_full)
         this.setState({calendar: <Calendar 
             tileClassName={({ date, view }) => {
-                console.log(moment(date).format("YYYY-MM-DD").toString())
-                console.log(dates_full.find(x=>x===moment(date).format("YYYY-MM-DD")))
                 if(this.state.dates.find(x=>x===moment(date).format("YYYY-MM-DD"))){
                  return  'highlight'
                 }
@@ -116,8 +111,8 @@ class LeftBar extends Component {
         let noProjects = ''
         if (this.state.projects.length==0) noProjects=<div><h3>Keine Projekte vorhanden</h3></div>
         let children = null
-        if(this.state.type==="f") children = this.state.projects.map((roleInfo, index) => <RoleListItem key={index} role_id={roleInfo.role_id} title={roleInfo.title} start_date={roleInfo.start_date} handleClick={this.handleRoleClick} mode="left"></RoleListItem>)
-        else children = this.state.projects.map((project, index) => <ListProjectItem key={index} project_id={project.project_id} title={project.titel} start_date={project.start_date} handleClick={this.handleProjectClick}></ListProjectItem>)
+        if(this.state.type==="f") children = this.state.projects.map((roleInfo) => <RoleListItem key={roleInfo.role_id} role_id={roleInfo.role_id} title={roleInfo.title} start_date={roleInfo.start_date} handleClick={this.handleRoleClick} mode="left"></RoleListItem>)
+        else children = this.state.projects.map((project) => <ListProjectItem key={project.project_id} project_id={project.project_id} title={project.titel} start_date={project.start_date} handleClick={this.handleProjectClick}></ListProjectItem>)
         return <div style={this.style}>
             {calTitle}
             {cal}

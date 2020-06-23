@@ -33,6 +33,7 @@ class Login extends Component {
                             borderRadius: '200px'
                             }
         this.handlePasswordForgotten= this.handlePasswordForgotten.bind(this);
+        this.handleLogin=this.handleLogin.bind(this);
         
     }
     switchToCompany = () => {

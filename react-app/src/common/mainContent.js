@@ -122,9 +122,9 @@ class MainContent extends Component {
         this.setState({content: this.getLogin()})
     }
 
-    handleRoleSelected(id){
+    handleRoleSelected(id, showApplication){
         this.setState({content: null})
-        let cont = this.getRoleDetail(id)
+        let cont = this.getRoleDetail(id, showApplication)
         this.getBars();
         this.setState({content: cont})
     }
@@ -218,13 +218,13 @@ class MainContent extends Component {
                 </div>
     }
 
-    getRoleDetail(role_id){
+    getRoleDetail(role_id, showApplication){
         console.log("showing role"+role_id)
         let username= this.state.auth['username']
         let auth= this.state.auth['private']
         this.setState({ mainContent: "rd"})
         return <div>
-            <RoleDetail role_id={role_id} username={username} token={auth} onBack={this.handleBackToHome} onApply={this.handleApplied}></RoleDetail>
+            <RoleDetail role_id={role_id} username={username} token={auth} showApplication={showApplication} onBack={this.handleBackToHome} onApply={this.handleApplied}></RoleDetail>
         </div>
     }
 

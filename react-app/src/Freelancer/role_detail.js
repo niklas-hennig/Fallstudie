@@ -8,7 +8,8 @@ class RoleDetail extends Component {
             role_id: this.props.role_id,
             token: this.props.token,
             username: this.props.username,
-            info: null
+            info: null,
+            showApplication: this.props.showApplication
         }
         this.style ={
             position: 'absolute',
@@ -59,7 +60,8 @@ class RoleDetail extends Component {
             payment = this.state.info.payment
             requirements = this.state.requirements
         }
-
+        let applyBtn = ''
+        if(!this.state.showApplication===false) applyBtn=<button onClick={this.handleApply}>Jetzt bewerben</button>
 
         return <div style={this.style}>
             <div>
@@ -75,7 +77,7 @@ class RoleDetail extends Component {
                 <p>Bezahlung: {payment}</p>
                 <p>Vorraussetzungen: {requirements}</p>
             </div>
-            <button onClick={this.handleApply}>Jetzt bewerben</button>
+            {applyBtn}
         </div>
     }
 

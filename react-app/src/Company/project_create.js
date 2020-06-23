@@ -56,7 +56,7 @@ class ProjectCreate extends Component {
 
     addRole(){
         let roles = this.state.roles
-        roles.push({title: null, description: null, requirements: null, payment: null, area: null, numberOfFreeancers:null, internal_id: roles.length})
+        roles.push({title: null, description: null, requirements: null, payment: null, area: this.state.prefences[0], numberOfFreeancers:null, internal_id: roles.length})
         this.setState({roles: roles})
     }
 
@@ -74,6 +74,8 @@ class ProjectCreate extends Component {
     }
 
     submitAll(){
+        console.log("submitting")
+        console.log(this.state.roles)
         axios.post('http://localhost:80/api/Project/'+this.state.token, {
             title: this.state.pr_titel,
             start_date: this.state.start_date,
@@ -106,6 +108,7 @@ class ProjectCreate extends Component {
     
     
     render(){
+        if (this.state.prefences.length>0) console.log("creating with prefences")
         return <div style={this.style}>
             <h2>Ihr neues Projekt</h2>
             <button onClick={this.props.onBack}>Zurück</button>
@@ -113,9 +116,9 @@ class ProjectCreate extends Component {
                 <input type="text" placeholder="Projekttitel" name="pr_titel" onChange={this.changeHandler}/>
                 <label htmlFor="start_date">Start:</label>
                 <input type="date" name="start_date" onChange={this.changeHandler}/>
-                <label htmlFor="end_date">Start:</label>
+                <label htmlFor="end_date">Ende:</label>
                 <input type="date" name="end_date" onChange={this.changeHandler}/><br></br>
-                <label htmlFor="application_limit">Start:</label><br></br>
+                <label htmlFor="application_limit">Bewerbungende:</label><br></br>
                 <input type="date" name="application_limit" onChange={this.changeHandler}/>
             </form>
             <button onClick={this.addRole}>Neue Rolle</button>
