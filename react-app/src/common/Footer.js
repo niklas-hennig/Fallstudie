@@ -7,9 +7,9 @@ class Footer extends Component {
         this.style={
             height: '10%',
             top: '90%',
-            position: 'absolute',
+            position: 'fixed',
             backgroundColor: '#143D59',
-            left: '0%',
+            left: '-1%',
             width: '100%',
             fontFamily: 'Verdana',
             fontSize: '10px'

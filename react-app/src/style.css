@@ -28,7 +28,6 @@ a {
 	text-decoration: none;
 	font-family: Verdana;
 	font-size: 11px;
-	color: white;
 	padding: 5px;
 }
 
@@ -45,6 +44,7 @@ a {
     right: 0;
 	font-family: Verdana;
 	font-size: 10px;
+	color: white;
 }
 
 .header {
@@ -420,6 +420,11 @@ list-style-type:none;
 	position: relative; 
 	flex: 0 0 100%; 
   }
+
+  .highlight {
+	color:red;
+	background-color: #143D59;
+ }
 
 
 

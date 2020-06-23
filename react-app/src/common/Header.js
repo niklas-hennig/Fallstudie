@@ -10,14 +10,15 @@ class Header extends Component {
             user: this.props.user //Cookies.get('Auth')
         }
         this.style = {
-            position: 'absolute',
+            position: 'fixed',
             width: '100%',
             left: '-0%',
             height: '5%',
             top: '0%',
             display: "flex", 
             flexDirection:"row", 
-            background: "#F4B41A"
+            background: "#F4B41A",
+            border: '#ffffff'
         }
         this.handleSettings=this.handleSettings.bind(this);
         this.handleLogout=this.handleLogout.bind(this);
@@ -34,7 +35,6 @@ class Header extends Component {
 
 
     render() {
-        console.log(this.state)
         let greeting = ''
         if (this.state.user) greeting='Hallo '+this.state.user
         let menu = ''
@@ -60,7 +60,6 @@ class Header extends Component {
     }
 
     UNSAFE_componentWillReceiveProps(nextProps){
-        console.log(nextProps)
         this.setState({user: nextProps.user})
     }
 }

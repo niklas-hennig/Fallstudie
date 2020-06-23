@@ -11,6 +11,7 @@
     "embla-carousel-react": "^2.0.1",
     "infinite-react-carousel": "^1.2.11",
     "js-cookie": "^2.2.1",
+    "moment": "^2.27.0",
     "package.json": "^2.0.1",
     "react": "^16.13.0",
     "react-bootstrap": "^1.0.1",

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Calendar from 'react-calendar'
 import Axios from 'axios';
+import moment from 'moment'
 
 import RoleListItem from './listRoleItem';
 import ListProjectItem from './listProjectItem';
@@ -15,7 +16,8 @@ class LeftBar extends Component {
             comp_id: this.props.comp_id,
             projects: [],
             dates: [],
-            updated: null
+            updated: null,
+            calendar: ''
         }
         this.style = {
             position: 'absolute',
@@ -57,26 +59,58 @@ class LeftBar extends Component {
         this.props.onProjectSelected(event);
     }
 
+    getDates(startDate, stopDate) {
+        var dateArray = [];
+        var currentDate = moment(startDate);
+        var stopDate = moment(stopDate);
+        while (currentDate <= stopDate) {
+            dateArray.push( moment(currentDate).format('YYYY-MM-DD') )
+            currentDate = moment(currentDate).add(1, 'days');
+        }
+        return dateArray;
+    }
+
     convertToDates(){
         let key=0
+        let i = 0
         let dates = []
+        let dates_full = []
         let date = null
         let start = null
         let end = null
         for(key in this.state.projects){
-            start = new Date(this.state.projects[key]['start_date'])
-            end = new Date(this.state.projects[key]['end_date'])
+            start = this.state.projects[key]['start_date']
+            end = this.state.projects[key]['end_date']
             date = {start: start, end: end}
             dates.push(date)
         }
-        this.setState({dates:dates})
+        let res = null
+        for(key in dates){
+            res = this.getDates(dates[0].start, dates[0].end)
+            for(i in res)
+                dates_full.push(res[i])
+        }
+        this.setState({dates:dates_full})
+        console.log("set dates")
+        console.log(dates)
+        console.log(dates_full)
+        this.setState({calendar: <Calendar 
+            tileClassName={({ date, view }) => {
+                console.log(moment(date).format("YYYY-MM-DD").toString())
+                console.log(dates_full.find(x=>x===moment(date).format("YYYY-MM-DD")))
+                if(this.state.dates.find(x=>x===moment(date).format("YYYY-MM-DD"))){
+                 return  'highlight'
+                }
+              }}
+            tileDisabled={({ date }) => date.getDay() === 0}
+            />})
     }
 
     render(){
         let cal = ''
         let calTitle = ''
         if(this.state.type=='f'){
-            cal = <Calendar />
+            cal = this.state.calendar
             calTitle = <h2>Ihr Monat</h2>
         }
         let noProjects = ''

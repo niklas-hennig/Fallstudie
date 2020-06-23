@@ -39,13 +39,13 @@ class MainContent extends Component {
             update: null,
             mainContent: null
         }
-        this.style={position: 'absolute', 
+        this.style={position: 'fixed', 
                     top: '8%',
                     left: '0%',
                     height: '85%',
                     width: '100%', 
                     display: "flex", 
-                    flexDirection:"row"                    
+                    overflowY: "scoll",                  
                 }
         this.getBars=this.getBars.bind(this);
         this.handleApplied=this.handleApplied.bind(this);
@@ -63,7 +63,7 @@ class MainContent extends Component {
     }
 
     componentDidMount(){
-        if(window.localStorage.getItem("auth") == null) this.setState({content: this.getLogin()});
+        if(window.localStorage.getItem("auth") === null) this.setState({content: this.getLogin()});
         else {
             let auth = JSON.parse(window.localStorage.getItem("auth"))
             this.setState({auth: auth})
@@ -162,7 +162,7 @@ class MainContent extends Component {
             token=this.state.auth['private']
             isFreelancer = true
         }
-        else if(isChange!=true) isFreelancer=false
+        else if(isChange!==true) isFreelancer=false
         else {
             token=this.state.auth['private']
             username = this.state.auth['username']
@@ -177,7 +177,7 @@ class MainContent extends Component {
     }
 
     getLogin(){
-        return <div id='backgroundImage' style={{backgroundImage: `url(${login_background})`}}>
+        return <div id='backgroundImage' style={{backgroundImage: `url(${login_background})`, backgroundSize: "cover"}}>
                     <Description />
                     <Login onRegister={this.handleRegister} onLogin={this.handleLogin} onPasswordForgotten={this.handlePasswordForgotten}/>
                 </div>
@@ -191,7 +191,7 @@ class MainContent extends Component {
     }
 
     getRegistration(){
-        return <div id='backgroundImage' style={{backgroundImage: `url(${login_background})`}}>
+        return <div style={{backgroundImage: `url(${login_background})`}}>
                     <Description />
                     <Registration onBack={this.handleBack} onCompanyComplete={this.handleCompanyComplete}/>
                 </div>
@@ -220,13 +220,8 @@ class MainContent extends Component {
 
     getRoleDetail(role_id){
         console.log("showing role"+role_id)
-        let username = null
-        let type='c'
-        let auth = null
-        let comp_id = this.state.comp_id
-        username= this.state.auth['username']
-        type=this.state.auth['type']
-        auth= this.state.auth['private']
+        let username= this.state.auth['username']
+        let auth= this.state.auth['private']
         this.setState({ mainContent: "rd"})
         return <div>
             <RoleDetail role_id={role_id} username={username} token={auth} onBack={this.handleBackToHome} onApply={this.handleApplied}></RoleDetail>
@@ -234,13 +229,8 @@ class MainContent extends Component {
     }
 
     getProjectDetail(project_id){
-        let username = null
-        let type='c'
-        let auth = null
-        let comp_id = this.state.comp_id
-        username= this.state.auth['username']
-        type=this.state.auth['type']
-        auth= this.state.auth['private']
+        let username= this.state.auth['username']
+        let auth= this.state.auth['private']
         this.setState({ mainContent: "pd"})
         return <div>
             <ProjectDetail project_id={project_id} token={auth} username={username} onBack={this.handleBackToHome} onUpdate={this.getBars}></ProjectDetail>
@@ -271,8 +261,6 @@ class MainContent extends Component {
     }
 
     UNSAFE_componentWillReceiveProps(nextProps){
-        console.log(nextProps)
-        console.log(this.state.mainContent)
         if(nextProps.goToSettings===true&&this.state.mainContent!=="s") this.setState({content: this.getSettings(true), leftContent: '', rightContent: ''})
     }
 }

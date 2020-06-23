@@ -27,7 +27,6 @@ class ContentWrapper extends Component{
 
 
     render(){
-        console.log(this.state)
         return (
         <div>
             <Header user={this.state.username} onSettings={this.handleSettings}/>
@@ -35,6 +34,10 @@ class ContentWrapper extends Component{
             <Footer ></Footer>
         </div>
         )
+    }
+
+    temp(){
+        let s =  ''   
     }
 }
 
