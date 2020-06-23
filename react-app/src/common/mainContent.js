@@ -203,8 +203,8 @@ class MainContent extends Component {
         let auth = this.state.auth['private']
         let comp_id = this.state.comp_id
         this.setState({update: new Date()})
-        this.setState({leftContent: <LeftBar username={username} type={type} token={auth} comp_id={comp_id} update={this.state.update} onRoleSelect={this.handleRoleSelected} onProjectSelected={this.handleProjectSelected}/> })
-        this.setState({rightContent: <RightBar username={username} type={type} token={auth} comp_id={comp_id} update={this.state.update} onApplicationSelect={this.handleRoleApplicationSelected} onChange={this.handleUpdate}/>})
+        this.setState({leftContent: <LeftBar username={username} type={type} token={auth} comp_id={comp_id} update={new Date()} onRoleSelect={this.handleRoleSelected} onProjectSelected={this.handleProjectSelected}/> })
+        this.setState({rightContent: <RightBar username={username} type={type} token={auth} comp_id={comp_id} update={new Date()} onApplicationSelect={this.handleRoleApplicationSelected} onChange={this.handleUpdate}/>})
     }
 
     getHome(){
@@ -243,7 +243,7 @@ class MainContent extends Component {
         auth= this.state.auth['private']
         this.setState({ mainContent: "pd"})
         return <div>
-            <ProjectDetail project_id={project_id} token={auth} onBack={this.handleBackToHome} onUpdate={this.getBars}></ProjectDetail>
+            <ProjectDetail project_id={project_id} token={auth} username={username} onBack={this.handleBackToHome} onUpdate={this.getBars}></ProjectDetail>
         </div>
     }
 
@@ -270,7 +270,7 @@ class MainContent extends Component {
         )
     }
 
-    componentWillReceiveProps(nextProps){
+    UNSAFE_componentWillReceiveProps(nextProps){
         console.log(nextProps)
         console.log(this.state.mainContent)
         if(nextProps.goToSettings===true&&this.state.mainContent!=="s") this.setState({content: this.getSettings(true), leftContent: '', rightContent: ''})

@@ -65,7 +65,7 @@ class ProjectRoleDetail extends Component {
         this.fetchAccepted(this.state.info.role_id)
     }
 
-    componentWillReceiveProps(nextProps){
+    UNSAFE_componentWillReceiveProps(nextProps){
         this.setState({info: this.props.info})
         this.fetchApplicationsSpecific(nextProps.info.role_id)
         this.fetchAccepted(nextProps.info.role_id)

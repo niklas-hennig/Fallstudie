@@ -30,10 +30,9 @@ router.post('/:token', (req, res) => {
     .catch(err=> console.log(err))
 })
 
-router.delete('/:project_id', (req, res)=>{
-    if (!req.cookies['Auth']) return res.status(401).send("Not signed in")
-    if(req.cookies['Auth']['type']=='f') return res.status(403).send("Not allowed")
-    username=req.cookies['Auth']['username']
+router.delete('/:project_id/:token/:username', (req, res)=>{
+    if(!auth_utils.validateToken(req.params.token)) return res.status(401).send('not signed in')
+    username=req.params.username
 
     db_utils.delteProject(req.params.project_id, username)
     .then(data => res.send(data))

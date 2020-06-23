@@ -41,6 +41,8 @@ class LeftBar extends Component {
         }else{
             Axios.get('http://localhost:80/api/Project/'+this.state.username+'/'+this.state.token)
             .then(res => {
+                console.log("fetched:")
+                console.log(res.data)
                 this.setState({projects: res.data})
             })
             .catch(err => console.log(err))
@@ -95,11 +97,15 @@ class LeftBar extends Component {
         this.fetchInfo();
     }
 
-    componentWillReceiveProps(nextProps){
-        if(this.state.updated!=nextProps.updated){
+    UNSAFE_componentWillReceiveProps(nextProps){
+        console.log("leftbar will receive props:")
+        console.log(nextProps)
+        console.log(this.state)
+        //if(this.state.updated!==nextProps.updated){
+            console.log("left bar will fetch")
             this.fetchInfo()
             this.setState({updated: nextProps.updated})
-        }
+        //}
     }
 }
 export default LeftBar;

@@ -482,10 +482,15 @@ module.exports={
   },
 
   delteProject: function(project_id, username){
+    console.log(project_id)
     return new Promise((resolve, reject)=>{
-      pool.query(`DELETE FROM project WHERE project_id=$1 AND comp_id=(SELECT MAX(comp_id) FROM company_account WHERE username=$2)`,
-      [project_id, username])
-      .then(data=>resolve(data))
+      pool.query('DELETE FROM role WHERE role_id IN (SELECT r.role_id FROM role as r JOIN role_assignment as ra ON ra.role_id=r.role_id WHERE ra.project_id=$1)', 
+      [project_id])
+      .then(data=>{
+        pool.query(`DELETE FROM project WHERE project_id=$1 AND comp_id=(SELECT MAX(comp_id) FROM company_account WHERE username=$2)`,  [project_id, username])
+        .then(data => resolve())
+        .catch(err => reject(err))
+      })
       .catch(err => reject(err))
     })
   },

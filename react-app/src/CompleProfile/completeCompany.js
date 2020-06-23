@@ -100,7 +100,7 @@ class CompleteProfileCompany extends Component {
 
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         this.setState({
             comp_id: nextProps.comp_id,
             comp_name: nextProps.name,

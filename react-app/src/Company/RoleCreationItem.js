@@ -44,7 +44,7 @@ class RoleCreationItem extends Component {
         </tbody>
     }
 
-    componentWillReceiveProps(nextProps){
+    UNSAFE_componentWillReceiveProps(nextProps){
         this.props.onChange(this.state.id, "area", nextProps.prefences[0]);
         this.setState({prefences: nextProps.prefences, id: nextProps.id, area: nextProps.prefences[0]})
     }

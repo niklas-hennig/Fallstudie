@@ -12,6 +12,7 @@ class ProjectDetail extends Component {
         this.state={
             project_id: this.props.project_id,
             token: this.props.token,
+            username: this.props.username,
             info: null,
             applications: [],
             accepted: [],
@@ -38,6 +39,7 @@ class ProjectDetail extends Component {
         this.addRole=this.addRole.bind(this);
         this.closePopup=this.closePopup.bind(this);
         this.createRole=this.createRole.bind(this);
+        this.handleDeleteProjekt=this.handleDeleteProjekt.bind(this);
     }
 
     fetchInfo(){
@@ -140,6 +142,15 @@ class ProjectDetail extends Component {
         })
     }
 
+    handleDeleteProjekt(){
+        axios.delete('http://localhost:80/api/Project/'+this.state.project_id+'/'+this.state.token+'/'+this.state.username)
+        .then(res => {
+            console.log(res)
+            this.props.onBack();
+        })
+        .catch(err => console.error(err))
+    }
+
 
     render(){
         let project_info = null
@@ -210,6 +221,7 @@ class ProjectDetail extends Component {
                     <p>Start: {project_info.start_date.substring(8,10)}.{project_info.start_date.substring(5,7)}.{project_info.start_date.substring(0,4)}</p>
                     <p>Ende: {project_info.end_date.substring(8,10)}.{project_info.end_date.substring(5,7)}.{project_info.end_date.substring(0,4)}</p>
                     <p>Bewerbungsende: {project_info.application_limit.substring(8,10)}.{project_info.application_limit.substring(5,7)}.{project_info.application_limit.substring(0,4)}</p>
+                    <button onClick={this.handleDeleteProjekt}>Projekt löschen</button>
                 </div>
                 <button onClick={this.addRole}>Rolle hinzufügen</button>
                 {creationDialog}
@@ -252,7 +264,7 @@ class ProjectDetail extends Component {
 
 
 
-    componentWillReceiveProps(nextProps){
+    UNSAFE_componentWillReceiveProps(nextProps){
         if(this.state.project_id!==nextProps.project_id)
             this.fetchSpecific(nextProps.project_id);
             this.setState({project_id: nextProps.project_id, applications: [], accepted:[]})

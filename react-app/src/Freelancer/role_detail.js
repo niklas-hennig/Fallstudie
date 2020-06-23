@@ -83,7 +83,7 @@ class RoleDetail extends Component {
         this.fetchInfo(this.state.role_id)
     }
 
-    componentWillReceiveProps(nextProps){
+    UNSAFE_componentWillReceiveProps(nextProps){
         if(this.state.role_id!==nextProps.role_id)
             this.fetchInfo(nextProps.role_id)
             this.setState({role_id: nextProps.role_id})

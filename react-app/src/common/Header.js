@@ -59,7 +59,7 @@ class Header extends Component {
             </header>
     }
 
-    componentWillReceiveProps(nextProps){
+    UNSAFE_componentWillReceiveProps(nextProps){
         console.log(nextProps)
         this.setState({user: nextProps.user})
     }

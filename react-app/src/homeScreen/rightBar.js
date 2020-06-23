@@ -61,7 +61,7 @@ class RightBar extends Component {
         this.setProjects();
     }
 
-    componentWillReceiveProps(nextProps){
+    UNSAFE_componentWillReceiveProps(nextProps){
         if(this.state.update!=nextProps.update){
             this.setProjects();
         }

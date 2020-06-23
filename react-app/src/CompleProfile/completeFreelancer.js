@@ -90,7 +90,7 @@ class CompleteProfileFreelancer extends Component {
         })
     }
 
-    componentWillMount(){
+    UNSAFE_componentWillMount(){
         this.fetchPrefences()
     }
 
@@ -147,7 +147,7 @@ class CompleteProfileFreelancer extends Component {
         );
     }
 
-    componentWillReceiveProps(nextProps){
+    UNSAFE_componentWillReceiveProps(nextProps){
         console.log("recieving props")
         console.log(nextProps)
         this.setState({

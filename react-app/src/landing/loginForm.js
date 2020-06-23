@@ -46,7 +46,7 @@ class LoginForm extends Component {
         })
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         let newtype = '';
         if(nextProps.isCompany) newtype='c'
         else newtype='f'

@@ -56,11 +56,11 @@ class CarouselComp extends Component {
         }
     }
 
-    componentWillMount(){
+    UNSAFE_componentWillMount(){
         this.getIds()
     }
 
-    componentWillReceiveProps(nextProps) {
+    UNSAFE_componentWillReceiveProps(nextProps) {
         this.setState({
             username: this.props.username,
             type: this.props.type,
