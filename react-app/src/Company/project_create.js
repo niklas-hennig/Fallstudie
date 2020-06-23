@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from "axios";
+import moment from 'moment'
 
 import RoleCreationItem from './RoleCreationItem';
 
@@ -21,7 +22,8 @@ class ProjectCreate extends Component {
             roles: [{title: '', description: '', requirements: '', payment: '', area: '', numberOfFreeancers: 0, internal_id: 0}],
 
             //Functional
-            prefences: []
+            prefences: [],
+            dateError: null
         }
         this.style ={
             position: 'absolute',
@@ -76,6 +78,16 @@ class ProjectCreate extends Component {
     submitAll(){
         console.log("submitting")
         console.log(this.state.roles)
+        if(!this.state.start_date||!this.state.end_date||!this.state.application_limit){
+            this.setState({dateError: true})
+            return
+        }
+        let start = moment(this.state.start_date)
+        let end = moment(this.state.end_date)
+        let appLimit = moment(this.state.application_limit)
+        if(start>end || appLimit>start) {
+            this.setState({dateError: true})
+            return}
         axios.post('http://localhost:80/api/Project/'+this.state.token, {
             title: this.state.pr_titel,
             start_date: this.state.start_date,
@@ -108,6 +120,8 @@ class ProjectCreate extends Component {
     
     
     render(){
+        let dateErr = ''
+        if(this.state.dateError) dateErr=<p>Bitte valide Daten eingeben</p>
         if (this.state.prefences.length>0) console.log("creating with prefences")
         return <div style={this.style}>
             <h2>Ihr neues Projekt</h2>
@@ -120,6 +134,7 @@ class ProjectCreate extends Component {
                 <input type="date" name="end_date" onChange={this.changeHandler}/><br></br>
                 <label htmlFor="application_limit">Bewerbungende:</label><br></br>
                 <input type="date" name="application_limit" onChange={this.changeHandler}/>
+                {dateErr}
             </form>
             <button onClick={this.addRole}>Neue Rolle</button>
             <table>
