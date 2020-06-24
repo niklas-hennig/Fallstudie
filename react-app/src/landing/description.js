@@ -5,14 +5,11 @@ class Description extends Component {
     constructor() {
         super()
         this.style = {
-            width: '50%',
             marginLeft: '2.5%',
             marginTop: '2.5%',
-            height: '50%',
             backgroundColor: "#D9D9D9",
             borderRadius: '50px',
             textAlign: 'justify',
-            overflow: 'hidden',
             float: 'left'
         }
     }

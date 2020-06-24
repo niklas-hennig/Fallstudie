@@ -33,7 +33,7 @@ class Footer extends Component {
                 flexDirection: "row",
                 justifyContent: 'space-between',
                 position: "fixed",
-                bottom: 0,
+                bottom: 0
               }}
             showLabels
             onChange={this.onChange}

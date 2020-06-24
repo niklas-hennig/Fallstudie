@@ -178,10 +178,12 @@ class MainContent extends Component {
     }
 
     getLogin(){
-        return <div id='backgroundImage' style={{backgroundImage: `url(${login_background})`, backgroundSize: "cover"}}>
+        let t = <div id='backgroundImage' style={{backgroundImage: `url(${login_background})`, backgroundSize: "cover"}}>
+            </div>
+        return <React.Fragment>
                     <Description />
                     <Login onRegister={this.handleRegister} onLogin={this.handleLogin} onPasswordForgotten={this.handlePasswordForgotten}/>
-                </div>
+                </React.Fragment>
     }
 
     getPasswordReset(){
@@ -252,17 +254,20 @@ class MainContent extends Component {
         let lftcon = this.state.leftContent
         let cont = this.state.content
         let rghcon = this.state.rightContent
+        let barCols = 0
+        
+        if (lftcon) barCols=2
         return (
             <React.Fragment>
-                <Grid item xs={2} alignContent="stretch">
+                <Grid item xs={barCols} alignContent="stretch">
                     {lftcon}
                 </Grid>
                 <Grid xs={1}></Grid>
-                <Grid item xs={6} alignContent="flex-start">
+                <Grid item xs={12-(2*barCols)-2} alignContent="flex-start">
                     {cont}
                 </Grid>
                 <Grid xs={1}></Grid>
-                <Grid item xs={2} alignContent="stretch">
+                <Grid item xs={barCols} alignContent="stretch">
                     {rghcon}
                 </Grid>
             </React.Fragment>

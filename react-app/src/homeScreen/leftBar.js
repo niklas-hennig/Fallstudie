@@ -5,6 +5,7 @@ import moment from 'moment'
 
 import RoleListItem from './listRoleItem';
 import ListProjectItem from './listProjectItem';
+import { Card, CardHeader, CardContent } from '@material-ui/core';
 
 class LeftBar extends Component {
     constructor(props){
@@ -20,6 +21,7 @@ class LeftBar extends Component {
             calendar: ''
         }
         this.style = {
+            marginBottom: "20px"
         }
         this.fetchInfo=this.fetchInfo.bind(this);
         this.convertToDates=this.convertToDates.bind(this);
@@ -30,7 +32,7 @@ class LeftBar extends Component {
     fetchInfo(){
         if(this.state.type==='f'){
             let date = new Date()
-            Axios.get('http://localhost:80/api/Role/Timeline/'+this.state.username+'/'+this.state.token+'/2020-05-16')
+            Axios.get('http://localhost:80/api/Role/Timeline/'+this.state.username+'/'+this.state.token+'/'+moment(new Date()).format("YYYY-MM-")+'01')
             .then(res => {
                 this.setState({projects: res.data})
                 this.convertToDates();
@@ -96,11 +98,16 @@ class LeftBar extends Component {
     }
 
     render(){
-        let cal = ''
-        let calTitle = ''
+        let calCard = ''
         if(this.state.type=='f'){
-            cal = this.state.calendar
-            calTitle = <h2>Ihr Monat</h2>
+            calCard = <Card 
+            variant="outlined"
+            style={{marginTop: "5%", marginLeft: "2%"}}>
+                <CardHeader title="Ihr Monat"></CardHeader>
+                <CardContent>
+                    {this.state.calendar}
+                </CardContent>
+            </Card>
         }
         let noProjects = ''
         if (this.state.projects.length==0) noProjects=<div><h3>Keine Projekte vorhanden</h3></div>
@@ -108,8 +115,7 @@ class LeftBar extends Component {
         if(this.state.type==="f") children = this.state.projects.map((roleInfo) => <RoleListItem key={roleInfo.role_id} role_id={roleInfo.role_id} title={roleInfo.title} start_date={roleInfo.start_date} end_date={roleInfo.end_date} handleClick={this.handleRoleClick} mode="left"></RoleListItem>)
         else children = this.state.projects.map((project) => <ListProjectItem key={project.project_id} project_id={project.project_id} title={project.titel} start_date={project.start_date} end_date={project.end_date} handleClick={this.handleProjectClick}></ListProjectItem>)
         return <div style={this.style}>
-            {calTitle}
-            {cal}
+            {calCard}
             <h2>Ihre Projekte</h2>
             {children}
             {noProjects}
