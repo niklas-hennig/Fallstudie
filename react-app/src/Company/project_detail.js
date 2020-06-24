@@ -26,12 +26,6 @@ class ProjectDetail extends Component {
             numberOfFreeancers: 0,
             area: null
         }
-        this.style ={
-            position: 'absolute',
-            left: '15%',
-            width: '70%',
-            height: '100%'
-        }
         this.handleBack=this.handleBack.bind(this);
         this.handleExpand=this.handleExpand.bind(this);
         this.handleUpdate=this.handleUpdate.bind(this);
@@ -214,7 +208,7 @@ class ProjectDetail extends Component {
                 project_info = this.state.info[0]
 
                 return <React.Fragment>
-            <div style={this.style}>
+            <div>
                 <div style={{backgroundColor: 'lightgray'}}>
                     <button onClick={this.handleBack}>Zurück</button>
                     <h2>{project_info.titel}</h2>
@@ -251,7 +245,7 @@ class ProjectDetail extends Component {
                 </React.Fragment>
             }
         }
-        return <div style={this.style}>
+        return <div>
             <button onClick={this.handleBack}>Zurück</button>
             <h2>Keine Informationen gefunden</h2>
         </div>

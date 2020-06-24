@@ -34,7 +34,11 @@ SELECT *
 
 SELECT * FROM applications
 SELECT * from project;
-DELETE FROM role WHERE role_id>3
+DELETE FROM freelancer WHERE username='nh2';
+DELETE FROM password_token
+
+DELETE FROM role 
+WHERE role_id IN (SELECT r.role_id FROM role as r JOIN role_assignment as ra ON ra.role_id=r.role_id WHERE ra.project_id=1)
 
 
 
@@ -46,6 +50,9 @@ SELECT * FROM role_assignment INNER JOIN project ON role_assignment.project_id=p
                   
 
 UPDATE freelancer SET resume_link='testuser' WHERE username='testuser';
+
+SELECT * FROM company;
+UPDATE company SET tel_no=01234512345 WHERE comp_id=1;
 
 SELECT r.* FROM role as r JOIN applications as a ON r.role_id=a.role_id JOIN freelancer as f ON f.user_id=a.freelancer_id;
 

@@ -61,7 +61,7 @@ module.exports={
 
     getApplicationsCompany: function(comp_id){
     return new Promise((resolve, reject) => {
-        pool.query('SELECT f.*, a.role_id FROM freelancer as f JOIN applications as a ON f.user_id=a.freelancer_id WHERE a.com_id=$1',
+        pool.query('SELECT f.*, a.role_id, r.title FROM freelancer as f JOIN applications as a ON f.user_id=a.freelancer_id JOIN role as r ON r.role_id=a.role_id WHERE a.com_id=$1',
         [comp_id])
         .then(data => resolve(data.rows))
         .catch(err => reject(err))

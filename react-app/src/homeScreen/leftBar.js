@@ -20,10 +20,6 @@ class LeftBar extends Component {
             calendar: ''
         }
         this.style = {
-            position: 'absolute',
-            width: '15%',
-            height: '100%',
-            backgroundColor: '#F4B41A',
         }
         this.fetchInfo=this.fetchInfo.bind(this);
         this.convertToDates=this.convertToDates.bind(this);
@@ -43,8 +39,6 @@ class LeftBar extends Component {
         }else{
             Axios.get('http://localhost:80/api/Project/'+this.state.username+'/'+this.state.token)
             .then(res => {
-                console.log("fetched:")
-                console.log(res.data)
                 this.setState({projects: res.data})
             })
             .catch(err => console.log(err))
@@ -111,8 +105,8 @@ class LeftBar extends Component {
         let noProjects = ''
         if (this.state.projects.length==0) noProjects=<div><h3>Keine Projekte vorhanden</h3></div>
         let children = null
-        if(this.state.type==="f") children = this.state.projects.map((roleInfo) => <RoleListItem key={roleInfo.role_id} role_id={roleInfo.role_id} title={roleInfo.title} start_date={roleInfo.start_date} handleClick={this.handleRoleClick} mode="left"></RoleListItem>)
-        else children = this.state.projects.map((project) => <ListProjectItem key={project.project_id} project_id={project.project_id} title={project.titel} start_date={project.start_date} handleClick={this.handleProjectClick}></ListProjectItem>)
+        if(this.state.type==="f") children = this.state.projects.map((roleInfo) => <RoleListItem key={roleInfo.role_id} role_id={roleInfo.role_id} title={roleInfo.title} start_date={roleInfo.start_date} end_date={roleInfo.end_date} handleClick={this.handleRoleClick} mode="left"></RoleListItem>)
+        else children = this.state.projects.map((project) => <ListProjectItem key={project.project_id} project_id={project.project_id} title={project.titel} start_date={project.start_date} end_date={project.end_date} handleClick={this.handleProjectClick}></ListProjectItem>)
         return <div style={this.style}>
             {calTitle}
             {cal}
@@ -127,14 +121,8 @@ class LeftBar extends Component {
     }
 
     UNSAFE_componentWillReceiveProps(nextProps){
-        console.log("leftbar will receive props:")
-        console.log(nextProps)
-        console.log(this.state)
-        //if(this.state.updated!==nextProps.updated){
-            console.log("left bar will fetch")
-            this.fetchInfo()
-            this.setState({updated: nextProps.updated})
-        //}
+        this.fetchInfo()
+        this.setState({updated: nextProps.updated})
     }
 }
 export default LeftBar;

@@ -70,15 +70,19 @@ module.exports={
     return new Promise ((resolve, reject) => 
       pool.query('SELECT user_id FROM freelancer WHERE username=$1', [username])
           .then(data => {
-            user_id = data.rows[0].user_id;
-            pool.query('SELECT pref_id FROM prefences WHERE pref_name=$1', [prefence_name])
-                .then(data => {pool.query('INSERT INTO prefence_assignment (user_id, pref_id) VALUES ($1, $2)', [user_id, data.rows[0].pref_id])
-                                .then(data => resolve())
-                                .catch(err => reject(err))
+            pool.query('DELETE FROM prefence_assignment WHERE user_id=$1', [data.rows[0].user_id])
+            .then(data => {
+              user_id = data.rows[0].user_id;
+              pool.query('SELECT pref_id FROM prefences WHERE pref_name=$1', [prefence_name])
+                  .then(data => {pool.query('INSERT INTO prefence_assignment (user_id, pref_id) VALUES ($1, $2)', [user_id, data.rows[0].pref_id])
+                                  .then(data => resolve())
+                                  .catch(err => reject(err))
+                    })
+                  .catch(err => reject(err))
                   })
-                .catch(err => reject(err))
                 })
             .catch(err => reject(err))
+          .catch(err => reject(err))
       )
   },
 

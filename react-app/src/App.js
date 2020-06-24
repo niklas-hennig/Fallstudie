@@ -7,6 +7,10 @@ import Datenschutz from './staticPages/datenschutz';
 import NotFound from './staticPages/notFound';
 
 class App extends Component {
+  componentDidMount(){
+    document.title = "Freelane - Die Projektvermittlung"
+  }
+
   render() {
     return (
       <React.Fragment>

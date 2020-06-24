@@ -123,7 +123,7 @@ class ProjectCreate extends Component {
         let dateErr = ''
         if(this.state.dateError) dateErr=<p>Bitte valide Daten eingeben</p>
         if (this.state.prefences.length>0) console.log("creating with prefences")
-        return <div style={this.style}>
+        return <div>
             <h2>Ihr neues Projekt</h2>
             <button onClick={this.props.onBack}>Zurück</button>
             <form style={{backgroundColor:"gray"}}>

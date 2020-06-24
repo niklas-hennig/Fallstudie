@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Card from '@material-ui/core/Card';
 
 class RoleListItem extends Component {
     constructor(props){
@@ -33,11 +34,19 @@ class RoleListItem extends Component {
         let date = ''
         if(this.state.start_date)
         date = <p>Start: {this.state.start_date.substring(8,10)}.{this.state.start_date.substring(5,7)}.{this.state.start_date.substring(0,4)}</p>
-        return <div onClick={this.clickHandler} style={{backgroundColor: 'gray'}}>
+        let t = <div onClick={this.clickHandler} style={{backgroundColor: 'gray'}}>
         <h3>{this.state.title}</h3>
         {date}
         {delBtn}
         </div>
+        return (
+            <Card style={{minWidth: 275}} 
+            variant="outlined">
+                
+            </Card>
+        )
+        
+        
     }
 }
 export default RoleListItem;

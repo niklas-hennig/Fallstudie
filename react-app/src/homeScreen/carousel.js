@@ -6,6 +6,7 @@ import Slider from 'infinite-react-carousel';
 import SlideProject from './slideProject'
 import SlideRole from './slideRole';
 import carousel from 'infinite-react-carousel/lib/carousel';
+import { Grid } from '@material-ui/core';
 
 class CarouselComp extends Component {
     constructor(props){
@@ -34,7 +35,7 @@ class CarouselComp extends Component {
     }
     getIds(){
         let projects = []
-        if(this.state.type=='f'){
+        if(this.state.type==='f'){
             axios.get('http://localhost:80/api/Role/'+this.state.username+'/f/'+this.state.token)
             .then(res => {
                 let key = 0
@@ -86,7 +87,7 @@ class CarouselComp extends Component {
         let carousel = ''
         let title = ''
         let create = ''
-        if (this.state.type=='f') title="Ihre vorgeschlagenen Projekte"
+        if (this.state.type==='f') title="Ihre vorgeschlagenen Projekte"
         else {
             title="Ihre aktiven Projekte"
             create = <div>
@@ -96,7 +97,7 @@ class CarouselComp extends Component {
         let settings = {
             dots: true,
             centerMode: true,
-            centerPadding: 30,
+            centerPadding: 0,
         }
         if (this.state.all_role_ids.length>0){
             carousel =
@@ -105,12 +106,13 @@ class CarouselComp extends Component {
             </Slider>
         }
         if(this.state.all_projects.length>0){
-            carousel = 
-            <Slider {...settings}>
-                {this.state.all_projects.map((info, index) => <SlideProject key={info.project_id} project_id={info.project_id} title={info.titel} start_date={info.start_date} height={this.state.height} onSelect={this.handleSelectProject} ></SlideProject>)}
-            </Slider>
+            carousel = <React.Fragment>
+                    <Slider {...settings}>
+                        {this.state.all_projects.map((info, index) => <SlideProject key={info.project_id} project_id={info.project_id} title={info.titel} start_date={info.start_date} app_limit={info.application_limit} height={this.state.height} onSelect={this.handleSelectProject} ></SlideProject>)}
+                    </Slider>
+            </React.Fragment>
         }
-        if(this.state.type=='f'&&this.state.all_role_ids.length==0){
+        if(this.state.type==='f'&&this.state.all_role_ids.length==0){
             carousel = 
             <div>
                 <h2>Keine Projekte vorhanden</h2>
@@ -123,7 +125,7 @@ class CarouselComp extends Component {
             </div>
         }
     return (
-        <div style={this.style}>
+        <div >
             <h1>{title}</h1>
             <div className="carousel_container" ref={ (divElement) => { this.divElement = divElement } } style={{height: '90%'}}>
                 {carousel}

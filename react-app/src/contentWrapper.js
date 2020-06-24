@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import { Grid } from '@material-ui/core';
+
 import MainContent from './common/mainContent';
 import Footer from './common/Footer';
 import Header from './common/Header';
@@ -10,7 +12,8 @@ class ContentWrapper extends Component{
         this.state={
             auth: null,
             username: null,
-            toSettings: false
+            toSettings: false,
+            mainContentHeight: 0
         }
         this.handleLogin=this.handleLogin.bind(this);
         this.handleSettings=this.handleSettings.bind(this);
@@ -28,17 +31,25 @@ class ContentWrapper extends Component{
 
     render(){
         return (
-        <div>
-            <Header user={this.state.username} onSettings={this.handleSettings}/>
-            <MainContent onLogin={this.handleLogin} goToSettings={this.state.toSettings}></MainContent>
-            <Footer ></Footer>
-        </div>
+        <Grid container direction="column" id="contentWrapper">
+            <Grid item ref={(elem) => this.header = elem} >
+                <Header user={this.state.username} onSettings={this.handleSettings} />
+            </Grid>
+            <Grid item container>
+                <MainContent onLogin={this.handleLogin} goToSettings={this.state.toSettings} height={this.state.mainContentHeight}></MainContent>
+            </Grid>  
+            <Grid item container>
+                <Grid item xs={"auto"}/>
+                <Grid item container xs={3}>
+                    <Footer />
+                </Grid>
+                <Grid item xs={"auto"}/>
+            </Grid>          
+        </Grid>
         )
     }
 
-    temp(){
-        let s =  ''   
-    }
+    
 }
 
 export default ContentWrapper;

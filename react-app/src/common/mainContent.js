@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from "axios";
+import { Grid } from '@material-ui/core'
 
 //Landing page imports
 import Description from '../landing/description';
@@ -252,11 +253,19 @@ class MainContent extends Component {
         let cont = this.state.content
         let rghcon = this.state.rightContent
         return (
-            <div id='MainContainer' style={this.style}>
-                {lftcon}
-                {cont}
-                {rghcon}
-            </div>
+            <React.Fragment>
+                <Grid item xs={2} alignContent="stretch">
+                    {lftcon}
+                </Grid>
+                <Grid xs={1}></Grid>
+                <Grid item xs={6} alignContent="stretch">
+                    {cont}
+                </Grid>
+                <Grid xs={1}></Grid>
+                <Grid item xs={2} alignContent="stretch">
+                    {rghcon}
+                </Grid>
+            </React.Fragment>
         )
     }
 
