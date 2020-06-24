@@ -9,7 +9,8 @@ class SlideProject extends Component {
             project_id: this.props.project_id,
             title: this.props.title,
             start_date: this.props.start_date,
-            app_limit: this.props.app_limit
+            app_limit: this.props.app_limit,
+            comp_name: this.props.comp_name
         }
     }
 
@@ -30,10 +31,10 @@ class SlideProject extends Component {
             variant="outlined">
                 <CardHeader avatar={
                     <Avatar aria-label="recipe" style={{backgroundColor: "#D6D6D6"}}>
-                        U
+                        {this.state.comp_name[0].toUpperCase()}
                     </Avatar>}
                     title={this.state.title}
-                    subheader={this.state.start_date}
+                    subheader={"Start: "+moment(this.state.start_date).format('DD.MM.YYYY')}
                 >
                 </CardHeader>
                 <CardContent>

@@ -258,7 +258,7 @@ class MainContent extends Component {
                     {lftcon}
                 </Grid>
                 <Grid xs={1}></Grid>
-                <Grid item xs={6} alignContent="stretch">
+                <Grid item xs={6} alignContent="flex-start">
                     {cont}
                 </Grid>
                 <Grid xs={1}></Grid>

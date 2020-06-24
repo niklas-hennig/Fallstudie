@@ -11,11 +11,6 @@ class Footer extends Component {
         this.state={
             selected: null
         }
-        this.style={
-            backgroundColor: '#143D59',
-            fontFamily: 'Verdana',
-            fontSize: '10px'
-        }
         this.sites={
             0: "about",
             1: "impressum",
@@ -29,19 +24,6 @@ class Footer extends Component {
     }
 
     render() {
-        let t = <div className="footer" style={this.style}>
-        <nav>
-            <table id="navigation_footer">
-                <tbody>
-                    <tr>
-                        <td><a href="/about.html">Über uns</a></td>
-                        <td><a href="/impressum.html" >Impressum</a></td>
-                        <td><a href="html\datenschutz.html">Datenschutzhinweise</a></td>
-                    </tr>
-                </tbody>
-            </table>
-        </nav>
-    </div>
         return (
             <BottomNavigation
             value={this.state.selected}

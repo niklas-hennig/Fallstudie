@@ -6,7 +6,7 @@ import Slider from 'infinite-react-carousel';
 import SlideProject from './slideProject'
 import SlideRole from './slideRole';
 import carousel from 'infinite-react-carousel/lib/carousel';
-import { Grid } from '@material-ui/core';
+import { Grid, Button } from '@material-ui/core';
 import AddCircleRoundedIcon from '@material-ui/icons/AddCircleRounded';
 
 class CarouselComp extends Component {
@@ -92,7 +92,15 @@ class CarouselComp extends Component {
         if (this.state.type==='f') title="Ihre vorgeschlagenen Projekte"
         else {
             title="Ihre aktiven Projekte"
-            create = <AddCircleRoundedIcon onClick={this.handleProjektCreate} fontSize="large" style={{right:0}}/>
+            create = <Button
+            variant="contained"
+            color="primary"
+            size="large"
+            startIcon={<AddCircleRoundedIcon />}
+            onClick={this.handleProjektCreate}
+            >
+                Neues Projekt
+            </Button>
         }
         let settings = {
             dots: true,
@@ -107,9 +115,10 @@ class CarouselComp extends Component {
             </Slider>
         }
         if(this.state.all_projects.length>0){
+            console.log(this.state.all_projects)
             carousel = <React.Fragment>
                     <Slider {...settings}>
-                        {this.state.all_projects.map((info, index) => <SlideProject key={info.project_id} project_id={info.project_id} title={info.titel} start_date={info.start_date} app_limit={info.application_limit} height={this.state.height} onSelect={this.handleSelectProject} ></SlideProject>)}
+                        {this.state.all_projects.map((info, index) => <SlideProject key={info.project_id} project_id={info.project_id} title={info.titel} start_date={info.start_date} app_limit={info.application_limit} height={this.state.height} comp_name={info.name} onSelect={this.handleSelectProject} ></SlideProject>)}
                     </Slider>
             </React.Fragment>
         }

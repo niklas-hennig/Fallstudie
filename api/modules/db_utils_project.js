@@ -11,10 +11,11 @@ const pool = new Pool({
 module.exports={
     getAllProjects: function(comp_account){
         return new Promise((resolve, reject) => {
-          pool.query(`SELECT project.*
+          pool.query(`SELECT project.*, c.name
                       FROM project
                       JOIN company_account as ca
                       ON project.comp_id = ca.comp_id
+                      LEFT JOIN company as c on c.comp_id=project.comp_id
                       WHERE ca.username = $1`, [comp_account])
           .then(data => resolve(data.rows))
           .catch(err => {console.log('db:')
