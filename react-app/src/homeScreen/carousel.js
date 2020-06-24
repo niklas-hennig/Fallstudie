@@ -7,6 +7,7 @@ import SlideProject from './slideProject'
 import SlideRole from './slideRole';
 import carousel from 'infinite-react-carousel/lib/carousel';
 import { Grid } from '@material-ui/core';
+import AddCircleRoundedIcon from '@material-ui/icons/AddCircleRounded';
 
 class CarouselComp extends Component {
     constructor(props){
@@ -38,6 +39,7 @@ class CarouselComp extends Component {
         if(this.state.type==='f'){
             axios.get('http://localhost:80/api/Role/'+this.state.username+'/f/'+this.state.token)
             .then(res => {
+                console.log(res)
                 let key = 0
                 for (key in res.data){
                     projects.push(res.data[key].role_id)
@@ -90,14 +92,13 @@ class CarouselComp extends Component {
         if (this.state.type==='f') title="Ihre vorgeschlagenen Projekte"
         else {
             title="Ihre aktiven Projekte"
-            create = <div>
-                <button onClick={this.handleProjektCreate}>Neues Projekt erstellen</button>
-            </div>
+            create = <AddCircleRoundedIcon onClick={this.handleProjektCreate} fontSize="large" style={{right:0}}/>
         }
         let settings = {
             dots: true,
             centerMode: true,
             centerPadding: 0,
+            arrowsBlock: false
         }
         if (this.state.all_role_ids.length>0){
             carousel =

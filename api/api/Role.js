@@ -11,7 +11,6 @@ router.get('/:username/:type/:token', (req, res) =>{
     if(!auth_utils.validateToken(req.params.token)) return res.status(401).send('not signed in')
     if(req.params.type!='f') return res.status(403).send("Not allowed")
     username = req.params.username
-
     db_role.getPersonalizedRoles(username)
     .then(data => res.send(data))
     .catch(err => {console.log(err)

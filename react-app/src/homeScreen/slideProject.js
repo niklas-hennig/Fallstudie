@@ -29,7 +29,7 @@ class SlideProject extends Component {
             content = <Card
             variant="outlined">
                 <CardHeader avatar={
-                    <Avatar aria-label="recipe" style={{backgroundColor: "#FF0000"}}>
+                    <Avatar aria-label="recipe" style={{backgroundColor: "#D6D6D6"}}>
                         U
                     </Avatar>}
                     title={this.state.title}

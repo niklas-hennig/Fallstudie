@@ -54,7 +54,10 @@ module.exports={
         JOIN freelancer as f ON fa.freelancer_id=f.user_id
         WHERE f.username=$1)`,
         [username])
-        .then(data => resolve(data.rows))
+        .then(data => {
+          console.log(data)
+          resolve(data.rows)}
+          )
         .catch(err => reject(err))
     })
     },

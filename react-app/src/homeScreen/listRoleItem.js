@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import moment from 'moment'
+
 import Card from '@material-ui/core/Card';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button'
+import { CardContent, CardActions } from '@material-ui/core';
 
 class RoleListItem extends Component {
     constructor(props){
@@ -28,21 +33,34 @@ class RoleListItem extends Component {
 
 
     render(){
-        let delBtn = ''
+        let delBtn = 'Mehr anzeigen'
         if(this.state.mode!=="left")
-        delBtn = <button onClick={this.clickHandler}>Löschen</button>
+        delBtn = "Löschen"
         let date = ''
         if(this.state.start_date)
-        date = <p>Start: {this.state.start_date.substring(8,10)}.{this.state.start_date.substring(5,7)}.{this.state.start_date.substring(0,4)}</p>
-        let t = <div onClick={this.clickHandler} style={{backgroundColor: 'gray'}}>
-        <h3>{this.state.title}</h3>
-        {date}
-        {delBtn}
-        </div>
+        date = <p>Start: </p>
+        let t = <div onClick={this.clickHandler} style={{backgroundColor: 'gray'}}/>
         return (
-            <Card style={{minWidth: 275}} 
+            <Card style={{backgroundColor: "#F4B41A", marginBottom: 12, marginLeft: 5, marginRight: 5}}
             variant="outlined">
-                
+                <CardContent>
+                    <Typography variant="h6" component="h6">
+                        {this.state.title}
+                    </Typography>
+                    <Typography variant="caption" component="p">
+                        Start: {moment(this.state.start_date).format('DD.MM.YYYY')}
+                        <br></br>
+                    </Typography >
+                </CardContent>
+                <CardActions>
+                    <Button 
+                    size="small"
+                    onClick={this.clickHandler}
+                    variant="outlined"
+                    >
+                        {delBtn}
+                    </Button>
+                </CardActions>
             </Card>
         )
         
