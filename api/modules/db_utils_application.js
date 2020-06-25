@@ -21,7 +21,7 @@ module.exports={
             pool.query('SELECT user_id FROM freelancer WHERE username=$1', [username])
             .then(data => {
               user_id = data.rows[0].user_id
-              pool.query('INSERT INTO applications (freelancer_id, role_id, com_id) VALUES($1, $2, $3)', [user_id, role_id, comp_id])
+              pool.query('INSERT INTO applications (freelancer_id, role_id, comp_id) VALUES($1, $2, $3)', [user_id, role_id, comp_id])
               .then(data => {
                 resolve()})
               .catch(err => reject(err))
@@ -60,7 +60,7 @@ module.exports={
 
     getApplicationsCompany: function(comp_id){
     return new Promise((resolve, reject) => {
-        pool.query('SELECT f.*, a.role_id, r.title FROM freelancer as f JOIN applications as a ON f.user_id=a.freelancer_id JOIN role as r ON r.role_id=a.role_id WHERE a.com_id=$1',
+        pool.query('SELECT f.*, a.role_id, r.title FROM freelancer as f JOIN applications as a ON f.user_id=a.freelancer_id JOIN role as r ON r.role_id=a.role_id WHERE a.comp_id=$1',
         [comp_id])
         .then(data => resolve(data.rows))
         .catch(err => reject(err))

@@ -129,7 +129,7 @@ CREATE TABLE applications (
     application_id SERIAL PRIMARY KEY,
     freelancer_id int NOT NULL,
     role_id int NOT NULL,
-    com_id int NOT NULL,
+    comp_id int NOT NULL,
     appText VARCHAR(300),
     CONSTRAINT freelancer_id_fkey FOREIGN KEY (freelancer_id)
       REFERENCES freelancer (user_id) MATCH SIMPLE
@@ -137,7 +137,7 @@ CREATE TABLE applications (
     CONSTRAINT role_id_fkey FOREIGN KEY (role_id)
       REFERENCES role_assignment (assign_id) MATCH SIMPLE
       ON UPDATE CASCADE ON DELETE CASCADE,
-    CONSTRAINT comp_id_fkey FOREIGN KEY (com_id)
+    CONSTRAINT comp_id_fkey FOREIGN KEY (comp_id)
       REFERENCES company (comp_id) MATCH SIMPLE
       ON UPDATE CASCADE ON DELETE RESTRICT
 );
@@ -195,7 +195,7 @@ INSERT INTO role_assignment (role_id, project_id, number_of_freelancers) VALUES
     (2, 1, 5), 
     (3, 2, 1);
 
-INSERT INTO applications (freelancer_id, role_id, com_id)
+INSERT INTO applications (freelancer_id, role_id, comp_id)
     VALUES (1, 3, 1);
 
 INSERT INTO freelancer_assignment (freelancer_id, role_id)
