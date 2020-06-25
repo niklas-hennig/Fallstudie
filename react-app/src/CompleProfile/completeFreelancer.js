@@ -115,20 +115,20 @@ class CompleteProfileFreelancer extends Component {
         } if (this.props.gender === 'd') {
             anrede = 'Hallo'
         }
-        let disableComponent = '"false'
-        if (!this.state.isChange) disableComponent = '"true"'
-
+        let disableComponent = true
         let backAction = ''
-        if(this.isChange) backAction = <IconButton aria-label="Zurück"
+        if (this.state.isChange) {
+            disableComponent = false
+            backAction = <IconButton aria-label="Zurück"
         onClick={this.props.onBack}
         >
           <BackspaceIcon />
-        </IconButton>
+        </IconButton>}
         let uploadBtn = ''
         if (this.state.showUploadBtn === true) uploadBtn = <Button variant="outlined" onClick={this.uploadHandler}>Hochladen</Button>
         let date = ''
         if (this.state.date_of_birth) date = moment(this.state.date_of_birth).format('YYYY-MM-DD')
-        console.log(this.state)
+        console.log(disableComponent)
         return (
             <form onSubmit={this.submitHandler}>
                 <Grid container spacing={3}>
