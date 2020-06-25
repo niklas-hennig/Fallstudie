@@ -19,6 +19,7 @@ class RoleDetail extends Component {
         this.fetchInfo = this.fetchInfo.bind(this);
     }
 
+    //Fill state with data to display
     fetchInfo(role_id) {
         axios.get('http://localhost:80/api/Role/Freelancer/All/' + role_id + '/' + this.state.token)
             .then(res => {
@@ -31,6 +32,7 @@ class RoleDetail extends Component {
         this.props.onBack()
     }
 
+    //Call Backend to post application for the selected role
     handleApply = (event) => {
         axios.post('http://localhost:80/api/Application/' + this.state.role_id + '/' + this.state.username + '/' + this.state.token)
             .then(res => this.props.onApply())
@@ -38,6 +40,8 @@ class RoleDetail extends Component {
 
     }
 
+
+    //Preformat information and show application button when the call doesn't come from the leftbar
     render() {
         let project_title = ''
         let start_date = ''

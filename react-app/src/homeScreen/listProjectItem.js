@@ -32,7 +32,7 @@ class ListProjectItem extends Component {
         endTxt = moment(this.state.end_date).format('DD.MM.YYYY')
         return (
             <Card  
-            variant="outlined"
+            variant="elevation"
             style={{backgroundColor: "#F4B41A", marginBottom: 12, marginLeft: 5, marginRight: 5}}
             >
                 <CardContent>

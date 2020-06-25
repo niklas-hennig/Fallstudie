@@ -5,7 +5,7 @@ import moment from 'moment'
 
 import RoleListItem from './listRoleItem';
 import ListProjectItem from './listProjectItem';
-import { Card, CardHeader, CardContent } from '@material-ui/core';
+import { Card, CardHeader, CardContent, Paper } from '@material-ui/core';
 
 class LeftBar extends Component {
     constructor(props){
@@ -21,7 +21,8 @@ class LeftBar extends Component {
             calendar: ''
         }
         this.style = {
-            marginBottom: "20px"
+            marginBottom: "20px",
+            paddingBottom: "6px"
         }
         this.fetchInfo=this.fetchInfo.bind(this);
         this.convertToDates=this.convertToDates.bind(this);
@@ -118,12 +119,15 @@ class LeftBar extends Component {
         let children = null
         if(this.state.type==="f") children = this.state.projects.map((roleInfo) => <RoleListItem key={roleInfo.role_id} role_id={roleInfo.role_id} title={roleInfo.title} start_date={roleInfo.start_date} end_date={roleInfo.end_date} handleClick={this.handleRoleClick} mode="left"></RoleListItem>)
         else children = this.state.projects.map((project) => <ListProjectItem key={project.project_id} project_id={project.project_id} title={project.titel} start_date={project.start_date} end_date={project.end_date} handleClick={this.handleProjectClick}></ListProjectItem>)
-        return <div style={this.style}>
+        return <Paper 
+        variant="elevation"
+        style={this.style}
+        >
             {calCard}
             <h2>Ihre Projekte</h2>
             {children}
             {noProjects}
-        </div>
+        </Paper>
     }
 
     componentDidMount(){

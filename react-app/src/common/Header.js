@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import logo from '../media/logo.png';
-import Dropdown from 'react-bootstrap/Dropdown'
 
-import 'js-cookie';
 import { AppBar, Toolbar, Typography, Menu, MenuItem } from '@material-ui/core';
 import MenuRoundedIcon from '@material-ui/icons/MenuRounded';
 
@@ -14,17 +12,6 @@ class Header extends Component {
             menu: false,
             anchor: null
         }
-        this.style = {
-            position: 'fixed',
-            width: '100%',
-            left: '-0%',
-            height: '5%',
-            top: '0%',
-            display: "flex",
-            flexDirection: "row",
-            background: "#F4B41A",
-            border: '#ffffff'
-        }
         this.handleSettings = this.handleSettings.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
         this.handleOpenMenu = this.handleOpenMenu.bind(this);
@@ -32,10 +19,12 @@ class Header extends Component {
 
     }
 
+    //halder to open screens accoring to user Selection
     handleSettings() {
         this.props.onSettings();
     }
 
+    //Authentification is currently only handled through local storage, so logout is deleting this entry and reloading the site
     handleLogout() {
         window.localStorage.removeItem("auth")
         window.open('/', "_self")
@@ -50,6 +39,7 @@ class Header extends Component {
     }
 
 
+    //greeting and menu only show up after login
     render() {
         let greeting = ''
         if (this.state.user) greeting = 'Hallo ' + this.state.user
@@ -89,7 +79,6 @@ class Header extends Component {
 
     UNSAFE_componentWillReceiveProps(nextProps) {
         this.setState({ user: nextProps.user })
-        let t = <img src={logo} alt="logo" maxHeight='50px' />
     }
 }
 

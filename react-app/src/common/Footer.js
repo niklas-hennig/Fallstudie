@@ -19,6 +19,7 @@ class Footer extends Component {
         this.onChange=this.onChange.bind(this);
     }
 
+    //Go to selected site
     onChange = (event, newValue) =>{
         window.open("/"+this.sites[newValue]+".html", '_self');
     }

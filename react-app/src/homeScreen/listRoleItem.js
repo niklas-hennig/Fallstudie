@@ -43,7 +43,7 @@ class RoleListItem extends Component {
         let t = <div onClick={this.clickHandler} style={{backgroundColor: 'gray'}}/>
         return (
             <Card style={{backgroundColor: "#F4B41A", marginBottom: 12, marginLeft: 5, marginRight: 5}}
-            variant="outlined">
+            variant="elevation">
                 <CardContent>
                     <Typography variant="h6" component="h6">
                         {this.state.title}
