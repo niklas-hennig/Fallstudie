@@ -131,8 +131,19 @@ class CompleteProfileCompany extends Component {
         let billing = ''
         let mailError = ''
         let passwordError = ''
-        let disable = ''
-        if (this.state.isChange) disable = 'disabled'
+        let disableComponent = true
+        let backAction = ''
+        if (!this.state.isChange) {
+            disableComponent = false
+        }else{
+            backAction = <IconButton aria-label="Zurück"
+                onClick={this.props.onBack}
+            >
+                <BackspaceIcon />
+            </IconButton>
+        }
+        console.log(this.state.isChange)
+        console.log(disableComponent)
 
         if (!this.state.enable_billing) billing =
             <React.Fragment>
@@ -153,22 +164,18 @@ class CompleteProfileCompany extends Component {
             <form id="completeCompany" onSubmit={this.submitHandler}>
                 <Card>
                     <CardHeader
-                        title={"Firma " + this.state.comp_name + ", vervollständige doch dein Profil um gefunden zu werden"}
+                        title={"Willkommen " + this.state.comp_name + ", vervollständige doch dein Profil um gefunden zu werden"}
                         component="h2"
                         action={
-                            <IconButton aria-label="Zurück"
-                            onClick={this.props.onBack}
-                            >
-                              <BackspaceIcon />
-                            </IconButton>
-                          }
-                        />
+                            backAction
+                        }
+                    />
                     <CardContent>
                         <Grid container spacing={3}>
                             <Grid item xs={6}>
                                 <Card>
-                                    <CardHeader 
-                                    title="Adresse"
+                                    <CardHeader
+                                        title="Adresse"
                                     />
                                     <CardContent style={{
                                         flex: 1,
@@ -178,12 +185,12 @@ class CompleteProfileCompany extends Component {
                                         <Typography variant="subtitle1">
                                             Lieferadresse
                                         </Typography>
-                                        <TextField name="street" {...disable} required helperText="Straße" value={this.state.street} onChange={this.changeHandler} />
-                                        <TextField name="number" type="number" {...disable} required helperText="Hausnummer" value={this.state.number} onChange={this.changeHandler} />
-                                        <TextField name="postcode" type="number" {...disable} required helperText="Postleitzahl" value={this.state.postcode} onChange={this.changeHandler} />
-                                        <TextField name="city" {...disable} required helperText="Stadt" value={this.state.city} onChange={this.changeHandler} />
-                                        <TextField name="country" {...disable} required helperText="Land" value={this.state.country} onChange={this.changeHandler} />
-                                        <TextField name="tel_no" type="number" {...disable} required helperText="Telefonnummer" value={this.state.tel_no} onChange={this.changeHandler} />
+                                        <TextField name="street" required helperText="Straße" value={this.state.street} onChange={this.changeHandler} />
+                                        <TextField name="number" type="number" required helperText="Hausnummer" value={this.state.number} onChange={this.changeHandler} />
+                                        <TextField name="postcode" type="number" required helperText="Postleitzahl" value={this.state.postcode} onChange={this.changeHandler} />
+                                        <TextField name="city" required helperText="Stadt" value={this.state.city} onChange={this.changeHandler} />
+                                        <TextField name="country" required helperText="Land" value={this.state.country} onChange={this.changeHandler} />
+                                        <TextField name="tel_no" type="number" required helperText="Telefonnummer" value={this.state.tel_no} onChange={this.changeHandler} />
                                         <Typography variant="subtitle2">
                                             Zahlungsaddresse
                                         </Typography>
@@ -224,7 +231,7 @@ class CompleteProfileCompany extends Component {
                                             <MenuItem value="d">Divers</MenuItem>
                                         </TextField><br />
 
-                                        <TextField name="username" disabled helperText="Nutername" value={this.state.username} onChange={this.changeHandler} />
+                                        <TextField name="username" disabled={disableComponent} helperText="Nutername" value={this.state.username} onChange={this.changeHandler} />
                                         <TextField name="email" required helperText="E-Mail" value={this.state.email} onChange={this.changeHandler} />
                                         <br />
                                         <TextField type="password" name="password" helperText="Passwort" onChange={this.changeHandler} />
@@ -234,14 +241,14 @@ class CompleteProfileCompany extends Component {
                                     </CardContent>
                                     <CardActions>
                                         <Button
-                                            variant="conained"
+                                            variant="contained"
                                             type="submit"
                                             color="primary"
                                             startIcon={<ArrowForwardIcon />}
 
                                         >
                                             Speichern
-                            </Button>
+                                        </Button>
                                     </CardActions>
                                 </Card>
                             </Grid>
@@ -259,7 +266,8 @@ class CompleteProfileCompany extends Component {
                 this.setState({
                     name: data.data.name,
                     surname: data.data.surname,
-                    email: data.data.email
+                    email: data.data.email,
+                    gender: data.data.gender
                 })
             })
             .catch(err => console.log(err))

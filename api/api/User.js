@@ -2,6 +2,7 @@ const express = require('express');
 
 const db_utils = require('../modules/db_utils')
 const db_user = require('../modules/db_utils_user')
+const db_comp = require('../modules/db_utils_company')
 
 const router = express.Router();
 
@@ -78,7 +79,7 @@ router.post('/Freelancer', (req, res) => {
     if(!req.body.company_name) return res.status(400).send('No comapny name Provided')
 
     
-    db_utils.checkIfCompanyExists(req.body.company_name)
+    db_comp.checkIfCompanyExists(req.body.company_name)
     .then(comp_id =>{
       db_user.createCompUser(username, email, password, name, surname, gender, comp_id)
       .then(id => res.status(200).send('created successful'))

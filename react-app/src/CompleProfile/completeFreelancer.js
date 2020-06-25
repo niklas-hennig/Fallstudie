@@ -115,9 +115,15 @@ class CompleteProfileFreelancer extends Component {
         } if (this.props.gender === 'd') {
             anrede = 'Hallo'
         }
-        let disable = ''
-        if (!this.state.isChange) disable = 'disabled'
+        let disableComponent = '"false'
+        if (!this.state.isChange) disableComponent = '"true"'
 
+        let backAction = ''
+        if(this.isChange) backAction = <IconButton aria-label="Zurück"
+        onClick={this.props.onBack}
+        >
+          <BackspaceIcon />
+        </IconButton>
         let uploadBtn = ''
         if (this.state.showUploadBtn === true) uploadBtn = <Button variant="outlined" onClick={this.uploadHandler}>Hochladen</Button>
         let date = ''
@@ -132,11 +138,7 @@ class CompleteProfileFreelancer extends Component {
                                 title={anrede + ' ' + this.props.surname + ' ' + this.props.name + ', vervollständige doch dein Profil um gefunden zu werden'}
                                 subheader="Persönliches"
                                 action={
-                                    <IconButton aria-label="Zurück"
-                                    onClick={this.props.onBack}
-                                    >
-                                      <BackspaceIcon />
-                                    </IconButton>
+                                    backAction
                                   }
                             >
                             </CardHeader>
@@ -145,8 +147,8 @@ class CompleteProfileFreelancer extends Component {
                                 flexDirection: "row",
                                 justifyItems: "space-evenly"
                             }}>
-                                <TextField style={this.inputStyle} helperText="Nachname" {...disable} name="name" placeholder={this.props.name} onChange={this.changeHandler} />
-                                <TextField style={this.inputStyle} helperText="Vorname" {...disable} name="surname" placeholder={this.props.surname} onChange={this.changeHandler} />
+                                <TextField style={this.inputStyle} helperText="Nachname" disabled={disableComponent} name="name" placeholder={this.props.name} onChange={this.changeHandler} />
+                                <TextField style={this.inputStyle} helperText="Vorname" disabled={disableComponent} name="surname" placeholder={this.props.surname} onChange={this.changeHandler} />
                                 <TextField
                                     required
                                     style={this.inputStyle}
@@ -238,8 +240,6 @@ class CompleteProfileFreelancer extends Component {
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
-        console.log("recieving props")
-        console.log(nextProps)
         this.setState({
             username: nextProps.username,
             email: nextProps.email,
