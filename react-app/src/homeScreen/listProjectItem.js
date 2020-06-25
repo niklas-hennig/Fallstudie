@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import moment from 'moment';
 import Card from '@material-ui/core/Card';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button'
+import Button from '@material-ui/core/Button';
 import { CardContent, CardActions } from '@material-ui/core';
 
 class ListProjectItem extends Component {
@@ -17,19 +17,19 @@ class ListProjectItem extends Component {
         this.clickHandler=this.clickHandler.bind(this);
     }
 
+    //Handle switch to Project view
     clickHandler = (event) => {
         this.props.handleClick(this.state.id);
     }
 
 
     render(){
-        let date = ''
+        let startTxt = ''
+        let endTxt = ''
         if(this.state.start_date)
-        date = <p>Start: {this.state.start_date.substring(8,10)}.{this.state.start_date.substring(5,7)}.{this.state.start_date.substring(0,4)}</p>
-        let t = <div onClick={this.clickHandler} style={{backgroundColor: 'gray'}}>
-        <h3>{this.state.title}</h3>
-        {date}
-        </div>
+        startTxt = moment(this.state.start_date).format('DD.MM.YYYY')
+        if(this.state.end_date)
+        endTxt = moment(this.state.end_date).format('DD.MM.YYYY')
         return (
             <Card  
             variant="outlined"
@@ -40,11 +40,11 @@ class ListProjectItem extends Component {
                         {this.state.title}
                     </Typography>
                     <Typography variant="caption" component="p">
-                        Start: {this.state.start_date.substring(8,10)}.{this.state.start_date.substring(5,7)}.{this.state.start_date.substring(0,4)}
+                        Start: {startTxt}
                         <br></br>
                     </Typography >
                     <Typography variant="caption" component="p">
-                        Ende: {this.state.end_date.substring(8,10)}.{this.state.end_date.substring(5,7)}.{this.state.end_date.substring(0,4)}
+                        Ende: {endTxt}
                     </Typography>
                 </CardContent>
                 <CardActions>

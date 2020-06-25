@@ -29,6 +29,7 @@ class LeftBar extends Component {
         this.handleProjectClick=this.handleProjectClick.bind(this);
     }
 
+    //Fill informations according to role from backend-call
     fetchInfo(){
         if(this.state.type==='f'){
             let date = new Date()
@@ -55,6 +56,8 @@ class LeftBar extends Component {
         this.props.onProjectSelected(event);
     }
 
+
+    //Fill array with all dates in specified range
     getDates(startDate, stopDate) {
         var dateArray = [];
         var currentDate = moment(startDate);
@@ -66,6 +69,7 @@ class LeftBar extends Component {
         return dateArray;
     }
 
+    //Fill date-array for calendar blocking
     convertToDates(){
         let key=0
         let i = 0

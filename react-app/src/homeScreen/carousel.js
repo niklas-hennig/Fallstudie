@@ -23,17 +23,13 @@ class CarouselComp extends Component {
             updated: null,
             height: 0
         }
-        this.style ={
-            position: 'absolute',
-            left: '15%',
-            width: '70%',
-            height: '100%'
-        }
         this.handleSelectRole = this.handleSelectRole.bind(this);
         this.handleSelectProject=this.handleSelectProject.bind(this);
         this.handleProjektCreate=this.handleProjektCreate.bind(this);
         
     }
+
+    //Fetching Information to display on the slider
     getIds(){
         let projects = []
         if(this.state.type==='f'){
@@ -59,10 +55,12 @@ class CarouselComp extends Component {
         }
     }
 
+    
     UNSAFE_componentWillMount(){
         this.getIds()
     }
 
+    //refreshing for updated unformation
     UNSAFE_componentWillReceiveProps(nextProps) {
         this.setState({
             username: this.props.username,
@@ -72,6 +70,7 @@ class CarouselComp extends Component {
         
     }
 
+    //Pass on call to switch to view on selected operation
     handleProjektCreate = (event) => {
         this.props.onProjectCreate();
     }
@@ -85,6 +84,7 @@ class CarouselComp extends Component {
     }
 
 
+    //Handle Slider Creation for all posibiliis, freelancer/company and no items available
     render() {
         let carousel = ''
         let title = ''
@@ -145,10 +145,5 @@ class CarouselComp extends Component {
         </div>
     )
     }
-
-    componentDidMount() {
-        const height = this.divElement.clientHeight;
-        this.setState({ height });
-      }
 }
 export default CarouselComp;

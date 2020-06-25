@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardHeader, Avatar, CardContent } from '@material-ui/core';
+import { Card, CardHeader, Avatar, CardContent, CardActions, Button } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography'
 import moment from 'moment'
 class SlideProject extends Component {
@@ -20,6 +20,8 @@ class SlideProject extends Component {
         this.props.onSelect(this.state.project_id)
     }
 
+
+    //Handle Information display and prevent crashes due to no information -> indicates error in backend calls
     render() {
         let t = <div onClick={this.clickHandler} style={{  backgroundColor: 'gray', marginLeft: '10%', height: this.props.height * 0.65 }}>
             <p>Titel: {this.state.title}</p><br />
@@ -42,6 +44,14 @@ class SlideProject extends Component {
                         Bewerbungsschluss: {moment(this.state.app_limit).format('DD.MM.YYYY')}
                     </Typography>
                 </CardContent>
+                <CardActions>
+                    <Button
+                    variant="outlined"
+                    onClick={this.clickHandler}
+                    >
+                        Anzeigen
+                    </Button>
+                </CardActions>
             </Card>
 
         } else {
@@ -52,10 +62,6 @@ class SlideProject extends Component {
                 </div>
         }
         return content
-    }
-
-    componentDidMount() {
-        //this.fetchProjectInfo();
     }
 }
 

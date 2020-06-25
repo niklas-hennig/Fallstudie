@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { Card, CardHeader, CardContent, CardActions, Button } from '@material-ui/core';
+import { Card, CardHeader, CardContent, CardActions, Button, Link } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography'
 
 class FreelancerListItem extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
-        this.state={
+        this.state = {
             id: this.props.role_id,
             name: this.props.name,
             surname: this.props.surname,
@@ -16,47 +16,49 @@ class FreelancerListItem extends Component {
             username: this.props.username,
             role_title: this.props.role_title
         }
-        this.clickHandler=this.clickHandler.bind(this);
+        this.clickHandler = this.clickHandler.bind(this);
     }
 
+    //Send appliation request to backend and return if call succeded
     clickHandler = (event) => {
         console.log("delting state:")
         console.log(this.state)
-        axios.delete('http://localhost:80/api/Application/'+this.state.id+'/'+this.state.freelancer_user+'/'+this.state.token)
-        .then(res=>{
-            this.props.onChange()})
-        .catch(err => console.log(err))
-            
+        axios.delete('http://localhost:80/api/Application/' + this.state.id + '/' + this.state.freelancer_user + '/' + this.state.token)
+            .then(res => {
+                this.props.onChange()
+            })
+            .catch(err => console.log(err))
+
     }
 
 
-    render(){
-        let t = <div style={{backgroundColor: 'gray'}}>
-        <h3>{this.state.surname+' '+this.state.name}</h3>
-        <a target="_blank" href={"http://localhost:80/api/File/"+this.state.freelancer_user}/>
-        <button onClick={this.clickHandler}>Löschen</button>
-        </div>
+    render() {
+        let LnkResume = ''
+        if (this.state.resume_link) LnkResume = <Link href={"http://localhost:80/api/File/" + this.state.freelancer_user} target="_blank">
+            Lebenslauf
+            </Link>
         return <Card
-        variant="outlined"
-        style={{backgroundColor: "#F4B41A", marginBottom: 12, marginLeft: 5, marginRight: 5}}
+            variant="outlined"
+            style={{ backgroundColor: "#F4B41A", marginBottom: 12, marginLeft: 5, marginRight: 5 }}
         >
             <CardContent>
                 <Typography variant="h6" component="h6">
-                    {this.state.surname+" "+this.state.name}
+                    {this.state.surname + " " + this.state.name}
                 </Typography>
                 <Typography variant="caption" component="p">
                     Rolle: {this.state.role_title}
                 </Typography>
+                {LnkResume}
             </CardContent>
             <CardActions>
                 <Button
-                size="small"
-                onClick={this.clickHandler}
-                variant="outlined"
+                    size="small"
+                    onClick={this.clickHandler}
+                    variant="outlined"
                 >
                     Löschen
                 </Button>
-            </CardActions>            
+            </CardActions>
         </Card>
     }
 }

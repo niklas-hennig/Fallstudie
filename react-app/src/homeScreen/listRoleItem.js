@@ -21,6 +21,7 @@ class RoleListItem extends Component {
         this.clickHandler=this.clickHandler.bind(this);
     }
 
+    //Handle Click, if is leftbar: show more information, if rightbar: delete application
     clickHandler = (event) => {
         if(this.state.mode==="left")
             this.props.handleClick(this.state.id);
