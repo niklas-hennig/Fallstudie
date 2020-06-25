@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Paper, Card, CardHeader, CardContent, Typography, Button, CardActions } from '@material-ui/core';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import BackspaceIcon from '@material-ui/icons/Backspace';
+import moment from 'moment'
 
 class RoleDetail extends Component {
     constructor(props) {
@@ -53,9 +54,9 @@ class RoleDetail extends Component {
         let requirements = ''
         if (this.state.info) {
             project_title = this.state.info.titel
-            start_date = this.state.info.start_date.substring(8, 10) + '.' + this.state.info.start_date.substring(5, 7) + '.' + this.state.info.start_date.substring(0, 4)
-            end_date = this.state.info.end_date.substring(8, 10) + '.' + this.state.info.end_date.substring(5, 7) + '.' + this.state.info.end_date.substring(0, 4)
-            bewerbungsfrist = this.state.info.application_limit.substring(8, 10) + '.' + this.state.info.application_limit.substring(5, 7) + '.' + this.state.info.application_limit.substring(0, 4)
+            start_date = moment(this.state.info.start_date).format('DD.MM.YYYY')
+            end_date = moment(this.state.info.end_date).format('DD.MM.YYYY')
+            bewerbungsfrist = moment(this.state.info.application_limit).format('DD.MM.YYYY')
             role_title = this.state.info.title
             role_description = this.state.info.description
             payment = this.state.info.payment

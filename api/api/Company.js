@@ -47,8 +47,6 @@ router.post('/', (req, res) => {
 
     db_company.createCompany(name, street, number, postcode, city, country)
     .then(data => {
-        console.log("created company")
-        console.log(data)
         res.send(data)})
     .catch(err => {console.log('comp_err')
         console.log(err)
@@ -61,9 +59,12 @@ router.put('/:comp_name', (req, res) => {
 
     infos = parseBody(req.body);
 
-    db_company.updateCompanyInfo(infos)
+    console.log(name)
+    console.log(infos)
+    db_company.updateCompanyInfo(infos, name)
     .then(res.send('Infos updated'))
-    .catch(err => res.status(500).send(err))
+    .catch(err => {console.log(err)
+        res.status(500).send(err)})
 
 
 })

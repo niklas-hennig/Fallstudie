@@ -3,6 +3,8 @@ import axios from "axios";
 import moment from 'moment'
 
 import RoleCreationItem from './RoleCreationItem';
+import { Card, CardHeader, IconButton, CardContent, TextField } from '@material-ui/core';
+import BackspaceIcon from '@material-ui/icons/Backspace';
 
 class ProjectCreate extends Component {
     constructor(props){
@@ -30,6 +32,9 @@ class ProjectCreate extends Component {
             left: '15%',
             width: '70%',
             height: '100%'
+        }
+        this.inputStyle = {
+            margin: "1%",
         }
         this.changeHandler=this.changeHandler.bind(this);
         this.addRole=this.addRole.bind(this);
@@ -123,19 +128,33 @@ class ProjectCreate extends Component {
         let dateErr = ''
         if(this.state.dateError) dateErr=<p>Bitte valide Daten eingeben</p>
         if (this.state.prefences.length>0) console.log("creating with prefences")
-        return <div>
-            <h2>Ihr neues Projekt</h2>
-            <button onClick={this.props.onBack}>Zurück</button>
-            <form style={{backgroundColor:"gray"}}>
-                <input type="text" placeholder="Projekttitel" name="pr_titel" onChange={this.changeHandler}/>
-                <label htmlFor="start_date">Start:</label>
-                <input type="date" name="start_date" onChange={this.changeHandler}/>
-                <label htmlFor="end_date">Ende:</label>
-                <input type="date" name="end_date" onChange={this.changeHandler}/><br></br>
-                <label htmlFor="application_limit">Bewerbungende:</label><br></br>
-                <input type="date" name="application_limit" onChange={this.changeHandler}/>
-                {dateErr}
-            </form>
+        return <Card
+        variant="elevation"
+        style={{marginTop: "4%"}}
+        >
+            <CardHeader 
+            title="Ihr neues Projekt"
+            action={
+                <IconButton aria-label="Zurück"
+                onClick={this.props.onBack}
+                >
+                  <BackspaceIcon />
+                </IconButton>
+              }
+            />
+            <CardContent>
+                <Card>
+                    <TextField required helperText="Projekttitel" name="pr_titel" value={this.state.pr_titel} onChange={this.changeHandler} />
+                    <br />
+                    <TextField required style={this.inputStyle} label="Startdatum" type="date" value={this.state.start_date} format='YYYY-MM-DD'
+                               name="start_date" onChange={this.changeHandler} InputLabelProps={{shrink: true }}/>
+                    <TextField required style={this.inputStyle} label="Enddatum" type="date" value={this.state.end_date} format='YYYY-MM-DD'
+                               name="end_date" onChange={this.changeHandler} InputLabelProps={{shrink: true }}/>
+                    <TextField required style={this.inputStyle} label="Bewerbungsende" type="date" value={this.state.application_limit} format='YYYY-MM-DD'
+                               name="application_limit" onChange={this.changeHandler} InputLabelProps={{shrink: true }}/>
+                    {dateErr}
+                </Card>
+            </CardContent>
             <button onClick={this.addRole}>Neue Rolle</button>
             <table>
                 <thead>
@@ -151,7 +170,7 @@ class ProjectCreate extends Component {
                 {this.state.roles.map((role, index) => <RoleCreationItem key={role.internal_id} id={index} prefences={this.state.prefences} onChange={this.roleChangeHandler} onDelete={this.roleDeleteHandler}></RoleCreationItem>)}
             </table>
             <button onClick={this.submitAll} >Anlegen</button>
-        </div>
+        </Card>
     }
 
     componentDidMount(){

@@ -36,7 +36,6 @@ module.exports={
     return new Promise((resolve, reject) => {
       pool.query('SELECT token FROM password_token WHERE '+col+'=$1', [username])
       .then(data => {
-        console.log(data.rows[0].token)
         if (token=data.rows[0].token){
           let table = ''
           if(type==="f") table='freelancer'

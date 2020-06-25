@@ -25,11 +25,10 @@ module.exports={
       },
     
     createProject: function(title, start_date, end_date, app_limit, comp_id){
-    console.log(title)
     return new Promise((resolve, reject) => {
     pool.query('INSERT INTO project (titel, start_date, end_date, application_limit, comp_id) VALUES($1, $2, $3, $4, $5) RETURNING project_id', 
     [title, start_date, end_date, app_limit, comp_id])
-    .then(data=>{console.log(data.rows[0].project_id)
+    .then(data=>{
         resolve(data.rows[0].project_id)})
         .catch(err=>{ reject(err)
         })
@@ -53,7 +52,6 @@ module.exports={
     
 
     delteProject: function(project_id, username){
-    console.log(project_id)
     return new Promise((resolve, reject)=>{
         pool.query('DELETE FROM role WHERE role_id IN (SELECT r.role_id FROM role as r JOIN role_assignment as ra ON ra.role_id=r.role_id WHERE ra.project_id=$1)', 
         [project_id])

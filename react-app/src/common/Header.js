@@ -21,11 +21,13 @@ class Header extends Component {
 
     //halder to open screens accoring to user Selection
     handleSettings() {
+        this.handleCloseMenu();
         this.props.onSettings();
     }
 
     //Authentification is currently only handled through local storage, so logout is deleting this entry and reloading the site
     handleLogout() {
+        this.handleCloseMenu();
         window.localStorage.removeItem("auth")
         window.open('/', "_self")
     }

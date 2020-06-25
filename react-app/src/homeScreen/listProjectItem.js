@@ -51,7 +51,8 @@ class ListProjectItem extends Component {
                     <Button 
                     size="small"
                     onClick={this.clickHandler}
-                    variant="outlined"
+                    variant="contained"
+                    color="primary"
                     >
                         Mehr anzeigen
                     </Button>

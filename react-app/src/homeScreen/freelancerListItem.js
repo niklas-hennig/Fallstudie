@@ -54,7 +54,8 @@ class FreelancerListItem extends Component {
                 <Button
                     size="small"
                     onClick={this.clickHandler}
-                    variant="outlined"
+                    variant="contained"
+                    color="primary"
                 >
                     Löschen
                 </Button>

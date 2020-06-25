@@ -1,6 +1,9 @@
 import React, { Component } from "react";
 import axios from "axios";
-
+import { Card, Grid, CardHeader, CardContent, CardActions, TextField, MenuItem, Button, Typography, IconButton } from "@material-ui/core";
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import BackspaceIcon from '@material-ui/icons/Backspace';
+import moment from 'moment'
 
 class CompleteProfileFreelancer extends Component {
     constructor(props) {
@@ -28,7 +31,10 @@ class CompleteProfileFreelancer extends Component {
             token: this.props.token,
             isChange: this.props.isChange,
 
-            showUploadBtn: true
+            showUploadBtn: false
+        }
+        this.inputStyle = {
+            margin: "1%",
         }
         this.uploadHandler = this.uploadHandler.bind(this);
     }
@@ -38,6 +44,7 @@ class CompleteProfileFreelancer extends Component {
 
     fileHandler = event => {
         console.log(event.target.files[0])
+        this.setState({ showUploadBtn: true })
         this.setState({ datei: event.target.files[0] })
     }
 
@@ -70,6 +77,7 @@ class CompleteProfileFreelancer extends Component {
     submitHandler = (event) => {
         event.preventDefault();
 
+        console.log(this.state)
         axios.put('http://localhost:80/api/User/Freelancer', {
             username: this.props.username,
             date_of_birth: this.state.date_of_birth,
@@ -86,8 +94,12 @@ class CompleteProfileFreelancer extends Component {
         }).then(res => {
             axios.put('http://localhost:80/api/Prefence/' + this.state.username, {
                 prefence: this.state.prefence
-            }).then(this.props.onSubmit('f'))
-                .catch(err => console.error(err))
+            }).then(res => {
+                if(this.state.isChange) this.props.onBack();
+                else this.props.onSubmit('f')
+            }                
+            )
+            .catch(err => console.error(err))
 
         })
     }
@@ -106,47 +118,122 @@ class CompleteProfileFreelancer extends Component {
         let disable = ''
         if (!this.state.isChange) disable = 'disabled'
 
-        let uploadBtn = 'Hochladen erfolgreich'
-        if (this.state.showUploadBtn === true) uploadBtn = <button onClick={this.uploadHandler}>Hochladen</button>
-
+        let uploadBtn = ''
+        if (this.state.showUploadBtn === true) uploadBtn = <Button variant="outlined" onClick={this.uploadHandler}>Hochladen</Button>
+        let date = ''
+        if (this.state.date_of_birth) date = moment(this.state.date_of_birth).format('YYYY-MM-DD')
+        console.log(this.state)
         return (
-            <div>
-                <h2>{anrede} {this.props.surname} {this.props.name}, vervollständige doch dein Profil um gefunden zu werden</h2>
-                <div class="completeProfileBox">
-                    <form id="completeFreelancer" onSubmit={this.submitHandler}>
-                        <div id="personal">Persönliches<br />
-                            <input type="text" {...disable} name={this.state.name} placeholder={this.props.name} /><br />
-                            <input type="text" {...disable} name={this.state.surname} placeholder={this.props.surname} /><br />
-                            <input type="date" name="date_of_birth" placeholder={this.state.date_of_birth} onChange={this.changeHandler} required /><br />
-                        </div><br />
+            <form onSubmit={this.submitHandler}>
+                <Grid container spacing={3}>
+                    <Grid item xs={12}>
+                        <Card>
+                            <CardHeader
+                                title={anrede + ' ' + this.props.surname + ' ' + this.props.name + ', vervollständige doch dein Profil um gefunden zu werden'}
+                                subheader="Persönliches"
+                                action={
+                                    <IconButton aria-label="Zurück"
+                                    onClick={this.props.onBack}
+                                    >
+                                      <BackspaceIcon />
+                                    </IconButton>
+                                  }
+                            >
+                            </CardHeader>
+                            <CardContent style={{
+                                flex: 1,
+                                flexDirection: "row",
+                                justifyItems: "space-evenly"
+                            }}>
+                                <TextField style={this.inputStyle} helperText="Nachname" {...disable} name="name" placeholder={this.props.name} onChange={this.changeHandler} />
+                                <TextField style={this.inputStyle} helperText="Vorname" {...disable} name="surname" placeholder={this.props.surname} onChange={this.changeHandler} />
+                                <TextField
+                                    required
+                                    style={this.inputStyle}
+                                    label="Geburtstag"
+                                    type="date"
+                                    value={date}
+                                    format='YYYY-MM-DD'
+                                    name="date_of_birth"
+                                    onChange={this.changeHandler}
+                                    InputLabelProps={{
+                                        shrink: true,
+                                    }}
+                                />
+                            </CardContent>
+                            <CardActions style={{
+                                float: "right",
+                                alignSelf: "end",
+                            }}>
+                                <Button
+                                    variant="conained"
+                                    type="submit"
+                                    color="primary"
+                                    startIcon={<ArrowForwardIcon />}
+                                    
+                                >
+                                    Speichern
+                            </Button>
+                            </CardActions>
+                        </Card>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Card
+                            variant="outlined"
+                            style={{ marginTop: "2%" }}
+                        >
+                            <CardHeader
+                                title="Addresse und Zahlungsdaten"
+                            >
+                            </CardHeader>
+                            <CardContent>
+                                <TextField required style={this.inputStyle} helperText="Straße" name="street" value={this.props.street} onChange={this.changeHandler} />
+                                <TextField required type="number" style={this.inputStyle} helperText="Hausnummer" name="number" value={this.props.number} onChange={this.changeHandler} />
+                                <br />
+                                <TextField required type="number" style={this.inputStyle} helperText="Postleitzal" name="postcode" value={this.props.postcode} onChange={this.changeHandler} />
+                                <TextField required style={this.inputStyle} helperText="Stadt" name="city" value={this.props.city} onChange={this.changeHandler} />
+                                <TextField style={this.inputStyle} helperText="Land" name="country" value={this.props.country} onChange={this.changeHandler} />
+                                <br />
+                                <TextField style={this.inputStyle} helperText="IBAN" name="iban" value={this.props.iban} onChange={this.changeHandler} />
+                                <TextField style={this.inputStyle} helperText="Kontoinhaber" name="ktn_owner" value={this.props.ktn_owner} onChange={this.changeHandler} />
+                            </CardContent>
+                        </Card>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Card
+                            variant="outlined"
+                            style={{ marginTop: "2%" }}
+                        >
+                            <CardHeader
+                                title="Erfahung" />
+                            <CardContent>
+                                <TextField select required name="prefence" value={this.state.prefence} helperText="Wählen Sie eine Kategorie für die Sie sich interessieren" onChange={this.changeHandler}>
+                                    {this.state.prefences_available.map((name) => <MenuItem key={name} value={name}>{name}</MenuItem>)}
+                                </TextField>
+                                <br />
+                                <TextField multiline rows={5} fullWidth variant="outlined" name="experience" value={this.state.experience} helperText="Erfahrung" onChange={this.changeHandler} defaultValue={this.state.experience} />
+                                <Typography variant="caption">
+                                    Laden Sie ihren Lebenslauf hier hoch
+                                </Typography>
+                                <br />
+                                <input
+                                    style={{ display: 'none' }}
+                                    id="raised-button-file"
+                                    type="file"
+                                    onChange={this.fileHandler}
+                                />
+                                <label htmlFor="raised-button-file">
+                                    <Button variant="contained" component="span">
+                                        Upload
+                                    </Button>
+                                </label>
+                                {uploadBtn}
+                            </CardContent>
+                        </Card>
 
-                        <div id="address">Adresse<br />
-                            <input type="text" name="street" placeholder={this.state.street} onChange={this.changeHandler} required /><br />
-                            <input type="number" name="number" placeholder={this.state.number} onChange={this.changeHandler} required /><br />
-                            <input type="number" name="postcode" placeholder={this.state.postcode} onChange={this.changeHandler} required /><br />
-                            <input type="text" name="city" placeholder={this.state.city} onChange={this.changeHandler} required />
-                            <input type="text" name="country" onChange={this.changeHandler} />
-                        </div><br />
-
-                        <div id="banking">Bankdaten<br />
-                            <input type="text" name="iban" placeholder={this.state.iban} onChange={this.changeHandler} /><br />
-                            <input type="text" name="ktn_owner" placeholder={this.state.ktn_owner} onChange={this.changeHandler} />
-                        </div><br />
-
-                        <div id="details">Details<br />
-                            <textarea rows="10" cols="50" name="experience" placeholder={this.state.experience} onChange={this.changeHandler} /><br />
-                            <span>Wählen Sie eine oder mehrere Kategorien für die Sie sich interessieren</span><br />
-                            <select name="prefence" onChange={this.changeHandler}>
-                                {this.state.prefences_available.map((name) => <option key={name}>{name}</option>)}
-                            </select>
-                            <span>Laden Sie ihren Lebenslauf hier hoch</span><br />
-                            <input name="datei" type="file" size="50" onChange={this.fileHandler} /><br />
-                            {uploadBtn}
-                        </div>
-                        <button type="submit">Speichern</button>
-                    </form>
-                </div>
-            </div>
+                    </Grid>
+                </Grid >
+            </form>
         );
     }
 

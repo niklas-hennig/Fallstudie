@@ -15,9 +15,8 @@ router.get('/:comp_user/:token', (req, res) => {
 })
 
 router.get('/:id', (req, res) => {
-    console.log(req.params.id)
     db_project.getProjectInfo(req.params.id)
-    .then(data => {console.log(data)
+    .then(data => {
         res.send(data)})
     .catch(err=> console.log(err))
 

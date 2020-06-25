@@ -206,19 +206,28 @@ class ProjectDetail extends Component {
                 >
                     <CardHeader
                         title={project_info.titel}
-                        action={<IconButton aria-label="Zurück" onClick={this.handleBack}>
-                            <ArrowBackIcon />
-                        </IconButton>}
                     >
                     </CardHeader>
-                    <CardContent>
+                    <CardContent >
+                    <Button 
+                    variant="conained"
+                    color="secondary"
+                    startIcon={<ArrowBackIcon />}
+                    onClick={this.handleBack}
+                    style={{marginBottom: "5%"}}
+                    >
+                        Zurück
+                    </Button>
                         <Card>
-                            <CardContent>
-                                <Typography>
+                            <CardContent style={{flex: 1, flexDirection: "row"}}>
+                                <Typography variant="subtitle2">
                                     Start: {moment(project_info.start_date).format("DD.MM.YYYY")}
+                                <Typography variant="subtitle2">
                                 </Typography>
-                                <Typography>
                                     Ende: {moment(project_info.end_date).format("DD.MM.YYYY")}
+                                </Typography>
+                                <Typography variant="caption">
+                                    Bewerbungsende: {moment(project_info.application_limit).format("DD.MM.YYYY")}
                                 </Typography>
                             </CardContent>
                         </Card>

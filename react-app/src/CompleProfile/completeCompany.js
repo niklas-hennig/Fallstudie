@@ -1,13 +1,16 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 import axios from "axios";
+import { Grid, Card, CardContent, CardHeader, CardActions, Button, Typography, TextField, Checkbox, FormControlLabel, MenuItem, IconButton } from "@material-ui/core";
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import BackspaceIcon from '@material-ui/icons/Backspace';
 
 class CompleteProfileCompany extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
         this.state = {
             comp_id: this.props.comp_id,
             comp_name: this.props.comp_name,
-            street: this.props.street,           
+            street: this.props.street,
             number: this.props.number,
             postcode: this.props.postcode,
             city: this.props.city,
@@ -23,10 +26,10 @@ class CompleteProfileCompany extends Component {
             name: null,
             surname: null,
             username: this.props.username,
-            email:null,
+            email: null,
             gender: 'f',
             password: null,
-            password_check:null,
+            password_check: null,
 
             //Functional states
             enable_billing: true,
@@ -34,68 +37,77 @@ class CompleteProfileCompany extends Component {
             passwordError: false,
             isChange: this.props.isChange
         }
-        
+
         this.changeHandler = this.changeHandler.bind(this);
         this.billingHandler = this.billingHandler.bind(this);
     }
 
 
     changeHandler = (event) => {
-        this.setState({[event.target.name]: event.target.value});
+        this.setState({ [event.target.name]: event.target.value });
     }
 
-    billingHandler=(event)=>{
-        if(this.state.enable_billing) {
-            this.setState({enable_billing: false, street_bill:this.state.street, number_bill: this.state.number, postcode_bill:this.state.postcode, city_bill:this.state.city})
+    billingHandler = (event) => {
+        if (this.state.enable_billing) {
+            this.setState({ enable_billing: false, street_bill: this.state.street, number_bill: this.state.number, postcode_bill: this.state.postcode, city_bill: this.state.city })
         }
-        else this.setState({enable_billing: true})
+        else this.setState({ enable_billing: true })
     }
 
-    
+
     submitHandler = (event) => {
         event.preventDefault();
-
-        if(this.state.password!=this.state.password_check) {
-            this.setState({passwordError: true, mailError:false})
+        if (this.state.password != this.state.password_check) {
+            this.setState({ passwordError: true, mailError: false })
             return
-        }else if(!this.state.email.includes('@')) {
-            this.setState({mailError: true, passwordError:false})
+        } else if (!this.state.email.includes('@')) {
+            this.setState({ mailError: true, passwordError: false })
             return
-        }else {
-            axios.put('http://localhost:80/api/Company/'+this.state.comp_name, {
-                tel_no: this.state.tel_no
+        } else {
+            axios.put('http://localhost:80/api/Company/' + this.state.comp_name, {
+                tel_no: this.state.tel_no,
+                street: this.state.street,
+                number: this.state.number,
+                postcode: this.state.postcode,
+                city: this.state.city,
+                country: this.state.country,
+                tel_no: this.state.tel_no,
+                street_bill: this.state.street_bill,
+                number_bill: this.state.number_bill,
+                postcode_bill: this.state.postcode_bill,
+                city_bill: this.state.city_bill,
+                description: this.state.description,
             }).then(res => {
-                if(this.state.isChange!==true){
+                if (this.state.isChange !== true) {
                     axios.post('http://localhost/api/User/CompanyUser', {
                         name: this.state.name,
                         surname: this.state.surname,
                         username: this.state.username,
-                        email:this.state.email,
+                        email: this.state.email,
                         gender: this.state.gender,
                         password: this.state.password,
                         company_name: this.state.comp_name
                     })
-                    .then(res => {
-                        this.props.onSubmit('c');
-                    })
-                    .catch(err => console.error(err))
-                }else{
+                        .then(res => {
+                            this.props.onSubmit('c');
+                        })
+                        .catch(err => console.error(err))
+                } else {
                     axios.put('http://localhost/api/User/CompanyUser', {
                         name: this.state.name,
                         surname: this.state.surname,
                         username: this.state.username,
-                        email:this.state.email,
+                        email: this.state.email,
                         gender: this.state.gender,
-                        password: this.state.password,
-                        company_name: this.state.comp_name
+                        password: this.state.password
                     })
-                    .then(res => {
-                        this.props.onBack();
-                    })
-                    .catch(err => console.error(err))
+                        .then(res => {
+                            this.props.onBack();
+                        })
+                        .catch(err => console.error(err))
                 }
             })
-            .catch(err => console.error(err))
+                .catch(err => console.error(err))
         }
 
     }
@@ -104,13 +116,15 @@ class CompleteProfileCompany extends Component {
         this.setState({
             comp_id: nextProps.comp_id,
             comp_name: nextProps.name,
-            street: nextProps.street,           
+            street: nextProps.street,
             number: nextProps.number,
             postcode: nextProps.postcode,
             city: nextProps.city,
             country: nextProps.country,
-            description: nextProps.description})
-            if(this.props.street_bill) this.setState({enable_billing: false})
+            description: nextProps.description,
+            tel_no: nextProps.tel_no
+        })
+        if (this.props.street_bill) this.setState({ enable_billing: false })
     }
 
     render() {
@@ -118,78 +132,137 @@ class CompleteProfileCompany extends Component {
         let mailError = ''
         let passwordError = ''
         let disable = ''
-        if(this.state.isChange) disable='disabled'
+        if (this.state.isChange) disable = 'disabled'
 
-        if (!this.state.enable_billing) billing=
-            <div>
-                <input type="text" name="bill_street" placeholder={this.state.street_bill} onChange={this.changeHandler}/><br />
-                <input type="number" name="bill_number" placeholder={this.state.number_bill} onChange={this.changeHandler}/><br />
-                <input type="number" name="bill_postcode" placeholder={this.state.postcode_bill} onChange={this.changeHandler}/><br />
-                <input type="text" name="bill_city" placeholder={this.state.city_bill} onChange={this.changeHandler}/>
-            </div>
-        if (this.state.passwordError){
-            passwordError = <p style={{color: 'red', position: 'relative', 'top': '10%'}}>Passwörter stimmen nicht überein</p>
+        if (!this.state.enable_billing) billing =
+            <React.Fragment>
+                <TextField type="text" name="bill_street" helperText="Straße" defaultValue={this.state.street_bill} onChange={this.changeHandler} />
+                <TextField type="number" name="bill_number" helperText="Hausnummer" defaultValue={this.state.number_bill} onChange={this.changeHandler} /><br />
+                <TextField type="number" name="bill_postcode" helperText="Postleitzahl" defaultValue={this.state.postcode_bill} onChange={this.changeHandler} />
+                <TextField type="text" name="bill_city" helperText="Stadt" defaultValue={this.state.city_bill} onChange={this.changeHandler} />
+            </React.Fragment>
+        if (this.state.passwordError) {
+            passwordError = <p style={{ color: 'red', position: 'relative', 'top': '10%' }}>Passwörter stimmen nicht überein</p>
         }
 
-        if (this.state.mailError){
-            mailError = <p style={{color: 'red', position: 'relative', 'top': '10%'}}>Keine gültige Mailaddresse</p>
+        if (this.state.mailError) {
+            mailError = <p style={{ color: 'red', position: 'relative', 'top': '10%' }}>Keine gültige Mailaddresse</p>
         }
+        console.log(this.state)
+        return (
+            <form id="completeCompany" onSubmit={this.submitHandler}>
+                <Card>
+                    <CardHeader
+                        title={"Firma " + this.state.comp_name + ", vervollständige doch dein Profil um gefunden zu werden"}
+                        component="h2"
+                        action={
+                            <IconButton aria-label="Zurück"
+                            onClick={this.props.onBack}
+                            >
+                              <BackspaceIcon />
+                            </IconButton>
+                          }
+                        />
+                    <CardContent>
+                        <Grid container spacing={3}>
+                            <Grid item xs={6}>
+                                <Card>
+                                    <CardHeader 
+                                    title="Adresse"
+                                    />
+                                    <CardContent style={{
+                                        flex: 1,
+                                        flexDirection: "row",
+                                        justifyContent: "space-evenly"
+                                    }}>
+                                        <Typography variant="subtitle1">
+                                            Lieferadresse
+                                        </Typography>
+                                        <TextField name="street" {...disable} required helperText="Straße" value={this.state.street} onChange={this.changeHandler} />
+                                        <TextField name="number" type="number" {...disable} required helperText="Hausnummer" value={this.state.number} onChange={this.changeHandler} />
+                                        <TextField name="postcode" type="number" {...disable} required helperText="Postleitzahl" value={this.state.postcode} onChange={this.changeHandler} />
+                                        <TextField name="city" {...disable} required helperText="Stadt" value={this.state.city} onChange={this.changeHandler} />
+                                        <TextField name="country" {...disable} required helperText="Land" value={this.state.country} onChange={this.changeHandler} />
+                                        <TextField name="tel_no" type="number" {...disable} required helperText="Telefonnummer" value={this.state.tel_no} onChange={this.changeHandler} />
+                                        <Typography variant="subtitle2">
+                                            Zahlungsaddresse
+                                        </Typography>
+                                        <FormControlLabel
+                                            control={
+                                                <Checkbox
+                                                    checked={!this.state.enable_billing}
+                                                    onChange={this.billingHandler}
+                                                    name="enable_billing"
+                                                    color="primary"
+                                                />
+                                            }
+                                            label="Zahlungsaddresse abweichend zu Lieferadresse"
+                                        />
+                                        {billing}
+                                    </CardContent>
+                                </Card>
+                            </Grid>
+                            <Grid item xs={6}>
+                                <Card>
+                                    <CardHeader title="Details" />
+                                    <CardContent>
+                                        <div id="details"><br />
+                                            <TextField multiline fullWidth rows={10} variant="outlined" name="description" helperText="Beschreibung" defaultValue={this.state.description} /><br />
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Card>
+                                    <CardHeader title="Ihr Account" />
+                                    <CardContent>
+                                        <TextField name="name" required helperText="Nachname" value={this.state.name} onChange={this.changeHandler} />
+                                        <TextField name="surname" required helperText="Vorname" value={this.state.surname} onChange={this.changeHandler} />
+                                        <TextField select required name="gender" value={this.state.gender} onChange={this.changeHandler}>
+                                            <MenuItem value="f">Weiblich</MenuItem>
+                                            <MenuItem value="m">Männlich</MenuItem>
+                                            <MenuItem value="d">Divers</MenuItem>
+                                        </TextField><br />
 
-        return(
-            <div>
-                <h2>Firma {this.state.comp_name}, vervollständige doch dein Profil um gefunden zu werden</h2>
-                <div class="completeProfileBox">
-                <form id="completeCompany" onSubmit={this.submitHandler}>                    
-                    <div id="deliveryAddress">Lieferadresse<br />
-                        <input type="text" {...disable} name="street" placeholder={this.props.street}/><br />
-                        <input type="number" {...disable} name="number" placeholder={this.props.number}/><br />
-                        <input type="number" {...disable} name="postcode" placeholder={this.props.postcode}/><br />
-                        <input type="text" {...disable} name="city" placeholder={this.props.city}/><br />
-                        <input type="text" name="country" onChange={this.changeHandler} />
-                        <input type="number" name="tel_no" placeholder={this.props.tel_no} onChange={this.changeHandler}/>
-                    </div><br />
+                                        <TextField name="username" disabled helperText="Nutername" value={this.state.username} onChange={this.changeHandler} />
+                                        <TextField name="email" required helperText="E-Mail" value={this.state.email} onChange={this.changeHandler} />
+                                        <br />
+                                        <TextField type="password" name="password" helperText="Passwort" onChange={this.changeHandler} />
+                                        <TextField type="password" name="password_check" helperText="Passwort erneut eingeben" onChange={this.changeHandler} />
+                                        {mailError}
+                                        {passwordError}
+                                    </CardContent>
+                                    <CardActions>
+                                        <Button
+                                            variant="conained"
+                                            type="submit"
+                                            color="primary"
+                                            startIcon={<ArrowForwardIcon />}
 
-                    <div id="bill_address">Zahlungsaddresse<br />
-                        <input type="checkbox" name="paymentAddressSameAsDelivery" onChange={this.billingHandler}/>Zahlungsaddresse abweichend zu Lieferadresse<br /><br />
-                        {billing}
-                    </div><br /> 
-                    <div id="details">Details<br />
-                        <textarea rows="10" cols="50" name="description" placeholder={this.state.description}/><br />                            
-                    </div>                   
-                    <div id="account_info">
-                        <input type="text" name="name" placeholder={this.state.name} onChange={this.changeHandler}></input>
-                        <input type="text" name="surname" placeholder={this.state.surname} onChange={this.changeHandler}></input> <br />
-                        <input type="text" name="username" placeholder="Nutzername" onChange={this.changeHandler}></input>
-                        <input type="text" name="email" placeholder={this.state.email} onChange={this.changeHandler}></input>
-                        <select name="gender" onChange={this.changeHandler}>
-                            <option value="f">Weiblich</option>
-                            <option value="m">Männlich</option>
-                            <option value="d">Divers</option>
-                        </select>
-                        <input type="password" name="password" placeholder="Passwort"onChange={this.changeHandler}></input>
-                        <input type="password" name="password_check" placeholder="Passwort erneut eingeben"onChange={this.changeHandler}></input>
-                        {mailError}
-                        {passwordError}
-                    </div>
-                                        
-                    <button type="submit">Speichern</button>
-                </form>
-                </div>
-            </div>
+                                        >
+                                            Speichern
+                            </Button>
+                                    </CardActions>
+                                </Card>
+                            </Grid>
+                        </Grid>
+                    </CardContent>
+                </Card>
+            </form>
         );
     }
 
-    componentDidMount(){
-        if(this.props.street_bill) this.setState({enable_billing: false})
-        axios.get('http://localhost:80/api/User/'+this.state.username + '/c/')
-        .then(data => {
-            this.setState({
-                name: data.data.name,
-                surname: data.data.surname,
-                email: data.data.email
+    componentDidMount() {
+        if (this.props.street_bill) this.setState({ enable_billing: false })
+        axios.get('http://localhost:80/api/User/' + this.state.username + '/c/')
+            .then(data => {
+                this.setState({
+                    name: data.data.name,
+                    surname: data.data.surname,
+                    email: data.data.email
+                })
             })
-        })
-        .catch(err => console.log(err))
+            .catch(err => console.log(err))
     }
 }
 

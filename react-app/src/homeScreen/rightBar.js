@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import RoleListItem from './listRoleItem';
 import FreelancerListItem from './freelancerListItem';
+import { Card, CardHeader, CardContent } from '@material-ui/core';
 
 class RightBar extends Component {
     constructor(props){
@@ -16,6 +17,8 @@ class RightBar extends Component {
             update: null
         }
         this.style = {
+            marginTop: "3%",
+            marginLeft: "5%",
             marginBottom: "70px"
         }
         this.setProjects=this.setProjects.bind(this);
@@ -49,10 +52,14 @@ class RightBar extends Component {
             console.log(this.state.applications)
             applicationsLst = this.state.applications.map((appInfo, index) => <FreelancerListItem key={appInfo.role_id+appInfo.username} role_id={appInfo.role_id} name={appInfo.name} surname={appInfo.surname} resume_link={appInfo.resume_link} token={this.state.token} freelancer_user={appInfo.username} username={this.state.username} role_title={appInfo.title} onChange={this.setProjects}></FreelancerListItem>)
         }
-        return <div style={this.style}>
-            <h2 style={{wordWrap: "break-word"}}>Ihre ausstehenden Bewerbungen</h2>
+        return <Card 
+        variant="outlined"
+        style={this.style}>
+            <CardHeader title="Ihre ausstehenden Bewerbungen" />
+            <CardContent>
             {applicationsLst}
-        </div>
+            </CardContent>
+        </Card>
     }
 
     componentDidMount(){

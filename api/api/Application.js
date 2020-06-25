@@ -50,7 +50,6 @@ router.get('/Freelancer/:username/:token', (req, res) => {
 router.get('/Company/:comp_id', (req, res) =>{
     db_application.getApplicationsCompany(req.params.comp_id)
     .then(data => {
-        console.log(data)
         res.send(data)
     })
     .catch(err => {

@@ -8,8 +8,9 @@ const router = express.Router();
 function parseBody(body){
   const infos = {};
   for (key in body){
+    if(body[key]!==null)
       infos[key] = body[key]
-      }
+    }
     return infos;
 };
 
@@ -29,7 +30,6 @@ router.get('/:username/:type', (req, res)=>{
 
 //Returns cookie in answer, requires username, password, email and others in body
 router.post('/Freelancer', (req, res) => {
-  console.log(req.body)
     if (!req.body.username) return res.status(400).send('No username provided');
     username = req.body.username;
     if (!req.body.email) return res.status(400).send('No email provided');
@@ -64,7 +64,6 @@ router.post('/Freelancer', (req, res) => {
   )
 
   router.post('/CompanyUser', (req, res) => {
-    console.log(req.body)
     if (!req.body.username) return res.status(400).send('No username provided');
     username = req.body.username;
     if (!req.body.email) return res.status(400).send('No email provided');
@@ -95,7 +94,6 @@ router.post('/Freelancer', (req, res) => {
     .then(data => {
       db_utils.setPasswordToken(req.params.username, req.params.type)
       .then(data => {
-        console.log(data.rows[0].token)
         res.send("token created")
       })
       .catch(err => res.status(500).send(err))
@@ -145,7 +143,7 @@ router.post('/Freelancer', (req, res) => {
 
     infos = parseBody(req.body);
 
-    db_utils.updateCompUser(username, req.body.password, req.body.email, infos)
+    db_user.updateCompUser(username, req.body.password, req.body.email, infos)
     .then(res.send('User Information updated'))
     .catch(err => {
       if (!err) res.status(400).send('Please Provide Information to update')

@@ -37,10 +37,11 @@ class RoleListItem extends Component {
         let delBtn = 'Mehr anzeigen'
         if(this.state.mode!=="left")
         delBtn = "Löschen"
-        let date = ''
-        if(this.state.start_date)
-        date = <p>Start: </p>
         let t = <div onClick={this.clickHandler} style={{backgroundColor: 'gray'}}/>
+        let dateMmt = moment(this.state.start_date)
+        if(this.state.mode!=="left") dateMmt.subtract(10, 'days')
+        console.log(this.state.start_date)
+        console.log(dateMmt)
         return (
             <Card style={{backgroundColor: "#F4B41A", marginBottom: 12, marginLeft: 5, marginRight: 5}}
             variant="elevation">
@@ -49,7 +50,7 @@ class RoleListItem extends Component {
                         {this.state.title}
                     </Typography>
                     <Typography variant="caption" component="p">
-                        Start: {moment(this.state.start_date).format('DD.MM.YYYY')}
+                        Start: {dateMmt.format('DD.MM.YYYY')}
                         <br></br>
                     </Typography >
                 </CardContent>
@@ -57,7 +58,8 @@ class RoleListItem extends Component {
                     <Button 
                     size="small"
                     onClick={this.clickHandler}
-                    variant="outlined"
+                    variant="contained"
+                    color="primary"
                     >
                         {delBtn}
                     </Button>

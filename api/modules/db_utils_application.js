@@ -23,7 +23,6 @@ module.exports={
               user_id = data.rows[0].user_id
               pool.query('INSERT INTO applications (freelancer_id, role_id, com_id) VALUES($1, $2, $3)', [user_id, role_id, comp_id])
               .then(data => {
-                console.log(data)
                 resolve()})
               .catch(err => reject(err))
             })
@@ -72,9 +71,6 @@ module.exports={
     return new Promise((resolve, reject) =>{
         pool.query('SELECT user_id FROM freelancer WHERE username=$1', [username])
         .then(data=>{
-        console.log("found user")
-        console.log(data)
-        console.log(username)
         pool.query('DELETE FROM applications WHERE freelancer_id=$1 AND role_id=$2', [data.rows[0].user_id, role_id])
         .then(data => resolve(data))
         .catch(err => reject(err))

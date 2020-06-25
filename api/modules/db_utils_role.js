@@ -55,7 +55,6 @@ module.exports={
         WHERE f.username=$1)`,
         [username])
         .then(data => {
-          console.log(data)
           resolve(data.rows)}
           )
         .catch(err => reject(err))
@@ -63,9 +62,6 @@ module.exports={
     },
 
     getRoleTimeline: function(username, start_date){
-        console.log("db:")
-        console.log(username)
-        console.log(start_date)
         return new Promise((resolve, reject) => {
           pool.query(`SELECT DISTINCT r.*, p.start_date, p.end_date
             FROM project as p

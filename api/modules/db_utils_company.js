@@ -44,7 +44,7 @@ module.exports={
     })
     },
 
-    updateCompanyInfo: function(infos){
+    updateCompanyInfo: function(infos, name){
     var i = 0;
     var upd_info = '';
     var params = [];
@@ -56,13 +56,14 @@ module.exports={
         upd_info = upd_info + key + '=$' + i
         }
     }
-    params[i] = infos['name']
+    params[i] = name
     i = i+1;
     upd_info = upd_info + ' WHERE name=$' + i
-
+    
     return new Promise((resolve, reject)=>{
         pool.query('UPDATE company SET ' + upd_info, params)
-        .then(resolve())
+        .then(data =>{console.log(data)
+          resolve()})
         .catch(err => reject(err))
     })
 

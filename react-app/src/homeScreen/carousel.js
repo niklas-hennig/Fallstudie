@@ -106,7 +106,8 @@ class CarouselComp extends Component {
             dots: true,
             centerMode: true,
             centerPadding: 0,
-            arrowsBlock: false
+            arrowsBlock: false,
+            autoplay: true
         }
         if (this.state.all_role_ids.length>0){
             carousel =

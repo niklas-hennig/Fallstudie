@@ -107,24 +107,19 @@ module.exports={
         upd_info = upd_info + key + '=$' + i
         }
     }
-    params[i] = infos['username']
+    params[i] = username
     i = i+1;
     upd_info = upd_info + ' WHERE username=$' + i
 
+    console.log('UPDATE company SET ' + upd_info)
+    console.log(params)
+
     return new Promise((resolve, reject)=> {
-        if (new_password) {
-        pool.query('UPDATE company_account SET password=$1 WHERE username=$2', [new_password, username])
-        .then(resolve(true))
-        .catch(err=>reject(err))
-        }else if (new_email) {
-        pool.query('UPDATE company_account SET email=$1 WHERE username=$2', [new_email, username])
-        .then(resolve(true))
-        .catch(err => reject(err))
-        }else{
         pool.query('UPDATE company_account SET ' + upd_info , params)
-        .then(resolve(true))
-        .catch(err => reject(err))
-        }
+        .then(data => {console.log(data)
+            resolve(true)})
+        .catch(err => {console.log(err)
+            reject(err)})
     })
     },
     
