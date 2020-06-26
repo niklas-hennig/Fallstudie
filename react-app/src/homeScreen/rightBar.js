@@ -46,10 +46,9 @@ class RightBar extends Component {
     render(){
         let applicationsLst = ''
         if (this.state.applications.length>0 && this.state.type==="f"){
-            applicationsLst = this.state.applications.map((appInfo, index) => <RoleListItem type={this.state.type} key={appInfo.role_id} role_id={appInfo.role_id} title={appInfo.title} mode="right" token={this.state.token} username={this.state.username} onChange={this.setProjects}> </RoleListItem>)
+            applicationsLst = this.state.applications.map((appInfo, index) => <RoleListItem type={this.state.type} key={appInfo.role_id} role_id={appInfo.role_id} start_date={appInfo.start_date} title={appInfo.title} mode="right" token={this.state.token} username={this.state.username} onChange={this.setProjects}> </RoleListItem>)
         }
         if (this.state.applications.length>0 && this.state.type==="c"){
-            console.log(this.state.applications)
             applicationsLst = this.state.applications.map((appInfo, index) => <FreelancerListItem key={appInfo.role_id+appInfo.username} role_id={appInfo.role_id} name={appInfo.name} surname={appInfo.surname} resume_link={appInfo.resume_link} token={this.state.token} freelancer_user={appInfo.username} username={this.state.username} role_title={appInfo.title} onChange={this.setProjects}></FreelancerListItem>)
         }
         return <Card 

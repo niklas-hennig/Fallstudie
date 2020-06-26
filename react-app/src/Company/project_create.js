@@ -3,7 +3,7 @@ import axios from "axios";
 import moment from 'moment'
 
 import RoleCreationItem from './RoleCreationItem';
-import { Card, CardHeader, IconButton, CardContent, TextField } from '@material-ui/core';
+import { Card, CardHeader, IconButton, CardContent, TextField, Typography } from '@material-ui/core';
 import BackspaceIcon from '@material-ui/icons/Backspace';
 
 class ProjectCreate extends Component {
@@ -126,7 +126,7 @@ class ProjectCreate extends Component {
     
     render(){
         let dateErr = ''
-        if(this.state.dateError) dateErr=<p>Bitte valide Daten eingeben</p>
+        if(this.state.dateError) dateErr=<Typography variant="caption">Bitte valide Daten eingeben</Typography>
         if (this.state.prefences.length>0) console.log("creating with prefences")
         return <Card
         variant="elevation"

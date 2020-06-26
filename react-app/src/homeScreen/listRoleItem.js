@@ -39,9 +39,10 @@ class RoleListItem extends Component {
         delBtn = "Löschen"
         let t = <div onClick={this.clickHandler} style={{backgroundColor: 'gray'}}/>
         let dateMmt = moment(this.state.start_date)
-        if(this.state.mode!=="left") dateMmt.subtract(10, 'days')
+        if(this.state.mode!=="left") {
         console.log(this.state.start_date)
         console.log(dateMmt)
+        }
         return (
             <Card style={{backgroundColor: "#F4B41A", marginBottom: 12, marginLeft: 5, marginRight: 5}}
             variant="elevation">

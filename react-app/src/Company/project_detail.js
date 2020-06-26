@@ -4,10 +4,11 @@ import ProjectRoleDetail from './RoleListItem';
 import ApplicationListItem from './ApplicationListItem';
 import AcceptedListItem from './AcceptedListItem';
 
-import { Card, CardHeader, CardContent, CardActions, IconButton, Typography } from '@material-ui/core'
+import { Button, Card, CardHeader, CardContent, CardActions, MenuItem, Typography, Dialog, DialogContent, DialogTitle, DialogContentText, DialogActions, TextField } from '@material-ui/core'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import moment from 'moment'
-import { Button } from 'react-bootstrap'
+
+import { Modal } from 'react-bootstrap'
 
 class ProjectDetail extends Component {
     constructor(props) {
@@ -27,7 +28,8 @@ class ProjectDetail extends Component {
             requirements: '',
             payment: 0,
             numberOfFreeancers: 0,
-            area: null
+            area: null,
+            anchorPopover: null
         }
         this.handleBack = this.handleBack.bind(this);
         this.handleExpand = this.handleExpand.bind(this);
@@ -55,8 +57,6 @@ class ProjectDetail extends Component {
         if (this.state.fetched !== id || force) {
             axios.get('http://localhost:80/api/Project/' + id)
                 .then(res => {
-                    console.log("fetched info")
-                    console.log(res.data)
                     this.setState({ info: res.data, fetched: res.data[0].project_id })
                 })
                 .catch(err => {
@@ -68,15 +68,12 @@ class ProjectDetail extends Component {
     fetchAccepted(id) {
         axios.get('http://localhost:80/api/Role/Accepted/All/' + id + '/' + this.state.token)
             .then(res => {
-                console.log(res.data.rows)
                 this.setState({ accepted: res.data.rows })
             })
             .catch(err => console.log(err))
     }
 
     handleUpdate = (id) => {
-        console.log("updating with id:")
-        console.log(id)
         axios.get('http://localhost:80/api/Application/' + id)
             .then(res => {
                 this.props.onUpdate();
@@ -96,15 +93,16 @@ class ProjectDetail extends Component {
         this.setState({ applications: event })
     }
 
-    addRole() {
-        this.setState({ isCreating: true })
+    addRole = (event) => {
+        this.setState({ isCreating: true, anchorPopover: event.currentTarget })
     }
 
     closePopup() {
         this.setState({ isCreating: false })
     }
 
-    createRole() {
+    createRole =(event)=> {
+        event.preventDefault()
         axios.post('http://localhost:80/api/Role/' + this.state.token, {
             title: this.state.title,
             description: this.state.description,
@@ -143,32 +141,64 @@ class ProjectDetail extends Component {
     handleDeleteProjekt() {
         axios.delete('http://localhost:80/api/Project/' + this.state.project_id + '/' + this.state.token + '/' + this.state.username)
             .then(res => {
-                console.log(res)
                 this.props.onBack();
             })
             .catch(err => console.error(err))
     }
 
     //Return card if no information was found
-    getNoInformation(){
+    getNoInformation() {
         return <Card
             variant="elevation"
-        > 
+        >
             <CardHeader
-            title="Keine Informationen gefunden"
+                title="Keine Informationen gefunden"
             >
             </CardHeader>
             <CardActions>
                 <Button
-                variant="outline-primary"
-                onClick={this.handleBack}
+                    variant="outline-primary"
+                    onClick={this.handleBack}
                 >Zurück
                 </Button>
             </CardActions>
         </Card>
     }
 
-    getDetailView(){}
+    getRoleCreation() {
+        return <Dialog
+            open={this.state.isCreating}
+            close={this.closePopup}
+        >
+            <form onSubmit={this.createRole}>
+                <DialogContent>
+                    <DialogTitle>Neue Rolle anlegen</DialogTitle>
+                    <DialogContentText>
+
+                        <TextField required name="title" helperText="Rollentitel" onChange={this.changehandler} />
+                        <TextField required name="description" helperText="Beschreibung" onChange={this.changehandler} />
+                        <TextField required name="requirements" helperText="Anforerungen" onChange={this.changehandler} />
+                        <TextField required name="payment" type="number" helperText="Bezahlung" onChange={this.changehandler} />
+                        <TextField required name="numberOfFreeancers" type="number" helperText="Anzahl an Freelancern" onChange={this.changehandler} />
+                        <TextField required select name="area" value={this.state.area} helperText="Bereich" onChange={this.changeHandler}>
+                            {this.state.prefences.map((pref, index) => <MenuItem key={index} value={pref}>{pref}</MenuItem>)}
+                        </TextField>
+
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={this.closePopup}
+                    >
+                        Schließen
+                </Button>
+                    <Button variant="contained" color="primary" type="submit">Speichern</Button>
+                </DialogActions>
+            </form>
+        </Dialog >
+    }
 
 
     render() {
@@ -197,33 +227,37 @@ class ProjectDetail extends Component {
                 </tr>
             </thead>
         }
+        if (this.state.isCreating) {
+
+            creationDialog = this.getRoleCreation()
+        }
         if (this.state.info) {
             if (this.state.info.length > 0) {
                 project_info = this.state.info[0]
 
                 return <Card
-                style={{marginTop: "3%"}}
+                    style={{ marginTop: "3%" }}
                 >
                     <CardHeader
                         title={project_info.titel}
                     >
                     </CardHeader>
                     <CardContent >
-                    <Button 
-                    variant="conained"
-                    color="secondary"
-                    startIcon={<ArrowBackIcon />}
-                    onClick={this.handleBack}
-                    style={{marginBottom: "5%"}}
-                    >
-                        Zurück
+                        <Button
+                            variant="conained"
+                            color="secondary"
+                            startIcon={<ArrowBackIcon />}
+                            onClick={this.handleBack}
+                            style={{ marginBottom: "5%" }}
+                        >
+                            Zurück
                     </Button>
                         <Card>
-                            <CardContent style={{flex: 1, flexDirection: "row"}}>
+                            <CardContent style={{ flex: 1, flexDirection: "row" }}>
                                 <Typography variant="subtitle2">
                                     Start: {moment(project_info.start_date).format("DD.MM.YYYY")}
-                                <Typography variant="subtitle2">
-                                </Typography>
+                                    <Typography variant="subtitle2">
+                                    </Typography>
                                     Ende: {moment(project_info.end_date).format("DD.MM.YYYY")}
                                 </Typography>
                                 <Typography variant="caption">
@@ -233,38 +267,38 @@ class ProjectDetail extends Component {
                         </Card>
                     </CardContent>
 
-                        <div style={{ backgroundColor: 'lightgray' }}>
-                            
-                            <button onClick={this.handleDeleteProjekt}>Projekt löschen</button>
-                        </div>
-                        <button onClick={this.addRole}>Rolle hinzufügen</button>
-                        {creationDialog}
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Rolle</th>
-                                    <th>Anzahl</th>
-                                    <th>Beschreibung</th>
-                                    <th>Neue Bewerbungen</th>
-                                    <th>Bisher angenommene Bewerbungen</th>
-                                </tr>
-                            </thead>
-                            {this.state.info.map((role, index) => <ProjectRoleDetail key={index} info={role} token={this.state.token} handleExpand={this.handleExpand}></ProjectRoleDetail>)}
-                        </table>
-                        <table>
-                            {appHead}
-                            {this.state.applications.map((app, index) => <ApplicationListItem key={index} info={app} token={this.state.token} onReject={this.handleUpdate}></ApplicationListItem>)}
-                        </table>
-                        <h3>Ihre angenommenen Bewerbungen</h3>
-                        <table>
-                            {acceptedHead}
-                            {this.state.accepted.map((freelancer_info, index) => <AcceptedListItem key={index} info={freelancer_info} ></AcceptedListItem>)}
-                        </table>
+                    <div style={{ backgroundColor: 'lightgray' }}>
 
-                    </Card>
+                        <button onClick={this.handleDeleteProjekt}>Projekt löschen</button>
+                    </div>
+                    <button onClick={this.addRole}>Rolle hinzufügen</button>
+                    {creationDialog}
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Rolle</th>
+                                <th>Anzahl</th>
+                                <th>Beschreibung</th>
+                                <th>Neue Bewerbungen</th>
+                                <th>Bisher angenommene Bewerbungen</th>
+                            </tr>
+                        </thead>
+                        {this.state.info.map((role, index) => <ProjectRoleDetail key={index} info={role} token={this.state.token} handleExpand={this.handleExpand}></ProjectRoleDetail>)}
+                    </table>
+                    <table>
+                        {appHead}
+                        {this.state.applications.map((app, index) => <ApplicationListItem key={index} info={app} token={this.state.token} onReject={this.handleUpdate}></ApplicationListItem>)}
+                    </table>
+                    <h3>Ihre angenommenen Bewerbungen</h3>
+                    <table>
+                        {acceptedHead}
+                        {this.state.accepted.map((freelancer_info, index) => <AcceptedListItem key={index} info={freelancer_info} ></AcceptedListItem>)}
+                    </table>
+
+                </Card>
             }
-        }else return this.getNoInformation()
-        
+        } else return this.getNoInformation()
+
     }
 
     componentDidMount() {

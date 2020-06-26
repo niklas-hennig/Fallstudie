@@ -35,7 +35,6 @@ class CarouselComp extends Component {
         if(this.state.type==='f'){
             axios.get('http://localhost:80/api/Role/'+this.state.username+'/f/'+this.state.token)
             .then(res => {
-                console.log(res)
                 let key = 0
                 for (key in res.data){
                     projects.push(res.data[key].role_id)

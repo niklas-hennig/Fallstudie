@@ -128,7 +128,6 @@ class CompleteProfileFreelancer extends Component {
         if (this.state.showUploadBtn === true) uploadBtn = <Button variant="outlined" onClick={this.uploadHandler}>Hochladen</Button>
         let date = ''
         if (this.state.date_of_birth) date = moment(this.state.date_of_birth).format('YYYY-MM-DD')
-        console.log(disableComponent)
         return (
             <form onSubmit={this.submitHandler}>
                 <Grid container spacing={3}>
