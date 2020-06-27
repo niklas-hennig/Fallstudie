@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from "axios";
+import { TableRow, TableCell, Button } from '@material-ui/core';
 
 class ApplicationListItem extends Component {
     constructor(props){
@@ -33,15 +34,14 @@ class ApplicationListItem extends Component {
         console.log(this.state)
         let resumeBtn = 'Kein Lebenslauf gefunden'
         if (this.state.info.resume_link) resumeBtn = <a target="_blank" href={'http://localhost:80/api/File/'+this.state.info.username+'/'+this.state.token}>Lebenslauf</a>
-        return <tbody>
-            <tr>
-                <td>{this.state.info.username}</td>
-                <td>{this.state.info.expienece}</td>
-                <td>{resumeBtn}</td>
-                <td><button onClick={this.handleAccept}>Annehmen</button></td>    
-                <td><button onClick={this.handleReject}>Ablehnen</button></td>            
-            </tr>
-        </tbody>
+        return <TableRow>
+                <TableCell>{this.state.info.username}</TableCell>
+                <TableCell>{this.state.info.expienece}</TableCell>
+                <TableCell>{this.state.info.email}</TableCell>
+                <TableCell>{resumeBtn}</TableCell>
+                <TableCell><Button variant="contained" color="primary" onClick={this.handleAccept}>Annehmen</Button></TableCell>    
+                <TableCell><Button variant="contained" color="secondary" onClick={this.handleReject}>Ablehnen</Button></TableCell>
+        </TableRow>
     }
 }
 export default ApplicationListItem;

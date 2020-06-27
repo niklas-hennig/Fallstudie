@@ -60,3 +60,23 @@ SELECT pref_name FROM prefences;
 SELECT * FROM role JOIN prefences ON prefences.pref_id=role.area;
 
 SELECT a.username, c.pref_name FROM freelancer as a JOIN prefence_assignment as b ON a.user_id=b.user_id JOIN prefences as c ON b.pref_id=c.pref_id;
+
+SELECT * FROM prefence_assignment
+
+SELECT role.role_id FROM role 
+        JOIN prefences as p ON role.area=p.pref_id 
+        JOIN prefence_assignment as pa ON p.pref_id=pa.pref_id 
+        JOIN freelancer as f ON f.user_id=pa.user_id 
+        WHERE f.username='testuser'
+        AND role.role_id NOT IN (
+        SELECT a.role_id 
+        FROM role
+        JOIN applications as a ON role.role_id=a.role_id
+        JOIN freelancer as f ON a.freelancer_id=f.user_id
+        WHERE f.username='testuser')
+        AND role.role_id NOT IN (
+        SELECT role.role_id
+        FROM role
+        JOIN freelancer_assignment as fa ON role.role_id=fa.role_id
+        JOIN freelancer as f ON fa.freelancer_id=f.user_id
+        WHERE f.username='testuser')

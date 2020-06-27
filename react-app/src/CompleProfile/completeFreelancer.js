@@ -191,7 +191,7 @@ class CompleteProfileFreelancer extends Component {
                                 <TextField required style={this.inputStyle} helperText="Straße" name="street" value={this.props.street} onChange={this.changeHandler} />
                                 <TextField required type="number" style={this.inputStyle} helperText="Hausnummer" name="number" value={this.props.number} onChange={this.changeHandler} />
                                 <br />
-                                <TextField required type="number" style={this.inputStyle} helperText="Postleitzal" name="postcode" value={this.props.postcode} onChange={this.changeHandler} />
+                                <TextField required  style={this.inputStyle} helperText="Postleitzal" name="postcode" value={this.props.postcode} onChange={this.changeHandler} />
                                 <TextField required style={this.inputStyle} helperText="Stadt" name="city" value={this.props.city} onChange={this.changeHandler} />
                                 <TextField style={this.inputStyle} helperText="Land" name="country" value={this.props.country} onChange={this.changeHandler} />
                                 <br />
