@@ -15,6 +15,7 @@ class ContentWrapper extends Component{
             toSettings: false,
             mainContentHeight: 0
         }
+
         this.handleLogin=this.handleLogin.bind(this);
         this.handleSettings=this.handleSettings.bind(this);
     }
