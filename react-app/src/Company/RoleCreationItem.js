@@ -1,30 +1,19 @@
 import React, { Component } from 'react';
 import axios from "axios";
+import { TableRow, TableCell } from '@material-ui/core';
 
 class RoleCreationItem extends Component {
     constructor(props){
         super(props)
         this.state={
-            id: this.props.id,
-            prefences: this.props.prefences,
-            title: '',
-            description: '',
-            requirements: '',
-            payment: 0,
-            area: this.props.prefences[0],
-            numberOfFreeancers: 0
+            id: this.props.info.id,
+            title: this.props.info.title,
+            description:  this.props.info.description,
+            requirements:  this.props.info.requirements,
+            payment:  this.props.info.payment,
+            area: this.props.info.area,
+            numberOfFreeancers:  this.props.info.numberOfFreeancers
         }
-        this.onChange=this.onChange.bind(this);
-        
-        if(this.props.prefences.lenght>0) {
-            console.log("updating in constructor")
-            this.props.onChange(this.state.id, "area", this.props.prefences[0]); 
-        }
-    }
-
-    onChange = (event) =>{
-        this.setState({[event.target.name]: event.target.value});
-        this.props.onChange(this.state.id, event.target.name, event.target.value);
     }
 
     onDelete = (event) =>{
@@ -32,27 +21,17 @@ class RoleCreationItem extends Component {
     }
 
     render(){
-        return <tbody>
-            <tr>
-                <td><input type="text" name="title" onChange={this.onChange} autoComplete={this.state.title}/></td>
-                <td><input type="text" name="description" onChange={this.onChange} autoComplete={this.state.description}/></td>
-                <td><input type="text" name="requirements" onChange={this.onChange} autoComplete={this.state.requirements}/></td>
-                <td><input type="number" name="payment" onChange={this.onChange} autoComplete={this.state.payment}/></td>
-                <td><select  name="area" onChange={this.onChange}>
-                        {this.state.prefences.map((prefence, index) => <option value={prefence} key={index}>{prefence}</option>)}
-                    </select ></td>
-                <td><button onClick={this.onDelete}>Löschen</button></td>
-                <td><input type="number" name="numberOfFreeancers" onChange={this.onChange}/></td>
-            </tr>
-        </tbody>
+        return <TableRow>
+                <TableCell>{this.state.title}</TableCell>
+                <TableCell>{this.state.description}</TableCell>
+                <TableCell>{this.state.requirements}</TableCell>
+                <TableCell>{this.state.payment}</TableCell>
+                <TableCell>{this.state.area}</TableCell>
+                <TableCell>{this.state.numberOfFreeancers}</TableCell>
+                <TableCell><button onClick={this.onDelete}>Löschen</button></TableCell>
+        </TableRow>
     }
 
-    UNSAFE_componentWillReceiveProps(nextProps){
-        console.log(this.state.id)
-        console.log(nextProps.prefences[0])
-        this.props.onChange(this.state.id, "area", nextProps.prefences[0]);
-        this.setState({prefences: nextProps.prefences, id: nextProps.id, area: nextProps.prefences[0]})
-    }
 }
 
 export default RoleCreationItem;
