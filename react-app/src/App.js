@@ -11,6 +11,8 @@ import Impressum from './staticPages/impressum';
 import Datenschutz from './staticPages/datenschutz';
 import NotFound from './staticPages/notFound';
 
+import '../src/style.css'
+
 class App extends Component {
   constructor(props){
     super(props)
@@ -22,7 +24,6 @@ class App extends Component {
         action: {main: "#FAFA6f"},
       },
       typography: {
-        
         title:{
           color: "#b00020"
         }
@@ -41,8 +42,8 @@ class App extends Component {
           <Router>
             <Switch>
               <Route exact path="/" component={ContentWrapper} />
-              <Route path="/about" component={About} />
-              <Route path="/impressum" component={Impressum} />
+              <Route path="/about.html" component={About} />
+              <Route path="/impressum.html" component={Impressum} />
               <Route path="/datenschutz.html" component={Datenschutz} />
               <Route component={NotFound} />
             </Switch>
