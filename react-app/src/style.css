@@ -4,7 +4,7 @@ h1 {
 	font-family: Verdana;
   	font-size: 18px;
 	text-align: left;
-	color:#F4B41A;
+	color: #F4B41A;
 }
 
 h2 {
@@ -50,3 +50,17 @@ a {
 	background-color: #091f2e;
  }
 
+#button_login span {
+  cursor: pointer;
+  transition: 0s;
+}
+
+#button_login:hover {
+  background-color:#F4B41A;
+  color: #143D59;
+}
+
+#button_register:hover {
+	background-color:#F4B41A;
+	color: #143D59;
+}

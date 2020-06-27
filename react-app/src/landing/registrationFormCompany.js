@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import axios from "axios";
+import { TextField, Card, MenuItem, Grid, Button} from "@material-ui/core";
 
 class RegistrationForm extends Component{
     constructor(props){
@@ -74,29 +75,31 @@ class RegistrationForm extends Component{
             registeredBtn = 'Registrieren'
             registered = 
             <div>
-                <p>Registierung erfolgreich</p>
+                <p>Registrierung erfolgreich</p>
             </div>
             fullForm = 
             <div>
+                <TextField fullWidth="true" label="Straße" name="street" variant="outlined" onChange={this.changeHandler} />
+                            
                 <label >Bitte neues Unternehmen anlegen</label><br></br>
-                <input type="text" name="street" placeholder="Street" onChange={this.changeHandler}/>
-                <input type="number" name="number" placeholder="Number" onChange={this.changeHandler}/>
-                <input type="text" name="postcode" placeholder="Postcode" onChange={this.changeHandler}/>
-                <input type="text" name="city" placeholder="City" onChange={this.changeHandler}/>
-                <select id="country" name="country">
-                    <option value="Germany">Deutschland</option>
-                </select>
+                <TextField fullWidth="true" label="Straße" name="street" onChange={this.changeHandler} />
+                <TextField fullWidth="true" label="Nummer" name="number" onChange={this.changeHandler} />
+                <TextField fullWidth="true" label="PLZ" name="postcode" onChange={this.changeHandler} />
+                <TextField fullWidth="true" label="Ort" name="city" onChange={this.changeHandler} />
+                <TextField fullWidth="true" label="Land" name="name" onChange={this.changeHandler}>
+                <MenuItem value={"Deutschland"}>{"name"}</MenuItem>)  </TextField>
             </div>
         }
 
         return <div id="RegistrationForm" style={{width: '60%', left: '20%', top: '15%', position: 'relative'}}>
             <form onSubmit={this.submitHandler} style={{position: 'relative', top: '20%'}}>
-                <div style={this.divStyle}>
-                    <input type="text" name="name" placeholder="Name" onChange={this.changeHandler}/>
-                </div>
+                <Card>
+                <TextField fullWidth="true" label="Firmenname" name="name" onChange={this.changeHandler} />
                 {fullForm}
                 <button type="submit" id="search_company" class="button"><span>{registeredBtn}</span></button>
+                </Card>
             </form>
+          
         </div>
     }
 
