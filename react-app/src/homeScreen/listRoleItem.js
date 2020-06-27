@@ -37,7 +37,6 @@ class RoleListItem extends Component {
         let delBtn = 'Mehr anzeigen'
         if(this.state.mode!=="left")
         delBtn = "Löschen"
-        let t = <div onClick={this.clickHandler} style={{backgroundColor: 'gray'}}/>
         let dateMmt = moment(this.state.start_date)
         if(this.state.mode!=="left") {
         console.log(this.state.start_date)

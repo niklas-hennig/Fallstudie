@@ -177,7 +177,7 @@ class ProjectCreate extends Component {
                 <DialogActions>
                     <Button
                         variant="contained"
-                        color="secondary"
+                        color="error"
                         onClick={this.closePopup}
                     >
                         Schließen

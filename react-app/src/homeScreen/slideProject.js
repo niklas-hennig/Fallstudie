@@ -56,10 +56,14 @@ class SlideProject extends Component {
 
         } else {
             content =
-                <div style={{ flex: '0 0 100%', backgroundColor: 'gray', width: '80%', marginLeft: '10%', height: this.props.height }}>
-                    <p>Bisher noch keine Projekte vorhanden</p><br />
-                    <p></p>
-                </div>
+            <Card
+            variant="outlined">
+                <CardContent>
+                    <Typography>
+                    Bisher noch keine Projekte vorhanden
+                    </Typography>
+                </CardContent>
+            </Card>
         }
         return content
     }

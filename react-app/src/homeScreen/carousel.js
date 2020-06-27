@@ -137,7 +137,7 @@ class CarouselComp extends Component {
     return (
         <div >
             <h1>{title}</h1>
-            <div className="carousel_container" ref={ (divElement) => { this.divElement = divElement } } style={{height: '90%'}}>
+            <div className="carousel_container" ref={ (divElement) => { this.divElement = divElement } }>
                 {carousel}
                 {create}
             </div>

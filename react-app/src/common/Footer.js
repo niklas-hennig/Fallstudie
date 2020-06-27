@@ -29,6 +29,8 @@ class Footer extends Component {
             <BottomNavigation
             value={this.state.selected}
             style={{
+                backgroundColor: "#143D59",
+                color: 'white',
                 width: '100%',
                 flex: 1,
                 flexDirection: "row",
@@ -39,9 +41,9 @@ class Footer extends Component {
             showLabels
             onChange={this.onChange}
             >
-                <BottomNavigationAction label="Über uns" icon={<InfoRoundedIcon/>}></BottomNavigationAction>
-                <BottomNavigationAction label="Impressum" icon={<DescriptionRoundedIcon/>}></BottomNavigationAction>
-                <BottomNavigationAction label="Datenschutz" icon={<LockOpenRoundedIcon/>}></BottomNavigationAction>
+                <BottomNavigationAction label="Über uns" style={{color: "white"}} icon={<InfoRoundedIcon color="secondary"/>}></BottomNavigationAction>
+                <BottomNavigationAction label="Impressum" style={{color: "white"}} icon={<DescriptionRoundedIcon color="secondary"/>}></BottomNavigationAction>
+                <BottomNavigationAction label="Datenschutz" style={{color: "white"}} icon={<LockOpenRoundedIcon color="secondary"/>}></BottomNavigationAction>
 
             </BottomNavigation>
           );
