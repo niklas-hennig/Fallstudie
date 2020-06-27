@@ -189,27 +189,35 @@ class MainContent extends Component {
     getLogin() {
         let t = <div id='backgroundImage' style={{ backgroundImage: `url(${login_background})`, backgroundSize: "cover" }}>
         </div>
-        return(
-        <Grid container spacing={3} style={{marginTop:'3%'}}>
+        return (
+            <Grid container spacing={3} style={{ marginTop: '3%' }}>
+                <Grid item xs={0}>
+                </Grid>
+                <Grid item xs={6}>
+                    <Description />
+                </Grid>
+                <Grid item xs={1}>
+                </Grid>
+                <Grid item xs={4}>
+                    <Login onRegister={this.handleRegister} onLogin={this.handleLogin} onPasswordForgotten={this.handlePasswordForgotten} />
+                </Grid>
+            </Grid>
+        )
+    }
+
+    getPasswordReset() {
+        return <Grid container spacing={3} style={{ marginTop: '3%' }}>
             <Grid item xs={0}>
             </Grid>
-
             <Grid item xs={6}>
-                <Description/>
+                <Description />
             </Grid>
             <Grid item xs={1}>
             </Grid>
             <Grid item xs={4}>
-                <Login onRegister={this.handleRegister} onLogin={this.handleLogin} onPasswordForgotten={this.handlePasswordForgotten}/>
+                <PasswordReset onBack={this.handleBack} />
             </Grid>
         </Grid>
-        )}
-
-    getPasswordReset() {
-        return <div id='backgroundImage' style={{ backgroundImage: `url(${login_background})` }}>
-            <Description />
-            <PasswordReset onBack={this.handleBack} />
-        </div>
     }
 
     getRegistration() {
