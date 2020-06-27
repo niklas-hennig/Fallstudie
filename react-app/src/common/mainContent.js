@@ -200,17 +200,9 @@ class MainContent extends Component {
             <Grid item xs={1}>
             </Grid>
             <Grid item xs={4}>
-                <Login />
-
+                <Login onRegister={this.handleRegister} onLogin={this.handleLogin} onPasswordForgotten={this.handlePasswordForgotten}/>
             </Grid>
-
         </Grid>
-        /*
-        <React.Fragment>
-                    <Description />
-                    <Login onRegister={this.handleRegister} onLogin={this.handleLogin} onPasswordForgotten={this.handlePasswordForgotten}/>
-                </React.Fragment>
-                */
         )}
 
     getPasswordReset() {

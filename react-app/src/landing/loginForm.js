@@ -62,15 +62,13 @@ class LoginForm extends Component {
     render() {
         let inputCompanyName = '';
         let error = '';
-        let margin = '20%';
         if (this.props.isCompany) {
-            margin = '15%';
-            inputCompanyName = <Grid container spacing={1} alignItems="flex-end">
-                <Grid item>
+            inputCompanyName = <Grid item container alignItems="flex-end">
+                <Grid item xs={2}>
                     <BusinessIcon color='Primary' fontSize='large' />
                 </Grid>
-                <Grid item>
-                    <TextField id="input-with-icon-grid" label="Firmenname" variant="outlined" name="Company_name" onChange={this.changeHandler} />
+                <Grid item xs={10}>
+                    <TextField label="Firmenname" fullWidth="true" variant="outlined" name="Company_name" onChange={this.changeHandler} />
                 </Grid>
             </Grid>
         }
@@ -79,38 +77,54 @@ class LoginForm extends Component {
                 <p>Falscher Nutzername oder Passwort</p>
             </div>
         }
-        return <div id='loginForm' style={{ position: 'relative', top: margin }}>
-            <form onSubmit={this.submitHandlerLogin} style={{ position: 'relative', top: '20%' }}>
-                {inputCompanyName}
+        return (<React.Fragment>
+            <form onSubmit={this.submitHandlerLogin}>
+                <Grid container spacing={2}>
+                    <Grid item container xs={10} direction="column">
+                        {inputCompanyName}
+                        <Grid item container alignItems="flex-end" style={{marginTop: "3%", marginBottom: "3%"}}>
+                            <Grid item xs={2}>
+                                <PersonIcon color='Primary' fontSize='large' />
+                            </Grid>
+                            <Grid item xs={10}>
+                                <TextField fullWidth="true" id="input-with-icon-grid" label="Benutzername" name="username" variant="outlined" onChange={this.changeHandler} />
+                            </Grid>
+                        </Grid>
+                        <Grid container alignItems="flex-end">
+                            <Grid item xs={2}>
+                                <LockOpenIcon color='Primary' fontSize='large' />
+                            </Grid>
+                            <Grid item xs={10}>
+                                <TextField id="input-with-icon-grid" fullWidth="true" type="password" label="Passwort" name="password" variant="outlined" onChange={this.changeHandler} />
+                            </Grid>
+                            <Grid item xs={12} align="right">
+                                <a href="#!" style={{ fontSize: "9px", textDecoration: "none" }} onClick={this.props.onPasswordReset}>
+                                    Passwort vergessen
+                        </a>
+                            </Grid>
+                        </Grid>
 
-                <Grid container spacing={1} alignItems="flex-end">
-                    <Grid item>
-                        <PersonIcon color='Primary' fontSize='large' />
                     </Grid>
-                    <Grid item>
-                        <TextField id="input-with-icon-grid" label="Benutzername" name="username" variant="outlined" onChange={this.changeHandler} />
+                    <Grid item xs={6} align="left">
+                        <Button id="button_register"
+                            onClick={this.props.onRegister}
+                            variant="outlined">
+                            Registrieren
+                            </Button>
+                    </Grid>
+                    <Grid item xs={6} align="right">
+                        <Button id="button_login" type="submit"
+                            variant="contained"
+                            color="primary"
+                            endIcon={<ExitToAppIcon />}>
+                            Login
+                        </Button>
                     </Grid>
                 </Grid>
-
-                <Grid container spacing={1} alignItems="flex-end">
-                    <Grid item>
-                        <LockOpenIcon color='Primary' fontSize='large' />
-                    </Grid>
-                    <Grid item>
-                        <TextField id="input-with-icon-grid" label="Passwort" name="password" variant="outlined" onChange={this.changeHandler} />
-                    </Grid>
-                </Grid>
-
-                <Button id="button_login" type="submit" id="button_login" 
-                    variant="contained"
-                    color="primary"
-                    endIcon={<ExitToAppIcon />}
-                >
-                    Login
-                </Button>
             </form>
             {error}
-        </div>
+        </React.Fragment>
+        )
     }
 }
 
