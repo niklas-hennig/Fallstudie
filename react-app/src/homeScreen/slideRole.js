@@ -68,9 +68,11 @@ class SlideRole extends Component {
                 </CardActions>
             </Card>
         } else {
-            content = <div style={{ backgroundColor: 'gray', width: '80%', marginLeft: '10%', height: this.props.height * 0.75 }}>
-                <h1>Leider haben wir keine neuen Projekte für Sie</h1>
-            </div>
+            content = <Card>
+                <CardContent>
+                    <Typography>Leider haben wir keine neuen Projekte für Sie</Typography>
+                </CardContent>
+            </Card>
         }
         return content
     }

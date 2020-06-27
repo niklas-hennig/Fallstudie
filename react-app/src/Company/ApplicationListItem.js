@@ -40,7 +40,7 @@ class ApplicationListItem extends Component {
                 <TableCell>{this.state.info.email}</TableCell>
                 <TableCell>{resumeBtn}</TableCell>
                 <TableCell><Button variant="contained" color="primary" onClick={this.handleAccept}>Annehmen</Button></TableCell>    
-                <TableCell><Button variant="contained" color="secondary" onClick={this.handleReject}>Ablehnen</Button></TableCell>
+                <TableCell><Button variant="contained" color="error" onClick={this.handleReject}>Ablehnen</Button></TableCell>
         </TableRow>
     }
 }

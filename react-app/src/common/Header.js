@@ -65,7 +65,7 @@ class Header extends Component {
 
         }
         return <React.Fragment>
-            <AppBar position="static" style={{backgroundColor: "#F4B41A"}}>
+            <AppBar position="static" color="secondary">
                 <Toolbar>
                     <Typography style={{ flex: 1 }}>
                         Freelane - Die Jobbörse

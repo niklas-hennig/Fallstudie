@@ -173,7 +173,7 @@ class ProjectDetail extends Component {
 
                         <TextField required name="title" helperText="Rollentitel" onChange={this.changehandler} />
                         <TextField required name="description" helperText="Beschreibung" onChange={this.changehandler} />
-                        <TextField required name="requirements" helperText="Anforerungen" onChange={this.changehandler} />
+                        <TextField required name="requirements" helperText="Anforderungen" onChange={this.changehandler} />
                         <TextField required name="payment" type="number" helperText="Bezahlung" onChange={this.changehandler} />
                         <TextField required name="numberOfFreeancers" type="number" helperText="Anzahl an Freelancern" onChange={this.changehandler} />
                         <TextField required select name="area" value={this.state.area} helperText="Bereich" onChange={this.changeHandler}>
