@@ -191,25 +191,17 @@ class MainContent extends Component {
         </div>
         return(
         <Grid container spacing={3} style={{marginTop:'3%'}}>
+            <Grid item xs={0}>
+            </Grid>
+
+            <Grid item xs={6}>
+                <Description/>
+            </Grid>
             <Grid item xs={1}>
             </Grid>
-
-            <Grid item xs={5}>
-                <Card>
-                    <CardHeader title="Herzlich Willkommen bei Freelane" component="h1" >
-                    </CardHeader>
-                    <CardContent>
-                        <Description />
-                    </CardContent>
-                </Card>
-            </Grid>
-
-            <Grid item xs={5}>
+            <Grid item xs={4}>
                 <Login />
 
-            </Grid>
-
-            <Grid item xs={1}>
             </Grid>
 
         </Grid>
@@ -298,7 +290,7 @@ class MainContent extends Component {
                     {lftcon}
                 </Grid>
                 <Grid xs={1}></Grid>
-                <Grid item xs={12 - (2 * barCols) - 2} alignContent="flex-start">
+                <Grid item xs={12 - (2 * barCols) - 2} alignContent="flex-start" >
                     {cont}
                 </Grid>
                 <Grid xs={1}></Grid>

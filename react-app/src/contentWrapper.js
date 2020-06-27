@@ -32,7 +32,7 @@ class ContentWrapper extends Component{
 
     render(){
         return (
-        <Grid container direction="column" id="contentWrapper">
+        <Grid container direction="column" id="contentWrapper" >
             <Grid item ref={(elem) => this.header = elem} >
                 <Header user={this.state.username} onSettings={this.handleSettings} />
             </Grid>

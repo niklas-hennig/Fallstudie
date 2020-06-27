@@ -21,6 +21,12 @@ class App extends Component {
         error: {main: "#b00020"},
         action: {main: "#FAFA6f"},
       },
+      typography: {
+        
+        title:{
+          color: "#b00020"
+        }
+      }
     })
   }
 
@@ -37,7 +43,7 @@ class App extends Component {
               <Route exact path="/" component={ContentWrapper} />
               <Route path="/about" component={About} />
               <Route path="/impressum" component={Impressum} />
-              <Route path="/datenschutz" component={Datenschutz} />
+              <Route path="/datenschutz.html" component={Datenschutz} />
               <Route component={NotFound} />
             </Switch>
           </Router>
