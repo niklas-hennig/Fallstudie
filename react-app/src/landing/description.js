@@ -45,7 +45,7 @@ class Description extends Component {
                         
                             <Grid item xs={3} align="center">
                                 <AssignmentIcon fontSize="large"  color="primary" />
-                                <Typography>Registrierung</Typography>
+                                <Typography>Registrieren</Typography>
                             </Grid>
                             <Grid item xs={1}  align="center">
                                 <ArrowForwardIosIcon fontSize="large"/>
