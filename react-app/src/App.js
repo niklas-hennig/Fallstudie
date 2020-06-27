@@ -24,8 +24,11 @@ class App extends Component {
         action: {main: "#FAFA6f"},
       },
       typography: {
-        title:{
-          color: "#b00020"
+        h5: {
+          color: "#f9aa33"
+        },
+        caption: {
+          color: "#344955"
         }
       }
     })

@@ -272,6 +272,24 @@ class CompleteProfileCompany extends Component {
             })
             .catch(err => console.log(err))
     }
+
+    UNSAFE_componentWillReceiveProps(nextProps){
+        if(this.state.comp_name!==nextProps.comp_name){
+            this.setState({comp_id: nextProps.comp_id,
+                comp_name: nextProps.comp_name,
+                street: nextProps.street,
+                number: nextProps.number,
+                postcode: nextProps.postcode,
+                city: nextProps.city,
+                country: nextProps.country,
+                tel_no: nextProps.tel_no,
+                street_bill: nextProps.street_bill,
+                number_bill: nextProps.number_bill,
+                postcode_bill: nextProps.postcode_bill,
+                city_bill: nextProps.city_bill,
+                description: nextProps.description,})
+        }
+    }
 }
 
 export default CompleteProfileCompany;

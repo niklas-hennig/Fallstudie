@@ -15,6 +15,13 @@ h2 {
 	color:#143D59;
 }
 
+h3 {
+	margin-left: 10px;
+	font-family: Verdana;
+  	font-size: 13px;
+	text-align: left;
+}
+
 p {
 	margin-left: 3%;
 	margin-right: 3%;

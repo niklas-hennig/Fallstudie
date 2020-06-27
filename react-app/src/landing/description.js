@@ -27,14 +27,14 @@ class Description extends Component {
                     <CardHeader title="Herzlich Willkommen bei Freelane">
                     </CardHeader>
                     <CardContent>
-                        <Typography component="h3" variant="h5">Freelancer?</Typography>
+                        <Typography component="h3" >Freelancer?</Typography>
                         <Typography variant="caption">
                             Sind Sie Freelancer und auf der Suche nach neuen, spannenden Projekten? Bestenfalls sogar Projekte, die auf
                             Ihre persönlichen Bedürfnisse zugesschnitten sind? Dann ist Freelane der richtige Ort für Sie. Wir bieten
                             Ihnen nach einer kurzen Registrierung schon eine Auswahl an Projekten, auf die Sie sich mit nur einem
                             Klick bewerben können.<br />
                         </Typography>
-                        <Typography  component="h3" variant="h5" style={{marginTop: "2%"}}>Unternehmen?</Typography>
+                        <Typography  component="h3" style={{marginTop: "2%"}}>Unternehmen?</Typography>
                         <Typography variant="caption">
                             Sind Sie ein Unternehmen, das qualifizierte Freelancer für Ihre Projekte sucht? Möchten Sie Ihren Bewerbungsprozess
                             digitalisieren und gleichzeitig schlanker gestalten? Dann sind Sie bei uns richtig. Wir bieten Ihnen beliebig

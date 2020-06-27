@@ -62,6 +62,7 @@ class Registration extends Component {
                                 </Grid>}
                                 />
                             <CardContent>
+                                
                                 {form}
                             </CardContent>
                         </Card>
