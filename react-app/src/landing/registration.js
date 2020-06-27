@@ -1,27 +1,15 @@
 import React, {Component} from "react";
 import Registration_form_freelancer from './registrationFormFreelancer';
 import Registration_form_company from './registrationFormCompany';
+import { Typography, CardContent, Card, CardHeader, Grid, Switch, Button } from "@material-ui/core";
 
 class Registration extends Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            isCompany: false
-        }
-        this.styleDefault = {marginRight: "5%",
-        backgroundColor: "#D9D9D9",
-        position: "absolute",
-        width: "40%",
-        height: '80%',
-        textAlign: "center",
-        left: '55%',
-        top: '10%',
-        borderRadius: '200px'
-        }
-        this.bottomStyle = {
-            position: 'relative',
-            top: '20%'
+            isCompany: false,
+            stateSwitch: true
         }
     }
     handleBack = (event) => {
@@ -36,19 +24,51 @@ class Registration extends Component {
     switchToFreelancer = (event) => {
         this.setState({isCompany: false})
     }
+    handleToggleSwitch(){
+        this.setState({stateSwitch: !this.state.stateSwitch})
+        if(!this.state.stateSwitch) this.switchToFreelancer();
+        else this.switchToCompany();
+    }
 
     render() {
         let form = ''
         if(this.state.isCompany) form = <Registration_form_company  onRegistered={this.handleCompanyComplete}/>
         else form = <Registration_form_freelancer  onRegistered={this.handleBack}/>
-        return <div style={this.styleDefault}>
-                    <div id='top' style={{position:'relative', top:'-3%', left:'20%'}}>
-                        <button type="button" id="button_selbststaendiger" onClick={this.switchToFreelancer}>Selbstständiger</button>
-                        <button type="button" id="button_unternehmen" onClick={this.switchToCompany}>Unternehmen </button>
-                    </div>
-                    {form}
-            
-                </div>
+        return (
+            <Card>
+                <CardHeader
+                    title="Registrierung"
+                    subheader="Erstelle ein neues Konto"
+                    action={<Button onClick={this.props.onBack}>
+                        Zurück
+                    </Button>}
+                />
+                <CardContent style={{
+                    flex: 1,
+                    flexDirection: "row",
+                    justifyItems: "space-evenly"
+                }}>
+                    <Typography component="div">
+                        <Card>
+                            <CardHeader action={<Grid component="label" container spacing={1}>
+                                    <Grid item>Unternehmen</Grid>
+                                    <Grid item>
+                                        <Switch color='primary'
+                                            checked={this.state.stateSwitch}
+                                            onChange={e => this.handleToggleSwitch()}
+                                        />
+                                    </Grid>
+                                    <Grid item>Freelancer</Grid>
+                                </Grid>}
+                                />
+                            <CardContent>
+                                {form}
+                            </CardContent>
+                        </Card>
+                    </Typography>
+                </CardContent>
+            </Card>
+        )
     }
 }
 

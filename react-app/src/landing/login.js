@@ -77,9 +77,7 @@ class Login extends Component {
                 <CardHeader
                     title="Login"
                     subheader="Logge dich ein"
-                >
-
-                </CardHeader>
+                />
                 <CardContent style={{
                     flex: 1,
                     flexDirection: "row",

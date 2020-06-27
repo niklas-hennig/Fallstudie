@@ -221,10 +221,14 @@ class MainContent extends Component {
     }
 
     getRegistration() {
-        return <div style={{ backgroundImage: `url(${login_background})` }}>
-            <Description />
-            <Registration onBack={this.handleBack} onCompanyComplete={this.handleCompanyComplete} />
-        </div>
+        return <Grid container spacing={3} style={{ marginTop: '3%' }}>
+            <Grid item xs={5}>
+                <Description />
+            </Grid>
+            <Grid item xs={7}>
+                <Registration onBack={this.handleBack} onCompanyComplete={this.handleCompanyComplete} />
+            </Grid>
+        </Grid>
     }
 
     getBars() {

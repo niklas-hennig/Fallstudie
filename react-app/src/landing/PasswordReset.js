@@ -53,7 +53,7 @@ class PasswordReset extends Component {
                         <Paper style={{ padding: "4%" }}>
                             <Typography>Bitte Nutzernamen eingeben</Typography>
                             <TextField required name="username" label="Nutzername" value={this.state.username} onChange={this.changeHandler} />
-                            <Typography>Bitte wählen Sie Ihren Kontotyp aus</Typography>
+                            <Typography style={{marginTop: "5%"}}>Bitte wählen Sie Ihren Kontotyp aus</Typography>
                             <TextField name="type" select value={this.state.type} onChange={this.changeHandler}>
                                 <MenuItem value="f">Freelancer</MenuItem>
                                 <MenuItem value="c">Unternehmen</MenuItem>
@@ -77,10 +77,8 @@ class PasswordReset extends Component {
                         <Paper style={{ padding: "4%" }}>
                             <Typography>Bitte Nutzernamen eingeben</Typography>
                             <TextField required fullWidth name="username" label="Nutzername" value={this.state.username} onChange={this.changeHandler} />
-                            <Typography>Bitte Nutzernamen eingeben</Typography>
-                            <TextField required fullWidth type="number" name="token" label="Bitte Token eingeben" value={this.state.token} onChange={this.changeHandler} />
-                            <Typography>Bitte neues Passwort eingeben</Typography>
-                            <TextField required fullWidth type="password" name="password" label="Bitte neues Passwort eingeben" value={this.state.password} onChange={this.changeHandler} />
+                            <TextField required fullWidth type="number" name="token" label="Bitte Token eingeben" value={this.state.token} onChange={this.changeHandler} style={{marginTop: "5%"}}/>
+                            <TextField required fullWidth type="password" name="password" label="Bitte neues Passwort eingeben" value={this.state.password} onChange={this.changeHandler} style={{marginTop: "5%"}}/>
                         </Paper>
                     </CardContent>
                     <CardActions style={{ float: "right" }}>

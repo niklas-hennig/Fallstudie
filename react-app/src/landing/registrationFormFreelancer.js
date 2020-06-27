@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import axios from "axios";
+import { TextField, Grid, MenuItem } from "@material-ui/core";
 
 class RegistrationForm extends Component{
     constructor(props) {
@@ -7,21 +8,12 @@ class RegistrationForm extends Component{
         this.state = {
             name: '',
             surname: '',
-            gender: 'f',
+            gender: '',
             username: '',
             password: '',
             password_check: '',
             email: '',
             mailError: false
-        }
-        this.iconStyle = {
-            position: 'relative',
-            top: '10px',
-            height: '35px'
-        }
-        this.divStyle = {
-            position: 'relative',
-            top: '50%'
         }
     }
     changeHandler = (event) => {
@@ -29,7 +21,6 @@ class RegistrationForm extends Component{
     }
     submitHandler = (event) => {
         event.preventDefault();
-        console.log(this.state.email.includes('@'))
         if(this.state.password!==this.state.password_check) {
             this.setState({passwordError: true, mailError:false})
             return
@@ -60,9 +51,9 @@ class RegistrationForm extends Component{
     }
 
     render(){
-        let passwordErrror = ''
+        let passwordError = ''
         if (this.state.passwordError){
-            passwordErrror = <p style={{color: 'red', position: 'relative', 'top': '10%'}}>Passwörter stimmen nicht überein</p>
+            passwordError = <p style={{color: 'red', position: 'relative', 'top': '10%'}}>Passwörter stimmen nicht überein</p>
         }
 
         let mailError = ''
@@ -78,33 +69,40 @@ class RegistrationForm extends Component{
                 <p>Registierung erfolgreich</p>
             </div>
         }
-        return <div id='RegistrationForm' style={{width: '60%', left: '20%', top: '15%', position: 'relative'}}>
-                    <form onSubmit={this.submitHandler} style={{position: 'relative', top: '20%'}}>
-                        <div style={this.divStyle}>
-                        <input type="text" name="name" placeholder="Name" onChange={this.changeHandler}/>
-                        <input type="text" name="surname" placeholder="Vorname" onChange={this.changeHandler}/>
-                        </div>
-                        <select name="gender" onChange={this.changeHandler}>
-                            <option value="f">Weiblich</option>
-                            <option value="m">Männlich</option>
-                            <option value="d">Divers</option>
-                        </select>
-                        <div style={this.divStyle}>
-                            <input type="text" name="email" placeholder="E-Mail" onChange={this.changeHandler}/>
-                        </div>
-                        <div style={this.divStyle}>
-                            <input type="text" name="username" placeholder="Nutzername" onChange={this.changeHandler}/>
-                        </div>
-                        <div style={this.divStyle}>
-                            <input type="password" name="password" placeholder="Passwort" onChange={this.changeHandler}/>
-                            <input type="password" name="password_check" placeholder="Passwort erneut eingeben" onChange={this.changeHandler}/>
-                            {passwordErrror}
-                            {mailError}
-                        </div>
+        return (<form onSubmit={this.submitHandler} >
+                    <Grid container spacing={0}>
+                        <Grid item xs={6}>
+                            <TextField required name="name" label="Name" value={this.state.name} onChange={this.changeHandler} />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextField required name="surname" label="Vorname" value={this.state.surname} onChange={this.changeHandler} />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField fullWidth="true" required select name="gender" helperText="Geschlecht" value={this.state.gender} onChange={this.changeHandler}>
+                                <MenuItem value="f">Weiblich</MenuItem>
+                                <MenuItem value="m">Männlich</MenuItem>
+                                <MenuItem value="d">Divers</MenuItem>
+                            </TextField>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField required fullWidth="true" name="email" label="E-Mail Addresse" value={this.state.email} onChange={this.changeHandler} />
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField required fullWidth="true" name="username" label="Nutzername" value={this.state.username} onChange={this.changeHandler} />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextField required fullWidth="true" type="password" name="password" label="Passwort" value={this.state.password} onChange={this.changeHandler} />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextField required fullWidth="true" type="password" name="password_check" label="Passwort erneut eingeben" value={this.state.password_check} onChange={this.changeHandler} />
+                        </Grid>
+                        {passwordError}
+                        {mailError}
                         {registered}
-                        <button type="submit" id="button_login" class="button"><span>{registeredBtn}</span></button>
+                    </Grid>
+                    <button type="submit" id="button_login" class="button"><span>{registeredBtn}</span></button>
                     </form>
-                </div>
+                )
     }
 
 }
