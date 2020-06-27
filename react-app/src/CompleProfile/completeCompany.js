@@ -149,7 +149,7 @@ class CompleteProfileCompany extends Component {
             <React.Fragment>
                 <TextField type="text" name="bill_street" helperText="Straße" defaultValue={this.state.street_bill} onChange={this.changeHandler} />
                 <TextField type="number" name="bill_number" helperText="Hausnummer" defaultValue={this.state.number_bill} onChange={this.changeHandler} /><br />
-                <TextField type="number" name="bill_postcode" helperText="Postleitzahl" defaultValue={this.state.postcode_bill} onChange={this.changeHandler} />
+                <TextField  name="bill_postcode" helperText="Postleitzahl" defaultValue={this.state.postcode_bill} onChange={this.changeHandler} />
                 <TextField type="text" name="bill_city" helperText="Stadt" defaultValue={this.state.city_bill} onChange={this.changeHandler} />
             </React.Fragment>
         if (this.state.passwordError) {
@@ -187,7 +187,7 @@ class CompleteProfileCompany extends Component {
                                         </Typography>
                                         <TextField name="street" required helperText="Straße" value={this.state.street} onChange={this.changeHandler} />
                                         <TextField name="number" type="number" required helperText="Hausnummer" value={this.state.number} onChange={this.changeHandler} />
-                                        <TextField name="postcode" type="number" required helperText="Postleitzahl" value={this.state.postcode} onChange={this.changeHandler} />
+                                        <TextField name="postcode" required helperText="Postleitzahl" value={this.state.postcode} onChange={this.changeHandler} />
                                         <TextField name="city" required helperText="Stadt" value={this.state.city} onChange={this.changeHandler} />
                                         <TextField name="country" required helperText="Land" value={this.state.country} onChange={this.changeHandler} />
                                         <TextField name="tel_no" type="number" required helperText="Telefonnummer" value={this.state.tel_no} onChange={this.changeHandler} />

@@ -81,7 +81,7 @@ class RegistrationForm extends Component{
                 <label >Bitte neues Unternehmen anlegen</label><br></br>
                 <input type="text" name="street" placeholder="Street" onChange={this.changeHandler}/>
                 <input type="number" name="number" placeholder="Number" onChange={this.changeHandler}/>
-                <input type="number" name="postcode" placeholder="Postcode" onChange={this.changeHandler}/>
+                <input type="text" name="postcode" placeholder="Postcode" onChange={this.changeHandler}/>
                 <input type="text" name="city" placeholder="City" onChange={this.changeHandler}/>
                 <select id="country" name="country">
                     <option value="Germany">Deutschland</option>
