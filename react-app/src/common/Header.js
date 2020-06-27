@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import logo from '../media/logo.png';
+import logo from '../media/logo_freelane.png';
 
 import { AppBar, Toolbar, Typography, Menu, MenuItem } from '@material-ui/core';
 import MenuRoundedIcon from '@material-ui/icons/MenuRounded';
@@ -65,7 +65,7 @@ class Header extends Component {
 
         }
         return <React.Fragment>
-            <AppBar position="static" color="secondary">
+            <AppBar position="static" color="secondary" title={<img src={logo} />}>
                 <Toolbar>
                     <Typography style={{ flex: 1 }}>
                         Freelane - Die Jobbörse
