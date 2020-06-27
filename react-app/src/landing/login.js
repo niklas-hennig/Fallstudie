@@ -1,5 +1,9 @@
 import React, {Component} from "react";
 import LoginForm from './loginForm';
+import Switch from '@material-ui/core/Switch';
+//Grid Layout
+import { Card, CardHeader, CardContent, Grid, TextField, MenuItem, Button, Typography, IconButton } from "@material-ui/core";
+
 
 
 class Login extends Component {
@@ -7,7 +11,8 @@ class Login extends Component {
         super(props);
         this.state = {
             isCompany: false,
-            isLogin: false
+            isLogin: false,
+            loginSwitch: true
         }
 
         this.bottomStyle = {position:'relative', 
@@ -54,24 +59,57 @@ class Login extends Component {
         this.props.onPasswordForgotten();
     }
 
+    handleToggleSwitch() {
+        if(this.state.loginSwitch) {
+            this.setState({loginSwitch:false})
+        } else {
+        this.setState({loginSwitch:true})
+        }
+    }
+
 
     render() {
         let style = this.styleDefault;
         return(
-            <div id="login_box" style={style}>
-                <div id='top' style={{position:'relative', top:'10%', left:'20%'}}>
-		            <button type="button" id="button_selbststaendiger" onClick={this.switchToFreelancer}>Selbstständiger</button>
-		            <button type="button" id="button_unternehmen"onClick={this.switchToCompany}>Unternehmen </button>
-                </div>
-                <LoginForm isCompany={this.state.isCompany} onLoginChange={this.handleLogin}/>
-		        <div  style={this.bottomStyle}>
-				    <p style={{fontSize: '8px', position: 'relative'}}>Neu hier?</p>
-				    <button type="button" id="button_register" onClick={this.submitHandlerRegister}>Registrieren</button>
-		        </div>
-                <div style={this.resetStyle}>
-                    <button onClick={this.handlePasswordForgotten}>Passwort vergessen</button>
-                </div>
-	        </div>
+            <Card alignContent="center" textAlign="center" justifyItems="center">
+                <CardHeader 
+                        title="Login"
+                        subheader="Logge dich ein"
+                    >
+                        
+                    </CardHeader>
+                    <CardContent style={{
+                        flex: 1,
+                        flexDirection: "row",
+                        justifyItems: "space-evenly"
+                    }}>
+                        <Typography component="div">
+                                <Card id="CardLogin">
+                            <Grid component="label" container spacing={1}>
+                              <Grid item>Unternehmen</Grid>
+                              <Grid item>
+                              <Switch color='primary'
+                              checked={this.state.loginSwitch}
+                              onChange={e => this.handleToggleSwitch()}
+                             />
+                              </Grid>
+                              <Grid item>Freelancer</Grid>
+                            </Grid>
+                            <LoginForm isCompany = {!this.state.loginSwitch}/>
+                            <Button id="button_register" onClick={this.submitHandlerRegister}>Registrieren</Button>
+                            </Card>
+                          </Typography>
+                          
+
+
+                          
+
+
+                        
+
+                    </CardContent>
+                </Card>
+           
         )
     }
 }
