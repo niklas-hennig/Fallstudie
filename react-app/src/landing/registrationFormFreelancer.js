@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import axios from "axios";
-import { TextField, Grid, MenuItem } from "@material-ui/core";
+import { TextField, Grid, MenuItem, Button } from "@material-ui/core";
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 class RegistrationForm extends Component{
     constructor(props) {
@@ -61,7 +62,7 @@ class RegistrationForm extends Component{
             mailError = <p style={{color: 'red', position: 'relative', 'top': '10%'}}>Keine gültige Mailaddresse</p>
         }
 
-        let registeredBtn = 'Anmelden'
+        let registeredBtn = 'Registrieren'
         let registered = ''
         if (this.state.registered){
             registeredBtn = 'Zurück'
@@ -70,37 +71,39 @@ class RegistrationForm extends Component{
             </div>
         }
         return (<form onSubmit={this.submitHandler} >
-                    <Grid container spacing={0}>
-                        <Grid item xs={6}>
-                            <TextField required name="name" label="Name" value={this.state.name} onChange={this.changeHandler} />
+                    <Grid container spacing={1}>
+                        <Grid item xs={5}>
+                            <TextField required fullWidth={true} name="name" label="Name" value={this.state.name} onChange={this.changeHandler} />
                         </Grid>
-                        <Grid item xs={6}>
-                            <TextField required name="surname" label="Vorname" value={this.state.surname} onChange={this.changeHandler} />
+                        <Grid item xs={4}>
+                            <TextField required fullWidth={true} name="surname" label="Vorname" value={this.state.surname} onChange={this.changeHandler} />
                         </Grid>
-                        <Grid item xs={12}>
-                            <TextField fullWidth="true" required select name="gender" helperText="Geschlecht" value={this.state.gender} onChange={this.changeHandler}>
+                        <Grid item xs={3} style={{marginTop: "2%"}}>
+                            <TextField fullWidth={true} required select name="gender" helperText="Geschlecht" value={this.state.gender} onChange={this.changeHandler}>
                                 <MenuItem value="f">Weiblich</MenuItem>
                                 <MenuItem value="m">Männlich</MenuItem>
                                 <MenuItem value="d">Divers</MenuItem>
                             </TextField>
                         </Grid>
-                        <Grid item xs={12}>
-                            <TextField required fullWidth="true" name="email" label="E-Mail Addresse" value={this.state.email} onChange={this.changeHandler} />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField required fullWidth="true" name="username" label="Nutzername" value={this.state.username} onChange={this.changeHandler} />
+                        <Grid item xs={6}>
+                            <TextField required fullWidth={true} name="email" label="E-Mail Addresse" value={this.state.email} onChange={this.changeHandler} />
                         </Grid>
                         <Grid item xs={6}>
-                            <TextField required fullWidth="true" type="password" name="password" label="Passwort" value={this.state.password} onChange={this.changeHandler} />
+                            <TextField required fullWidth={true} name="username" label="Nutzername" value={this.state.username} onChange={this.changeHandler} />
                         </Grid>
                         <Grid item xs={6}>
-                            <TextField required fullWidth="true" type="password" name="password_check" label="Passwort erneut eingeben" value={this.state.password_check} onChange={this.changeHandler} />
+                            <TextField required fullWidth={true} type="password" name="password" label="Passwort" value={this.state.password} onChange={this.changeHandler} />
+                        </Grid>
+                        <Grid item xs={6}>
+                            <TextField required fullWidth={true} type="password" name="password_check" label="Passwort erneut eingeben" value={this.state.password_check} onChange={this.changeHandler} />
                         </Grid>
                         {passwordError}
                         {mailError}
                         {registered}
+                        <Grid item xs={12} align="right" >
+                            <Button type="submit" variant="contained" color="primary" id="button_login" endIcon={<ExitToAppIcon />}>{registeredBtn}</Button>
+                        </Grid>
                     </Grid>
-                    <button type="submit" id="button_login" class="button"><span>{registeredBtn}</span></button>
                     </form>
                 )
     }
