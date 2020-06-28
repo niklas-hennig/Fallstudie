@@ -24,6 +24,10 @@ class App extends Component {
         action: {main: "#FAFA6f"},
       },
       typography: {
+        h3: {
+          color: "#344955",
+          fontWeight: "bold"
+        },
         h5: {
           color: "#f9aa33",
           fontWeight: "bold"
