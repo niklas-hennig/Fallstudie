@@ -25,7 +25,12 @@ class App extends Component {
       },
       typography: {
         h5: {
-          color: "#f9aa33"
+          color: "#f9aa33",
+          fontWeight: "bold"
+        },
+        subtitle1: {
+          color: "#344955",
+          fontWeight: "bolder"
         },
         caption: {
           color: "#344955"
