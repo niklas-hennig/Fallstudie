@@ -71,3 +71,23 @@ a {
 	background-color:#F4B41A;
 	color: #143D59;
 }
+
+#img_aboutUs_slider {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 100%;
+	height: auto;
+}
+
+#Card_Team {
+	background-color: #F9AA33;
+	margin: 2%;
+
+}
+
+#aboutUs_header {
+	background-color: #143D59;
+	color: white;
+	
+}
