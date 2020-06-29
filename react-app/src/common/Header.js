@@ -14,6 +14,7 @@ class Header extends Component {
         }
         this.handleSettings = this.handleSettings.bind(this);
         this.handleLogout = this.handleLogout.bind(this);
+        this.handleBackToMain=this.handleBackToMain.bind(this);
         this.handleOpenMenu = this.handleOpenMenu.bind(this);
         this.handleCloseMenu = this.handleCloseMenu.bind(this);
 
@@ -32,6 +33,10 @@ class Header extends Component {
         window.open('/', "_self")
     }
 
+    handleBackToMain(){
+        window.open('/', '_self')
+    }
+
     handleOpenMenu =(event)=> {
         this.setState({ menu: true, anchor: event.currentTarget })
     }
@@ -39,6 +44,7 @@ class Header extends Component {
     handleCloseMenu() {
         this.setState({ menu: false })
     }
+
 
 
     //greeting and menu only show up after login
@@ -67,7 +73,7 @@ class Header extends Component {
         return <React.Fragment>
             <AppBar position="static" color="secondary">
                 <Toolbar>
-                    <Avatar src={logo}/>
+                    <Avatar src={logo} onClick={this.handleBackToMain}/>
                     <Typography style={{ flex: 1 }}>
                         Freelane - Die Jobbörse
                         </Typography>

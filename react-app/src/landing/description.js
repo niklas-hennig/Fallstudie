@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import { Card, CardHeader, CardContent, Typography, Grid} from '@material-ui/core'
+import { Card, CardHeader, CardContent, Typography, Grid, CardActions, Button} from '@material-ui/core'
 import FindInPageIcon from '@material-ui/icons/FindInPage';
 import AssignmentIcon from '@material-ui/icons/Assignment';
 import DoneAllIcon from '@material-ui/icons/DoneAll';
@@ -16,6 +16,11 @@ class Description extends Component {
             textAlign: 'justify',
             float: 'left'
         }
+        this.handleOpenAbout=this.handleOpenAbout.bind(this);
+    }
+
+    handleOpenAbout(){
+        window.open("/about.html", '_self')
     }
 
 
@@ -64,6 +69,9 @@ class Description extends Component {
                             <Grid xs={1} />
                         </Grid>
                     </CardContent>
+                    <CardActions>
+                        <Button variant="outlined" onClick={this.handleOpenAbout} >Mehr erfahren</Button>
+                    </CardActions>
                 </Card>
                 </React.Fragment>)
     }
