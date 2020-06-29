@@ -8,7 +8,7 @@ import slide_aboutUs from '../media/Slide_aboutUs.jpg';
 class About extends Component {
     render() {
         return <div style={{
-            backgroundColor: '#344955',
+            
 
           }}>
             <Header />
@@ -19,7 +19,7 @@ class About extends Component {
                 <Grid item xs={2}>
                 </Grid>
                 <Grid item xs={8}>
-                    <h1 style={{ textAlign: "center" }}>Freelane - Die Projektvermittlungsfirma</h1>
+                    <h1 style={{ textAlign: "center", fontSize:"25pt" }}>Freelane - Die Projektvermittlungsfirma</h1>
                     <Card id="Card_aboutUs_history">
                         <CardHeader title={<h2>Unsere Geschichte</h2>}>
 
@@ -80,7 +80,7 @@ class About extends Component {
                                 </Grid>
                                 <Grid item xs={3}>
                                     <Card id="Card_Team">
-                                        <CardHeader avatar={
+                                        <CardHeader id="aboutUs_header" avatar={
                                             <Avatar aria-label="AccountCircleIcon" style={{ backgroundColor: "#D6D6D6" }}>
                                             </Avatar>}
                                             title={"Dennis Burkhard"} subheader={"Designer, Marketing"}>
@@ -99,7 +99,7 @@ class About extends Component {
                                 </Grid>
                                 <Grid item xs={3}>
                                     <Card id="Card_Team">
-                                        <CardHeader avatar={
+                                        <CardHeader id="aboutUs_header" avatar={
                                             <Avatar aria-label="AccountCircleIcon" style={{ backgroundColor: "#D6D6D6" }}>
                                             </Avatar>}
                                             title={"Niklas Hennig"} subheader={"Developer, Designer"}>
@@ -118,7 +118,7 @@ class About extends Component {
                                 </Grid>
                                 <Grid item xs={3}>
                                     <Card id="Card_Team">
-                                        <CardHeader avatar={
+                                        <CardHeader id="aboutUs_header" avatar={
                                             <Avatar aria-label="AccountCircleIcon" style={{ backgroundColor: "#D6D6D6" }}>
                                             </Avatar>}
                                             title={"Vanessa Stutz"} subheader={"Accounting Management"}>
