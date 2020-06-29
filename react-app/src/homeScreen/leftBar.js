@@ -103,6 +103,8 @@ class LeftBar extends Component {
     }
 
     render(){
+        let title = 'Angenommene Projekte'
+        if (this.state.type==='c') title='Ausgegebene Projekte'
         let calCard = ''
         if(this.state.type=='f'){
             calCard = <Card 
@@ -124,7 +126,7 @@ class LeftBar extends Component {
         style={this.style}
         >
             {calCard}
-            <h2>Angenommene Projekte</h2>
+            <h2>{title}</h2>
             {children}
             {noProjects}
         </Paper>

@@ -7,10 +7,7 @@ import slide_aboutUs from '../media/Slide_aboutUs.jpg';
 
 class About extends Component {
     render() {
-        return <div style={{
-            
-
-        }}>
+        return <Grid>
             <Header />
             <Grid container spacing={3}>
                 <Grid item xs={12}>

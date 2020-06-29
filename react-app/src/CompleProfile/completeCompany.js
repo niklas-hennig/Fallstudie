@@ -191,9 +191,6 @@ class CompleteProfileCompany extends Component {
                                         <TextField name="city" required helperText="Stadt" value={this.state.city} onChange={this.changeHandler} />
                                         <TextField name="country" required helperText="Land" value={this.state.country} onChange={this.changeHandler} />
                                         <TextField name="tel_no" type="number" required helperText="Telefonnummer" value={this.state.tel_no} onChange={this.changeHandler} />
-                                        <Typography variant="subtitle2">
-                                            Zahlungsaddresse
-                                        </Typography>
                                         <FormControlLabel
                                             control={
                                                 <Checkbox
@@ -211,10 +208,10 @@ class CompleteProfileCompany extends Component {
                             </Grid>
                             <Grid item xs={6}>
                                 <Card>
-                                    <CardHeader title="Details" />
+                                    <CardHeader title="Firmendetails" />
                                     <CardContent>
                                         <div id="details"><br />
-                                            <TextField multiline fullWidth rows={10} variant="outlined" name="description" helperText="Beschreibung" defaultValue={this.state.description} /><br />
+                                            <TextField multiline fullWidth rows={10} variant="outlined" name="description" label="Beschreibung" defaultValue={this.state.description} /><br />
                                         </div>
                                     </CardContent>
                                 </Card>

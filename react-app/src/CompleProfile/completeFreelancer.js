@@ -95,11 +95,11 @@ class CompleteProfileFreelancer extends Component {
             axios.put('http://localhost:80/api/Prefence/' + this.state.username, {
                 prefence: this.state.prefence
             }).then(res => {
-                if(this.state.isChange) this.props.onBack();
+                if (this.state.isChange) this.props.onBack();
                 else this.props.onSubmit('f')
-            }                
+            }
             )
-            .catch(err => console.error(err))
+                .catch(err => console.error(err))
 
         })
     }
@@ -120,27 +120,27 @@ class CompleteProfileFreelancer extends Component {
         if (this.state.isChange) {
             disableComponent = false
             backAction = <IconButton aria-label="Zurück"
-        onClick={this.props.onBack}
-        >
-          <BackspaceIcon />
-        </IconButton>}
+                onClick={this.props.onBack}
+            >
+                <BackspaceIcon />
+            </IconButton>
+        }
         let uploadBtn = ''
-        if (this.state.showUploadBtn === true) uploadBtn = <Button variant="outlined" onClick={this.uploadHandler}>Hochladen</Button>
+        if (this.state.showUploadBtn === true) uploadBtn = <Button variant="contained" color="primary" onClick={this.uploadHandler}>Hochladen</Button>
         let date = ''
         if (this.state.date_of_birth) date = moment(this.state.date_of_birth).format('YYYY-MM-DD')
         let activityText = 'vervollständige'
-        if (this.state.isChange) activityText='bearbeite'
+        if (this.state.isChange) activityText = 'ergänze'
         return (
             <form onSubmit={this.submitHandler}>
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
                         <Card>
                             <CardHeader
-                                title={anrede + ' ' + this.props.surname + ' ' + this.props.name + ', '+activityText+' dein Profil'}
-                                subheader="Persönliches"
+                                title={anrede + ' ' + this.props.surname + ' ' + this.props.name + ', ' + activityText + ' dein Profil'}
                                 action={
                                     backAction
-                                  }
+                                }
                             >
                             </CardHeader>
                             <CardContent style={{
@@ -148,21 +148,40 @@ class CompleteProfileFreelancer extends Component {
                                 flexDirection: "row",
                                 justifyItems: "space-evenly"
                             }}>
-                                <TextField style={this.inputStyle} helperText="Nachname" disabled={disableComponent} name="name" placeholder={this.props.name} onChange={this.changeHandler} />
-                                <TextField style={this.inputStyle} helperText="Vorname" disabled={disableComponent} name="surname" placeholder={this.props.surname} onChange={this.changeHandler} />
-                                <TextField
-                                    required
-                                    style={this.inputStyle}
-                                    label="Geburtstag"
-                                    type="date"
-                                    value={date}
-                                    format='YYYY-MM-DD'
-                                    name="date_of_birth"
-                                    onChange={this.changeHandler}
-                                    InputLabelProps={{
-                                        shrink: true,
-                                    }}
-                                />
+                                <Grid container spacing={3}>
+                                    <Grid item xs={6}>
+                                        <Card style={{backgroundColor: "white"}}>
+                                            <CardHeader title="Persönliche Daten" />
+                                            <CardContent>
+                                                <TextField style={this.inputStyle} helperText="Nachname" disabled={disableComponent} name="name" placeholder={this.props.name} onChange={this.changeHandler} />
+                                                <TextField style={this.inputStyle} helperText="Vorname" disabled={disableComponent} name="surname" placeholder={this.props.surname} onChange={this.changeHandler} />
+                                                <TextField
+                                                    required
+                                                    style={this.inputStyle}
+                                                    label="Geburtstag"
+                                                    type="date"
+                                                    value={date}
+                                                    format='YYYY-MM-DD'
+                                                    name="date_of_birth"
+                                                    onChange={this.changeHandler}
+                                                    InputLabelProps={{
+                                                        shrink: true,
+                                                    }}
+                                                />
+                                            </CardContent>
+                                        </Card>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <Card style={{backgroundColor: "white"}}>
+                                            <CardHeader title="Bevorzugtes Interessensgebiet" />
+                                            <CardContent>
+                                                <TextField select required name="prefence" value={this.state.prefence} helperText="Wählen Sie eine Kategorie für die Sie sich interessieren" onChange={this.changeHandler}>
+                                                    {this.state.prefences_available.map((name) => <MenuItem key={name} value={name}>{name}</MenuItem>)}
+                                                </TextField>
+                                            </CardContent>
+                                        </Card>
+                                    </Grid>
+                                </Grid>
                             </CardContent>
                             <CardActions style={{
                                 float: "right",
@@ -173,7 +192,7 @@ class CompleteProfileFreelancer extends Component {
                                     type="submit"
                                     color="primary"
                                     startIcon={<ArrowForwardIcon />}
-                                    
+
                                 >
                                     Speichern
                             </Button>
@@ -193,7 +212,7 @@ class CompleteProfileFreelancer extends Component {
                                 <TextField required style={this.inputStyle} helperText="Straße" name="street" value={this.props.street} onChange={this.changeHandler} />
                                 <TextField required type="number" style={this.inputStyle} helperText="Hausnummer" name="number" value={this.props.number} onChange={this.changeHandler} />
                                 <br />
-                                <TextField required  style={this.inputStyle} helperText="Postleitzal" name="postcode" value={this.props.postcode} onChange={this.changeHandler} />
+                                <TextField required style={this.inputStyle} helperText="Postleitzal" name="postcode" value={this.props.postcode} onChange={this.changeHandler} />
                                 <TextField required style={this.inputStyle} helperText="Stadt" name="city" value={this.props.city} onChange={this.changeHandler} />
                                 <TextField style={this.inputStyle} helperText="Land" name="country" value={this.props.country} onChange={this.changeHandler} />
                                 <br />
@@ -208,17 +227,8 @@ class CompleteProfileFreelancer extends Component {
                             style={{ marginTop: "2%" }}
                         >
                             <CardHeader
-                                title="Erfahrung" />
+                                title="Qualifikationen" />
                             <CardContent>
-                                <TextField select required name="prefence" value={this.state.prefence} helperText="Wählen Sie eine Kategorie für die Sie sich interessieren" onChange={this.changeHandler}>
-                                    {this.state.prefences_available.map((name) => <MenuItem key={name} value={name}>{name}</MenuItem>)}
-                                </TextField>
-                                <br />
-                                <TextField multiline rows={5} fullWidth variant="outlined" name="experience" value={this.state.experience} helperText="Erfahrung" onChange={this.changeHandler} defaultValue={this.state.experience} />
-                                <Typography variant="caption">
-                                    Laden Sie ihren Lebenslauf hier hoch
-                                </Typography>
-                                <br />
                                 <input
                                     style={{ display: 'none' }}
                                     id="raised-button-file"
@@ -227,10 +237,17 @@ class CompleteProfileFreelancer extends Component {
                                 />
                                 <label htmlFor="raised-button-file">
                                     <Button variant="contained" component="span">
-                                        Upload
+                                        Datei auswählen
                                     </Button>
                                 </label>
                                 {uploadBtn}
+                                <br />
+                                <Typography variant="caption">
+                                    Laden Sie ihren Lebenslauf hier hoch
+                                </Typography>
+                                <br />
+                                <br />
+                                <TextField multiline rows={5} fullWidth variant="outlined" name="experience" value={this.state.experience} label="Sonstige Qualifikationen" onChange={this.changeHandler} defaultValue={this.state.experience} />
                             </CardContent>
                         </Card>
 
