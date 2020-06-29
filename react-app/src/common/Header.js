@@ -73,7 +73,7 @@ class Header extends Component {
         return <React.Fragment>
             <AppBar position="static" color="secondary">
                 <Toolbar>
-                    <Avatar src={logo} onClick={this.handleBackToMain}/>
+                    <Avatar id="img_logo" src={logo} onClick={this.handleBackToMain}/>
                     <Typography style={{ flex: 1 }}>
                         Freelane - Die Jobbörse
                         </Typography>

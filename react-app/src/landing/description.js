@@ -50,27 +50,27 @@ class Description extends Component {
                         
                             <Grid item xs={3} align="center">
                                 <AssignmentIcon fontSize="large"  color="primary" />
-                                <Typography>Registrieren</Typography>
+                                <Typography align="center">Registrieren</Typography>
                             </Grid>
                             <Grid item xs={1}  align="center">
                                 <ArrowForwardIosIcon fontSize="large"/>
                             </Grid>
                             <Grid item xs={3} align="center">
                                 <FindInPageIcon fontSize="large" color="secondary"/>
-                                <Typography>Projekt wählen</Typography>
+                                <Typography align="center">Projekt wählen</Typography>
                             </Grid>
                             <Grid item xs={1}  align="center">
                                 <ArrowForwardIosIcon fontSize="large"/>
                             </Grid>
                             <Grid item xs={3} align="center">
                                 <DoneAllIcon fontSize="large" style={{color: "#00cc00"}}/>
-                                <Typography>Beworben</Typography>
+                                <Typography align="center">Beworben</Typography>
                             </Grid>
                             <Grid xs={1} />
                         </Grid>
                     </CardContent>
                     <CardActions>
-                        <Button variant="outlined" onClick={this.handleOpenAbout} >Mehr erfahren</Button>
+                        <Button id="button_letsGo" variant="outlined" onClick={this.handleOpenAbout} >Mehr Erfahren</Button>
                     </CardActions>
                 </Card>
                 </React.Fragment>)

@@ -7,8 +7,8 @@ import slide_aboutUs from '../media/Slide_aboutUs.jpg';
 
 class About extends Component {
     render() {
-        return <Grid container style={{
-            backgroundColor: '#344955',
+        return <div style={{
+            
 
         }}>
             <Header />
@@ -21,7 +21,7 @@ class About extends Component {
                 <Grid item xs={2}>
                 </Grid>
                 <Grid item xs={8}>
-                    <h1 style={{ textAlign: "center" }}>Freelane - Die Projektvermittlungsfirma</h1>
+                    <h1 style={{ textAlign: "center", fontSize:"25pt" }}>Freelane - Die Projektvermittlungsfirma</h1>
                     <Card id="Card_aboutUs_history">
                         <CardHeader title={<h2>Unsere Geschichte</h2>}>
 
@@ -70,11 +70,11 @@ class About extends Component {
                                         </CardHeader>
                                         <CardContent>
                                             <Typography>
-                                                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
-                                                aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
-                                                sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
-                                                ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
-                                                gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+                                                <p>Lorem ipsum olor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et olore magna
+                                                aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo olores et ea rebum. Stet clita kasd gubergren, no sea takimata
+                                                sanctus est Lorem ipsum olor sit amet. Lorem ipsum olor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt
+                                                ut labore et olore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo olores et ea rebum. Stet clita kasd
+                                                gubergren, no sea takimata sanctus est Lorem ipsum olor sit amet.
                                                 </p>
                                             </Typography>
                                         </CardContent>
@@ -82,7 +82,7 @@ class About extends Component {
                                 </Grid>
                                 <Grid item xs={3}>
                                     <Card id="Card_Team">
-                                        <CardHeader avatar={
+                                        <CardHeader id="aboutUs_header" avatar={
                                             <Avatar aria-label="AccountCircleIcon" style={{ backgroundColor: "#D6D6D6" }}>
                                             </Avatar>}
                                             title={"Dennis Burkhard"} subheader={"Designer, Marketing"}>
@@ -101,7 +101,7 @@ class About extends Component {
                                 </Grid>
                                 <Grid item xs={3}>
                                     <Card id="Card_Team">
-                                        <CardHeader avatar={
+                                        <CardHeader id="aboutUs_header" avatar={
                                             <Avatar aria-label="AccountCircleIcon" style={{ backgroundColor: "#D6D6D6" }}>
                                             </Avatar>}
                                             title={"Niklas Hennig"} subheader={"Developer, Designer"}>
@@ -120,7 +120,7 @@ class About extends Component {
                                 </Grid>
                                 <Grid item xs={3}>
                                     <Card id="Card_Team">
-                                        <CardHeader avatar={
+                                        <CardHeader id="aboutUs_header" avatar={
                                             <Avatar aria-label="AccountCircleIcon" style={{ backgroundColor: "#D6D6D6" }}>
                                             </Avatar>}
                                             title={"Vanessa Stutz"} subheader={"Accounting Management"}>

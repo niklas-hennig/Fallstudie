@@ -12,7 +12,8 @@ class Login extends Component {
         this.state = {
             isCompany: false,
             isLogin: false,
-            loginSwitch: true
+            loginSwitch: true,
+            subHeaderText: "Finde jetzt dein perfektes Projekt"
         }
 
         this.bottomStyle = {
@@ -63,9 +64,13 @@ class Login extends Component {
 
     handleToggleSwitch() {
         if (this.state.loginSwitch) {
+            this.setState({ subHeaderText: "Stelle deine Projekte online"})
             this.setState({ loginSwitch: false })
+
         } else {
+            this.setState({ subHeaderText: "Finde jetzt dein perfektes Projekt"})
             this.setState({ loginSwitch: true })
+
         }
     }
 
@@ -76,7 +81,7 @@ class Login extends Component {
             <Card alignContent="center" textAlign="center" justifyItems="center">
                 <CardHeader
                     title="Login"
-                    subheader="Logge dich ein"
+                    subheader={this.state.subHeaderText}
                 />
                 <CardContent style={{
                     flex: 1,
@@ -88,7 +93,7 @@ class Login extends Component {
                             <CardHeader action={<Grid component="label" container spacing={1}>
                                     <Grid item>Unternehmen</Grid>
                                     <Grid item>
-                                        <Switch color='primary'
+                                        <Switch id="switchLogin" color='primary'
                                             checked={this.state.loginSwitch}
                                             onChange={e => this.handleToggleSwitch()}
                                         />
