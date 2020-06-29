@@ -84,7 +84,7 @@ class Login extends Component {
                     justifyItems: "space-evenly"
                 }}>
                     <Typography component="div">
-                        <Card id="CardLogin">
+                        <Card id="CardLogin" style={{backgroundColor: "white"}}>
                             <CardHeader action={<Grid component="label" container spacing={1}>
                                     <Grid item>Unternehmen</Grid>
                                     <Grid item>

@@ -22,7 +22,8 @@ class App extends Component {
         secondary: {main: "#f9aa33"},
         error: {main: "#b00020"},
         action: {main: "#FAFA6f"},
-        background: { default: "#344955" },
+        background: { default: "#344955",
+      paper: "#f5f5f5" },
       },
     
       typography: {
