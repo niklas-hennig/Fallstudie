@@ -54,7 +54,7 @@ class RightBar extends Component {
         return <Card 
         variant="outlined"
         style={this.style}>
-            <CardHeader title="Ihre ausstehenden Bewerbungen" />
+            <CardHeader title="Ausstehende Bewerbungen" />
             <CardContent>
             {applicationsLst}
             </CardContent>

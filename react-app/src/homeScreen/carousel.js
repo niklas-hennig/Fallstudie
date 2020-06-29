@@ -88,7 +88,7 @@ class CarouselComp extends Component {
         let carousel = ''
         let title = ''
         let create = ''
-        if (this.state.type==='f') title="Ihre vorgeschlagenen Projekte"
+        if (this.state.type==='f') title="Projektvorschläge"
         else {
             title="Ihre aktiven Projekte"
             create = <Button

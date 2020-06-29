@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Card, CardHeader, CardContent, Grid, Avatar, TextField, MenuItem, Button, Typography, IconButton, CardActions } from "@material-ui/core";
+import { Card, CardHeader, CardContent, Grid, Avatar, TextField, MenuItem, Button, Typography, IconButton, CardActions, CardMedia } from "@material-ui/core";
 import Header from "../common/Header";
 import Footer from "../common/Footer";
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -7,14 +7,16 @@ import slide_aboutUs from '../media/Slide_aboutUs.jpg';
 
 class About extends Component {
     render() {
-        return <div style={{
+        return <Grid container style={{
             backgroundColor: '#344955',
 
-          }}>
+        }}>
             <Header />
             <Grid container spacing={3}>
                 <Grid item xs={12}>
-                    <img id="img_aboutUs_slider" src={require('../media/Slide_aboutUs.jpg')}/>
+                    <Card>
+                        <CardMedia image={require('../media/Slide_aboutUs.jpg')} style={{ height: 0, paddingTop: '9%' }} />
+                    </Card>
                 </Grid>
                 <Grid item xs={2}>
                 </Grid>
@@ -165,10 +167,9 @@ class About extends Component {
                 </Grid>
                 <Grid item xs={12}></Grid>
                 <Grid item xs={12}></Grid>
-
+                <Footer />
             </Grid>
-            <Footer />
-        </div>
+        </Grid>
     }
 }
 export default About;

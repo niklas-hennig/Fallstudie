@@ -128,13 +128,15 @@ class CompleteProfileFreelancer extends Component {
         if (this.state.showUploadBtn === true) uploadBtn = <Button variant="outlined" onClick={this.uploadHandler}>Hochladen</Button>
         let date = ''
         if (this.state.date_of_birth) date = moment(this.state.date_of_birth).format('YYYY-MM-DD')
+        let activityText = 'vervollständige'
+        if (this.state.isChange) activityText='bearbeite'
         return (
             <form onSubmit={this.submitHandler}>
                 <Grid container spacing={3}>
                     <Grid item xs={12}>
                         <Card>
                             <CardHeader
-                                title={anrede + ' ' + this.props.surname + ' ' + this.props.name + ', vervollständige doch dein Profil um gefunden zu werden'}
+                                title={anrede + ' ' + this.props.surname + ' ' + this.props.name + ', '+activityText+' dein Profil'}
                                 subheader="Persönliches"
                                 action={
                                     backAction
@@ -206,7 +208,7 @@ class CompleteProfileFreelancer extends Component {
                             style={{ marginTop: "2%" }}
                         >
                             <CardHeader
-                                title="Erfahung" />
+                                title="Erfahrung" />
                             <CardContent>
                                 <TextField select required name="prefence" value={this.state.prefence} helperText="Wählen Sie eine Kategorie für die Sie sich interessieren" onChange={this.changeHandler}>
                                     {this.state.prefences_available.map((name) => <MenuItem key={name} value={name}>{name}</MenuItem>)}
