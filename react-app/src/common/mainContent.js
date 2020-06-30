@@ -127,7 +127,11 @@ class MainContent extends Component {
     }
 
     handleSettingsComplete = (event) => {
-        this.setState({ content: this.getLogin() })
+        if (event!=="f") this.setState({ content: this.getLogin() })
+        else {
+            this.setState({ content: this.getHome() })
+            this.getBars()
+        }
     }
 
     handleRoleSelected(id, showApplication) {
@@ -193,12 +197,12 @@ class MainContent extends Component {
             <Grid container spacing={3} style={{ marginTop: '3%' }}>
                 <Grid item xs={0}>
                 </Grid>
-                <Grid item xs={6}>
+                <Grid item xs={12} md={6}>
                     <Description />
                 </Grid>
                 <Grid item xs={1}>
                 </Grid>
-                <Grid item xs={4}>
+                <Grid item xs={12} md={4}>
                     <Login onRegister={this.handleRegister} onLogin={this.handleLogin} onPasswordForgotten={this.handlePasswordForgotten} />
                 </Grid>
             </Grid>
@@ -209,12 +213,12 @@ class MainContent extends Component {
         return <Grid container spacing={3} style={{ marginTop: '3%' }}>
             <Grid item xs={0}>
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
                 <Description />
             </Grid>
             <Grid item xs={1}>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12} md={4}>
                 <PasswordReset onBack={this.handleBack} />
             </Grid>
         </Grid>
@@ -222,10 +226,10 @@ class MainContent extends Component {
 
     getRegistration() {
         return <Grid container spacing={3} style={{ marginTop: '3%' }}>
-            <Grid item xs={5}>
+            <Grid item xs={12} md={5}>
                 <Description />
             </Grid>
-            <Grid item xs={7}>
+            <Grid item xs={12} md={7}>
                 <Registration onBack={this.handleBack} onCompanyComplete={this.handleCompanyComplete} />
             </Grid>
         </Grid>
@@ -290,15 +294,15 @@ class MainContent extends Component {
         if (lftcon) barCols = 2
         return (
             <React.Fragment>
-                <Grid item xs={barCols} alignContent="stretch">
+                <Grid item xs={12} md={barCols} alignContent="stretch">
                     {lftcon}
                 </Grid>
-                <Grid xs={1}></Grid>
-                <Grid item xs={12 - (2 * barCols) - 2} alignContent="flex-start" >
+                <Grid md={1}></Grid>
+                <Grid item xs={12} md={12 - (2 * barCols) - 2} alignContent="flex-start" >
                     {cont}
                 </Grid>
-                <Grid xs={1}></Grid>
-                <Grid item xs={barCols} alignContent="stretch">
+                <Grid md={1}></Grid>
+                <Grid item xs={12} md={barCols} alignContent="stretch">
                     {rghcon}
                 </Grid>
             </React.Fragment>

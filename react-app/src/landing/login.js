@@ -90,18 +90,17 @@ class Login extends Component {
                 }}>
                     <Typography component="div">
                         <Card id="CardLogin" style={{backgroundColor: "white"}}>
-                            <CardHeader action={<Grid component="label" container spacing={1}>
-                                    <Grid item>Unternehmen</Grid>
-                                    <Grid item>
+                            <CardContent>
+                            <Grid component="label" container spacing={1}>
+                                    <Grid item xs={4}><Typography>Unternehmen</Typography></Grid>
+                                    <Grid item xs={4} align="center">
                                         <Switch id="switchLogin" color='primary'
                                             checked={this.state.loginSwitch}
                                             onChange={e => this.handleToggleSwitch()}
                                         />
                                     </Grid>
-                                    <Grid item>Freelancer</Grid>
-                                </Grid>}
-                                />
-                            <CardContent>
+                                    <Grid item xs={4}><Typography>Freelancer</Typography></Grid>
+                                </Grid>
                                 <LoginForm isCompany={!this.state.loginSwitch} onLoginChange={this.handleLogin} onPasswordReset={this.handlePasswordForgotten} onRegister={this.submitHandlerRegister}/>
                             </CardContent>
                         </Card>

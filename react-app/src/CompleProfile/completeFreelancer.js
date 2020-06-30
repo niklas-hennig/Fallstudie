@@ -149,7 +149,7 @@ class CompleteProfileFreelancer extends Component {
                                 justifyItems: "space-evenly"
                             }}>
                                 <Grid container spacing={3}>
-                                    <Grid item xs={6}>
+                                    <Grid item xs={12} md={6}>
                                         <Card style={{backgroundColor: "white"}}>
                                             <CardHeader title="Persönliche Daten" />
                                             <CardContent>
@@ -171,7 +171,7 @@ class CompleteProfileFreelancer extends Component {
                                             </CardContent>
                                         </Card>
                                     </Grid>
-                                    <Grid item xs={6}>
+                                    <Grid item xs={12} md={6}>
                                         <Card style={{backgroundColor: "white"}}>
                                             <CardHeader title="Bevorzugtes Interessensgebiet" />
                                             <CardContent>
@@ -199,7 +199,7 @@ class CompleteProfileFreelancer extends Component {
                             </CardActions>
                         </Card>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={12} md={6}>
                         <Card
                             variant="outlined"
                             style={{ marginTop: "2%" }}
@@ -209,19 +209,19 @@ class CompleteProfileFreelancer extends Component {
                             >
                             </CardHeader>
                             <CardContent>
-                                <TextField required style={this.inputStyle} helperText="Straße" name="street" value={this.props.street} onChange={this.changeHandler} />
-                                <TextField required type="number" style={this.inputStyle} helperText="Hausnummer" name="number" value={this.props.number} onChange={this.changeHandler} />
+                                <TextField required style={this.inputStyle} helperText="Straße *" name="street" value={this.props.street} onChange={this.changeHandler} />
+                                <TextField required type="number" style={this.inputStyle} helperText="Hausnummer  *" name="number" value={this.props.number} onChange={this.changeHandler} />
                                 <br />
-                                <TextField required style={this.inputStyle} helperText="Postleitzal" name="postcode" value={this.props.postcode} onChange={this.changeHandler} />
-                                <TextField required style={this.inputStyle} helperText="Stadt" name="city" value={this.props.city} onChange={this.changeHandler} />
-                                <TextField style={this.inputStyle} helperText="Land" name="country" value={this.props.country} onChange={this.changeHandler} />
+                                <TextField required style={this.inputStyle} helperText="Postleitzahl *" name="postcode" value={this.props.postcode} onChange={this.changeHandler} />
+                                <TextField required style={this.inputStyle} helperText="Stadt *" name="city" value={this.props.city} onChange={this.changeHandler} />
+                                <TextField style={this.inputStyle} helperText="Land *" name="country" value={this.props.country} onChange={this.changeHandler} />
                                 <br />
                                 <TextField style={this.inputStyle} helperText="IBAN" name="iban" value={this.props.iban} onChange={this.changeHandler} />
                                 <TextField style={this.inputStyle} helperText="Kontoinhaber" name="ktn_owner" value={this.props.ktn_owner} onChange={this.changeHandler} />
                             </CardContent>
                         </Card>
                     </Grid>
-                    <Grid item xs={6}>
+                    <Grid item xs={12} md={6}>
                         <Card
                             variant="outlined"
                             style={{ marginTop: "2%" }}

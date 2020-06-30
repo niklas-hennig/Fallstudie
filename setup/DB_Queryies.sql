@@ -49,7 +49,7 @@ SELECT * FROM role as r
 SELECT * FROM role_assignment INNER JOIN project ON role_assignment.project_id=project.project_id;
                   
 
-UPDATE freelancer SET resume_link='testuser' WHERE username='testuser';
+UPDATE role SET title='Designer' WHERE title='testrole3';
 
 SELECT * FROM company;
 UPDATE company SET tel_no=01234512345 WHERE comp_id=1;
@@ -80,3 +80,11 @@ SELECT role.role_id FROM role
         JOIN freelancer_assignment as fa ON role.role_id=fa.role_id
         JOIN freelancer as f ON fa.freelancer_id=f.user_id
         WHERE f.username='testuser')
+
+SELECT project.*, c.name
+                      FROM project
+                      JOIN company_account as ca
+                      ON project.comp_id = ca.comp_id
+                      LEFT JOIN company as c on c.comp_id=project.comp_id
+                      WHERE ca.username = 'compt'
+                      AND project.application_limit >= now();

@@ -43,7 +43,7 @@ class CarouselComp extends Component {
             })
             .catch(err => console.error(err))
         }else{
-            axios.get('http://localhost:80/api/Project/'+this.state.username+'/'+this.state.token)
+            axios.get('http://localhost:80/api/Project/Active/'+this.state.username+'/'+this.state.token)
             .then(res => {
                 let key = 0
                 for (key in res.data){
@@ -131,7 +131,7 @@ class CarouselComp extends Component {
         if(this.state.type=="c"&&this.state.all_projects.length==0){
             carousel = 
             <div>
-                <h1>Keine Projekte angelegt</h1>
+                <h1>Keine Projekte ausstehend</h1>
             </div>
         }
     return (

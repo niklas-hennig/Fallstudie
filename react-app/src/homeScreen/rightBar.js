@@ -17,8 +17,8 @@ class RightBar extends Component {
             update: null
         }
         this.style = {
-            marginTop: "3%",
-            marginLeft: "5%",
+            marginTop: "5%",
+            marginLeft: "2%",
             marginBottom: "70px"
         }
         this.setProjects=this.setProjects.bind(this);

@@ -14,6 +14,23 @@ router.get('/:comp_user/:token', (req, res) => {
     .catch(err => {res.status(500).send(err)})
 })
 
+router.get('/Active/:comp_user/:token', (req, res) => {
+    if(!auth_utils.validateToken(req.params.token)) return res.status(401).send('not signed in')
+    
+    db_project.getActiveProjects(req.params.comp_user)
+    .then(data => {console.log(data)
+        res.send(data)})
+    .catch(err => {res.status(500).send(err)})
+})
+
+router.get('/Running/:comp_user/:token', (req, res) => {
+    if(!auth_utils.validateToken(req.params.token)) return res.status(401).send('not signed in')
+    
+    db_project.getRunningProjects(req.params.comp_user)
+    .then(data => res.send(data))
+    .catch(err => {res.status(500).send(err)})
+})
+
 router.get('/:id', (req, res) => {
     db_project.getProjectInfo(req.params.id)
     .then(data => {

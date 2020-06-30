@@ -23,6 +23,37 @@ module.exports={
             reject(err)})
         })
       },
+
+      getActiveProjects: function(comp_account){
+        return new Promise((resolve, reject) => {
+          pool.query(`SELECT project.*, c.name
+                      FROM project
+                      JOIN company_account as ca
+                      ON project.comp_id = ca.comp_id
+                      LEFT JOIN company as c on c.comp_id=project.comp_id
+                      WHERE ca.username = $1 
+                      AND project.application_limit >= now()`, [comp_account])
+          .then(data => resolve(data.rows))
+          .catch(err => {
+            reject(err)})
+        })
+      },
+
+      getRunningProjects: function(comp_account){
+        return new Promise((resolve, reject) => {
+          pool.query(`SELECT project.*, c.name
+                      FROM project
+                      JOIN company_account as ca
+                      ON project.comp_id = ca.comp_id
+                      LEFT JOIN company as c on c.comp_id=project.comp_id
+                      WHERE ca.username = $1
+                      AND project.end_date >= now()
+                      AND project.start_date <= now()`, [comp_account])
+          .then(data => resolve(data.rows))
+          .catch(err => {
+            reject(err)})
+        })
+      },
     
     createProject: function(title, start_date, end_date, app_limit, comp_id){
     return new Promise((resolve, reject) => {

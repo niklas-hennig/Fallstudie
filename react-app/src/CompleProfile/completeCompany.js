@@ -172,7 +172,7 @@ class CompleteProfileCompany extends Component {
                     />
                     <CardContent>
                         <Grid container spacing={3}>
-                            <Grid item xs={6}>
+                            <Grid item xs={12} md={6}>
                                 <Card>
                                     <CardHeader
                                         title="Adresse"
@@ -206,7 +206,7 @@ class CompleteProfileCompany extends Component {
                                     </CardContent>
                                 </Card>
                             </Grid>
-                            <Grid item xs={6}>
+                            <Grid item xs={12} md={6}>
                                 <Card>
                                     <CardHeader title="Firmendetails" />
                                     <CardContent>

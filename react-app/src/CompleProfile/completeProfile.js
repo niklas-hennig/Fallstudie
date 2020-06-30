@@ -62,7 +62,7 @@ class CompleteProfile extends Component{
     }
 
     handleSubmit(type){
-        this.props.onSubmit();
+        this.props.onSubmit(type);
     }
 
     handleBack(){

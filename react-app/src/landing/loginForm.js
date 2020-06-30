@@ -105,14 +105,14 @@ class LoginForm extends Component {
                         </Grid>
 
                     </Grid>
-                    <Grid item xs={6} align="left">
+                    <Grid item md={6} align="left">
                         <Button id="button_register"
                             onClick={this.props.onRegister}
                             variant="outlined">
                             Registrieren
                             </Button>
                     </Grid>
-                    <Grid item xs={6} align="right">
+                    <Grid item md={6} align="right">
                         <Button id="button_login" type="submit"
                             variant="contained"
                             color="primary"

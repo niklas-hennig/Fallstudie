@@ -41,7 +41,7 @@ class LeftBar extends Component {
             })
             .catch(err => console.log(err))
         }else{
-            Axios.get('http://localhost:80/api/Project/'+this.state.username+'/'+this.state.token)
+            Axios.get('http://localhost:80/api/Project/Running/'+this.state.username+'/'+this.state.token)
             .then(res => {
                 this.setState({projects: res.data})
             })
@@ -104,7 +104,7 @@ class LeftBar extends Component {
 
     render(){
         let title = 'Angenommene Projekte'
-        if (this.state.type==='c') title='Ausgegebene Projekte'
+        if (this.state.type==='c') title='Laufende Projekte'
         let calCard = ''
         if(this.state.type=='f'){
             calCard = <Card 
