@@ -1,0 +1,15 @@
+version: "3"
+services:
+    web:
+        build: .
+        depends_on:
+            - db
+        environment:
+            - NODE_ENV=production
+        ports: 
+            - "80:80" 
+
+    db: 
+        build: ./setup
+        ports: 
+            - "5432:5432"

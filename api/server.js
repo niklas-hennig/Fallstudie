@@ -15,7 +15,6 @@ const Role = require('./api/Role')
 const Project = require('./api/Project');
 const Application = require('./api/Application')
 const FileEp = require('./api/File');
-const Test = require('./api/Test');
 
 const API_PORT = 80;
 const app = express();
@@ -24,13 +23,20 @@ const router = express.Router();
 const htmlRouter = express.Router();
 const config = require('config');
 
+let host = 'localhost'
+if(process.env.DB_host) host=process.env.DB_host
 const pool = new Pool({
     user: 'docker',
-    host: 'localhost',
+    host: host,
     database: 'docker',
     password: 'docker',
     port: 5432,
   })
+
+console.log(pool.query('SELECT NOW()', (err, data)=>{
+  if (err) console.log(err)
+  else console.log(data)
+}))
 
 app.use(fileUpload());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -58,7 +64,7 @@ htmlRouter.get('/', (req, res) => {
 
 
 htmlRouter.get('*', (req, res) => {
-  if (!req.path.match('\/auth\/.*')){
+  if (!req.path.match('\/api\/.*')){
     fs.readFile('../react-app/build/'+req.path, (err, data) => {
       if (err) res.status(500).send(err);
       res.end(data);
@@ -79,7 +85,6 @@ app.use('/api/Role', Role);
 app.use('/api/Project', Project);
 app.use('/api/Application', Application);
 app.use('/api/File', FileEp);
-app.use('/api/Test', Test);
 app.use('/', htmlRouter);
 
 

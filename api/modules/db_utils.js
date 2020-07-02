@@ -1,8 +1,11 @@
 const { Pool, Client} = require('pg');
 
+let host = 'localhost'
+if(process.env.DB_host) host=process.env.DB_host
+
 const pool = new Pool({
     user: 'docker',
-    host: 'localhost',
+    host: host,
     database: 'docker',
     password: 'docker',
     port: 5432,

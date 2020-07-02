@@ -1,55 +1,38 @@
-FROM postgres:latest AS base
+FROM node:12.18.2 AS build
 
-# Database setup
-# Changes to the DB structure shold be made inside DB_Setup.sql
-ENV POSTGRES_USER docker
-ENV POSTGRES_PASSWORD docker
-ENV POSTGRES_DB docker
-ENV REST_PORT 2001
-ENV POSTGRES_PORT 5432
+WORKDIR /app
 
-ADD setup/DB_Setup.sql /docker-entrypoint-initdb.d/
+ENV PATH /app/node_modules/.bin:$PATH
 
+#Setup enviroment
+COPY ./react-app/package.json ./
+COPY ./react-app/package-lock.json ./
+RUN npm install --silent
+RUN npm install react-scripts@3.4.0 -g --silent
 
-# Node.js setup including npm (may take a while, installing about 300 packages)
-RUN apt-get update
-RUN apt-get install -y nodejs
-RUN apt-get install -y npm 
-RUN npm install react-scripts@3.0.1 -g
-RUN npm install forever -g
+COPY ./react-app/. ./
 
-# Setup React-App
-WORKDIR /app/react-app
-ENV PATH /app/react-app/node_modules/.bin:$PATH
+RUN npm run-script build
 
-COPY react-app/package.json /app/react-app/package.json
+FROM node:12.18.2
+
+WORKDIR /usr/src/app
+
+COPY ./api/package.json ./
+COPY ./api/package-lock.json ./
+
 RUN npm install
 
+COPY ./api/. .
 
-COPY react-app/. /app/react-app
+WORKDIR /usr/src/react-app/build
 
-RUN npm run build
-
-#Setup Express Node.js Backend
-WORKDIR /app/api
-
-COPY api/package.json /api/package.json
-RUN npm install
-
-COPY api/. /app/api
-
-
-# Setup Nginx Server
-RUN apt install nginx -y
-
-COPY nginx/default.conf /etc/nginx/conf.d/default.conf
-
-RUN rm -r /var/www/html/*
-
-RUN mv /app/react-app/build/* /var/www/html/
+COPY --from=build /app/build/. .
 
 EXPOSE 80
-EXPOSE 443
-EXPOSE ${REST_PORT}
-EXPOSE ${POSTGRES_PORT}
 
+WORKDIR /usr/src/app
+
+ENV DB_host "db"
+
+CMD ["node", "server.js"]
