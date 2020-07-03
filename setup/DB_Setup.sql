@@ -172,14 +172,18 @@ CREATE TABLE password_token (
 );
 
 
-INSERT INTO freelancer (username, password, email, name, surname, gender)
-    VALUES ('testuser', 'test', 'none', 'user', 'test', 'u');
+INSERT INTO freelancer (username, password, email, name, surname, gender, is_set)
+    VALUES ('testuser', 'test', 'none@none.de', 'user', 'test', 'u', TRUE);
+
 INSERT INTO prefences (pref_name)
-    VALUES ('Design');
+    VALUES ('Design'), ('Projektleitung'), ('Softwaredesign'), ('Data Analytics');
+
+INSERT INTO prefence_assignment (user_id, pref_id)
+  VALUES (1, 1);
 
 
 INSERT INTO company (name, postcode, city, country)
-    VALUES ('testcomany', '09342', 'testcity', 'nowhere');
+    VALUES ('testcompany', '09342', 'testcity', 'nowhere');
 INSERT INTO company_account (username, password, email, comp_id, name, surname, gender)
     VALUES('compt', 'test', 'none', 1, 't', 'est', 'u');
 
@@ -187,9 +191,10 @@ INSERT INTO role (title, description, requirements, area, payment)
     VALUES ('testrole', 'Es muss nur getestet werden', NULL, 1, 100),
     ('testrole2', 'Es muss nur getestet werden, noch mehr', NULL, 1, 200),
     ('testrole3', 'Ich bin für Pojekt 2 hier', NULL, 1, 200);
+
 INSERT INTO project (titel, start_date, end_date, application_limit,comp_id)
-    VALUES ('Project 1', '2020-06-01', '2020-07-01', '2020-06-15', 1),
-    ('Project 2', '2020-07-01', '2020-08-01', '2020-07-15', 1);
+    VALUES ('Project 1', '2020-07-01', '2020-08-01', '2020-06-15', 1),
+    ('Project 2', '2020-08-01', '2020-08-15', '2020-07-15', 1);
 INSERT INTO role_assignment (role_id, project_id, number_of_freelancers) VALUES 
     (1, 1, 10), 
     (2, 1, 5), 

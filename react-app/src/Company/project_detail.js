@@ -264,7 +264,7 @@ class ProjectDetail extends Component {
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
-                                        {this.state.info.map((role, index) => <ProjectRoleDetail key={index} info={role} token={this.state.token} handleExpand={this.handleExpand} onUpdate={this.handleUpdate}/>)}
+                                        {this.state.info.map((role) => <ProjectRoleDetail key={role.role_id} info={role} token={this.state.token} handleExpand={this.handleExpand} onUpdate={this.handleUpdate}/>)}
                                     </TableBody>
                                 </Table>
                             </TableContainer>
