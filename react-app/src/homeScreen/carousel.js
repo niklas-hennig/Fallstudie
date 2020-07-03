@@ -33,7 +33,7 @@ class CarouselComp extends Component {
     getIds(){
         let projects = []
         if(this.state.type==='f'){
-            axios.get('http://localhost:80/api/Role/'+this.state.username+'/f/'+this.state.token)
+            axios.get('http://localhost:80/api/Roles/'+this.state.username+'/f/'+this.state.token)
             .then(res => {
                 let key = 0
                 for (key in res.data){
@@ -43,7 +43,7 @@ class CarouselComp extends Component {
             })
             .catch(err => console.error(err))
         }else{
-            axios.get('http://localhost:80/api/Project/Active/'+this.state.username+'/'+this.state.token)
+            axios.get('http://localhost:80/api/Projects/Active/'+this.state.username+'/'+this.state.token)
             .then(res => {
                 let key = 0
                 for (key in res.data){

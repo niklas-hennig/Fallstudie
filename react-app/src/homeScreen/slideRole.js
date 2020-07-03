@@ -24,7 +24,7 @@ class SlideRole extends Component {
     //Fill state with specific information to display
     fetchProjectInfo(project_id) {
         if (project_id > 0) {
-            axios.get('http://localhost:80/api/Role/' + project_id + '/' + this.state.token)
+            axios.get('http://localhost:80/api/Roles/' + project_id + '/' + this.state.token)
                 .then(res => {
                     this.setState({ title: res.data[0].title, description: res.data[0].description, requirements: res.data[0].requirements, payment: res.data[0].payment })
                 })

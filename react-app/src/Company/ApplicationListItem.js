@@ -15,14 +15,14 @@ class ApplicationListItem extends Component {
 
     handleAccept(){
         console.log("accepted")
-        axios.put('http://localhost:80/api/Application/'+this.state.info.role_id+'/'+this.state.info.user_id+'/'+this.state.info.username)
+        axios.put('http://localhost:80/api/Applications/'+this.state.info.role_id+'/'+this.state.info.user_id+'/'+this.state.info.username)
         .then(res => {this.props.onReject(this.state.info.role_id);
             console.log(res)})
         .catch(err => console.log(err))
     }
 
     handleReject(){
-        axios.delete('http://localhost:80/api/Application/'+this.state.info.role_id+'/'+this.state.info.username+'/'+this.state.token)
+        axios.delete('http://localhost:80/api/Applications/'+this.state.info.role_id+'/'+this.state.info.username+'/'+this.state.token)
         .then(data => {
             this.props.onReject(this.state.info.role_id);
         })

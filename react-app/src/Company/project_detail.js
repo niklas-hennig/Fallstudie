@@ -47,7 +47,7 @@ class ProjectDetail extends Component {
 
     fetchInfo() {
         if (this.state.fetched !== this.props.project_id) {
-            axios.get('http://localhost:80/api/Project/' + this.props.project_id)
+            axios.get('http://localhost:80/api/Projects/' + this.props.project_id)
                 .then(res => {
                     this.setState({ info: res.data, fetched: res.data[0].project_id })
                 })
@@ -59,7 +59,7 @@ class ProjectDetail extends Component {
 
     fetchSpecific(id, force) {
         if (this.state.fetched !== id || force) {
-            axios.get('http://localhost:80/api/Project/' + id)
+            axios.get('http://localhost:80/api/Projects/' + id)
                 .then(res => {
                     this.setState({ info: res.data, fetched: res.data[0].project_id })
                 })
@@ -71,7 +71,7 @@ class ProjectDetail extends Component {
 
 
     handleUpdate = (id) => {
-        axios.get('http://localhost:80/api/Application/' + id)
+        axios.get('http://localhost:80/api/Applications/' + id)
             .then(res => {
                 this.props.onUpdate();
                 this.setState({ applications: res.data })
@@ -99,7 +99,7 @@ class ProjectDetail extends Component {
 
     createRole = (event) => {
         event.preventDefault()
-        axios.post('http://localhost:80/api/Role/' + this.state.token, {
+        axios.post('http://localhost:80/api/Roles/' + this.state.token, {
             title: this.state.title,
             description: this.state.description,
             reqs: this.state.requirements,
@@ -124,7 +124,7 @@ class ProjectDetail extends Component {
     fetchPrefences() {
         let pref = []
         let key = ''
-        axios.get('http://localhost:80/api/Prefence/')
+        axios.get('http://localhost:80/api/Prefences/')
             .then(res => {
                 for (key in res.data) {
                     pref.push(res.data[key]['pref_name'])
@@ -135,7 +135,7 @@ class ProjectDetail extends Component {
     }
 
     handleDeleteProjekt() {
-        axios.delete('http://localhost:80/api/Project/' + this.state.project_id + '/' + this.state.token + '/' + this.state.username)
+        axios.delete('http://localhost:80/api/Projects/' + this.state.project_id + '/' + this.state.token + '/' + this.state.username)
             .then(res => {
                 this.props.onBack();
             })

@@ -34,14 +34,14 @@ class LeftBar extends Component {
     fetchInfo(){
         if(this.state.type==='f'){
             let date = new Date()
-            Axios.get('http://localhost:80/api/Role/Timeline/'+this.state.username+'/'+this.state.token+'/'+moment(new Date()).format("YYYY-MM-")+'01')
+            Axios.get('http://localhost:80/api/Roles/Timeline/'+this.state.username+'/'+this.state.token+'/'+moment(new Date()).format("YYYY-MM-")+'01')
             .then(res => {
                 this.setState({projects: res.data})
                 this.convertToDates();
             })
             .catch(err => console.log(err))
         }else{
-            Axios.get('http://localhost:80/api/Project/Running/'+this.state.username+'/'+this.state.token)
+            Axios.get('http://localhost:80/api/Projects/Running/'+this.state.username+'/'+this.state.token)
             .then(res => {
                 this.setState({projects: res.data})
             })

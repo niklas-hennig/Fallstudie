@@ -26,7 +26,7 @@ class ProjectRoleDetail extends Component {
     fetchAccepted(id) {
         console.log("setting")
         console.log(id)
-        axios.get('http://localhost:80/api/Role/Accepted/All/' + id + '/' + this.state.token)
+        axios.get('http://localhost:80/api/Roles/Accepted/All/' + id + '/' + this.state.token)
             .then(res => {
                 this.setState({ accepted: res.data.rows })
             })
@@ -34,7 +34,7 @@ class ProjectRoleDetail extends Component {
     }
 
     fetchApplications() {
-        axios.get('http://localhost:80/api/Application/' + this.state.info.role_id)
+        axios.get('http://localhost:80/api/Applications/' + this.state.info.role_id)
             .then(res => {
                 this.setState({ applications: res.data })
             })
@@ -44,7 +44,7 @@ class ProjectRoleDetail extends Component {
     }
 
     fetchApplicationsSpecific(id) {
-        axios.get('http://localhost:80/api/Application/' + id)
+        axios.get('http://localhost:80/api/Applications/' + id)
             .then(res => {
                 this.setState({ applications: res.data })
             })

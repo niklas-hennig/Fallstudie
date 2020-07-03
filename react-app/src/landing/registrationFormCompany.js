@@ -29,7 +29,7 @@ class RegistrationForm extends Component {
     submitHandler = (event) => {
         event.preventDefault();
         if (this.state.registration === true) {
-            axios.post('http://localhost/api/Company', {
+            axios.post('http://localhost/api/Companies', {
                 name: this.state.name,
                 street: this.state.street,
                 number: this.state.number,
@@ -53,7 +53,7 @@ class RegistrationForm extends Component {
 
     searchHandler = (event) => {
         event.preventDefault();
-        axios.get('http://localhost/api/Company/Existence/' + this.state.name)
+        axios.get('http://localhost/api/Companies/Existence/' + this.state.name)
             .then((res) => {
                 if (res.data) {
                     this.props.onRegistered(res.data.name);

@@ -21,7 +21,7 @@ class PasswordReset extends Component {
 
     handleReqest = (event) => {
         event.preventDefault();
-        axios.post('http://localhost:80/api/User/Password/' + this.state.username + '/' + this.state.type)
+        axios.post('http://localhost:80/api/Users/Password/' + this.state.username + '/' + this.state.type)
             .then(res => {
                 this.setState({ isRequest: false })
             })
@@ -31,7 +31,7 @@ class PasswordReset extends Component {
 
     handleReset = (event) => {
         event.preventDefault();
-        axios.put('http://localhost:80/api/User/Password/' + this.state.username + '/' + this.state.type + '/' + this.state.token + '/' + this.state.password)
+        axios.put('http://localhost:80/api/Users/Password/' + this.state.username + '/' + this.state.type + '/' + this.state.token + '/' + this.state.password)
             .then(res => this.props.onBack())
             .catch(err => console.error(err))
     }

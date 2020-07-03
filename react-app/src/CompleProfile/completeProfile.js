@@ -71,7 +71,7 @@ class CompleteProfile extends Component{
 
     componentDidMount() {
         if(this.props.isFreelancerSetting) {
-            axios.get('http://localhost:80/api/User/'+this.state.username + '/'+ this.state.type)
+            axios.get('http://localhost:80/api/Users/'+this.state.username + '/'+ this.state.type)
             .then(data => {
                 this.setState({
                     email: data.data['email'],
@@ -90,7 +90,7 @@ class CompleteProfile extends Component{
                     experience: data.data['experience'] })
             }) 
         } else {
-            axios.get('http://localhost:80/api/Company/'+ this.state.comp_name)
+            axios.get('http://localhost:80/api/Companies/'+ this.state.comp_name)
             .then(data => {
                 this.setState({
                     name: data.data['name'],

@@ -22,7 +22,7 @@ class RoleDetail extends Component {
 
     //Fill state with data to display
     fetchInfo(role_id) {
-        axios.get('http://localhost:80/api/Role/Freelancer/All/' + role_id + '/' + this.state.token)
+        axios.get('http://localhost:80/api/Roles/Freelancer/All/' + role_id + '/' + this.state.token)
             .then(res => {
                 this.setState({ info: res.data })
             })
@@ -35,7 +35,7 @@ class RoleDetail extends Component {
 
     //Call Backend to post application for the selected role
     handleApply = (event) => {
-        axios.post('http://localhost:80/api/Application/' + this.state.role_id + '/' + this.state.username + '/' + this.state.token)
+        axios.post('http://localhost:80/api/Applications/' + this.state.role_id + '/' + this.state.username + '/' + this.state.token)
             .then(res => this.props.onApply())
             .catch(err => console.error(err))
 

@@ -7,14 +7,14 @@ const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
 const fileUpload = require('express-fileupload');
 
-const User = require('./api/User');
-const Authentification = require('./api/Authentification');
-const Prefence = require('./api/Prefence')
-const Company = require('./api/Company')
-const Role = require('./api/Role')
-const Project = require('./api/Project');
-const Application = require('./api/Application')
-const FileEp = require('./api/File');
+const Users = require('./api/Users');
+const Authentifications = require('./api/Authentifications');
+const Prefences = require('./api/Prefences')
+const Companies = require('./api/Companies')
+const Roles = require('./api/Roles')
+const Projects = require('./api/Projects');
+const Applications = require('./api/Applications')
+const Files = require('./api/Files');
 
 const API_PORT = 80;
 const app = express();
@@ -77,14 +77,14 @@ htmlRouter.get('*', (req, res) => {
 
 // append /api for our http requests
 app.use('/api', router);
-app.use('/api/User', User);
-app.use('/api/Authentification', Authentification);
-app.use('/api/Prefence', Prefence);
-app.use('/api/Company', Company);
-app.use('/api/Role', Role);
-app.use('/api/Project', Project);
-app.use('/api/Application', Application);
-app.use('/api/File', FileEp);
+app.use('/api/Users', Users);
+app.use('/api/Authentifications', Authentifications);
+app.use('/api/Prefences', Prefences);
+app.use('/api/Companies', Companies);
+app.use('/api/Roles', Roles);
+app.use('/api/Projects', Projects);
+app.use('/api/Applications', Applications);
+app.use('/api/Files', Files);
 app.use('/', htmlRouter);
 
 

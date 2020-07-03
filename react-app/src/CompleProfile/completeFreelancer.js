@@ -52,7 +52,7 @@ class CompleteProfileFreelancer extends Component {
         event.preventDefault();
         const data = new FormData()
         data.append('file', this.state.datei)
-        axios.post('http://localhost:80/api/File/' + this.state.username + '/' + this.state.token, data, {
+        axios.post('http://localhost:80/api/Files/' + this.state.username + '/' + this.state.token, data, {
 
         }).then(res => {
             console.log(res)
@@ -64,7 +64,7 @@ class CompleteProfileFreelancer extends Component {
     fetchPrefences() {
         let pref = []
         let key = ''
-        axios.get('http://localhost:80/api/Prefence/')
+        axios.get('http://localhost:80/api/Prefences/')
             .then(res => {
                 for (key in res.data) {
                     pref.push(res.data[key]['pref_name'])
@@ -78,7 +78,7 @@ class CompleteProfileFreelancer extends Component {
         event.preventDefault();
 
         console.log(this.state)
-        axios.put('http://localhost:80/api/User/Freelancer', {
+        axios.put('http://localhost:80/api/Users/Freelancer', {
             username: this.props.username,
             date_of_birth: this.state.date_of_birth,
             street: this.state.street,
@@ -92,7 +92,7 @@ class CompleteProfileFreelancer extends Component {
             experience: this.state.experience,
             is_set: this.state.is_set
         }).then(res => {
-            axios.put('http://localhost:80/api/Prefence/' + this.state.username, {
+            axios.put('http://localhost:80/api/Prefences/' + this.state.username, {
                 prefence: this.state.prefence
             }).then(res => {
                 if (this.state.isChange) this.props.onBack();

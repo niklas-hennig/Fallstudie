@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import axios from "axios";
 import { TableRow, TableCell } from '@material-ui/core';
 
 class RoleCreationItem extends Component {

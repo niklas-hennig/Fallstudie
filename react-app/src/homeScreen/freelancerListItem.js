@@ -23,7 +23,7 @@ class FreelancerListItem extends Component {
     clickHandler = (event) => {
         console.log("delting state:")
         console.log(this.state)
-        axios.delete('http://localhost:80/api/Application/' + this.state.id + '/' + this.state.freelancer_user + '/' + this.state.token)
+        axios.delete('http://localhost:80/api/Applications/' + this.state.id + '/' + this.state.freelancer_user + '/' + this.state.token)
             .then(res => {
                 this.props.onChange()
             })
@@ -34,7 +34,7 @@ class FreelancerListItem extends Component {
 
     render() {
         let LnkResume = ''
-        if (this.state.resume_link) LnkResume = <Link href={"http://localhost:80/api/File/" + this.state.freelancer_user} target="_blank">
+        if (this.state.resume_link) LnkResume = <Link href={"http://localhost:80/api/Files/" + this.state.freelancer_user} target="_blank">
             Lebenslauf
             </Link>
         return <Card

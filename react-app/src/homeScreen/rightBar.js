@@ -28,7 +28,7 @@ class RightBar extends Component {
     setProjects(){
         this.props.onChange();
         if (this.state.type==="f")
-            axios.get('http://localhost:80/api/Application/Freelancer/'+this.state.username+'/'+this.state.token)
+            axios.get('http://localhost:80/api/Applications/Freelancer/'+this.state.username+'/'+this.state.token)
             .then(res => {
                 this.setState({applications: res.data})
             })
@@ -36,7 +36,7 @@ class RightBar extends Component {
                 console.log(err)
             })
         else 
-            axios.get('http://localhost:80/api/Application/Company/'+this.state.comp_id)
+            axios.get('http://localhost:80/api/Applications/Company/'+this.state.comp_id)
             .then(res => {
                 this.setState({applications: res.data})
             })

@@ -102,7 +102,7 @@ class ProjectCreate extends Component {
     fetchPrefences() {
         let pref = []
         let key = ''
-        axios.get('http://localhost:80/api/Prefence/')
+        axios.get('http://localhost:80/api/Prefences/')
             .then(res => {
                 for (key in res.data) {
                     pref.push(res.data[key]['pref_name'])
@@ -124,7 +124,7 @@ class ProjectCreate extends Component {
             this.setState({ dateError: true })
             return
         }
-        axios.post('http://localhost:80/api/Project/' + this.state.token, {
+        axios.post('http://localhost:80/api/Projects/' + this.state.token, {
             title: this.state.pr_titel,
             start_date: this.state.start_date,
             end_date: this.state.end_date,
@@ -134,7 +134,7 @@ class ProjectCreate extends Component {
             .then(res => {
                 let promises = []
                 this.state.roles.forEach((role) => {
-                    promises.push(axios.post('http://localhost:80/api/Role/' + this.state.token, {
+                    promises.push(axios.post('http://localhost:80/api/Roles/' + this.state.token, {
                         title: role.title,
                         description: role.description,
                         reqs: role.requirements,

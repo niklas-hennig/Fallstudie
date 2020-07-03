@@ -31,7 +31,7 @@ class RegistrationForm extends Component{
         }else {
             if (!this.state.registered){
                 this.setState({passwordError: false, mailError:false})
-                axios.post('http://localhost:80/api/User/Freelancer', {
+                axios.post('http://localhost:80/api/Users/Freelancer', {
                     name: this.state.name,
                     surname: this.state.surname,
                     username: this.state.username,

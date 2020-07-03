@@ -64,7 +64,7 @@ class CompleteProfileCompany extends Component {
             this.setState({ mailError: true, passwordError: false })
             return
         } else {
-            axios.put('http://localhost:80/api/Company/' + this.state.comp_name, {
+            axios.put('http://localhost:80/api/Companies/' + this.state.comp_name, {
                 tel_no: this.state.tel_no,
                 street: this.state.street,
                 number: this.state.number,
@@ -79,7 +79,7 @@ class CompleteProfileCompany extends Component {
                 description: this.state.description,
             }).then(res => {
                 if (this.state.isChange !== true) {
-                    axios.post('http://localhost/api/User/CompanyUser', {
+                    axios.post('http://localhost/api/Users/CompanyUser', {
                         name: this.state.name,
                         surname: this.state.surname,
                         username: this.state.username,
@@ -93,7 +93,7 @@ class CompleteProfileCompany extends Component {
                         })
                         .catch(err => console.error(err))
                 } else {
-                    axios.put('http://localhost/api/User/CompanyUser', {
+                    axios.put('http://localhost/api/Users/CompanyUser', {
                         name: this.state.name,
                         surname: this.state.surname,
                         username: this.state.username,
@@ -258,7 +258,7 @@ class CompleteProfileCompany extends Component {
 
     componentDidMount() {
         if (this.props.street_bill) this.setState({ enable_billing: false })
-        axios.get('http://localhost:80/api/User/' + this.state.username + '/c/')
+        axios.get('http://localhost:80/api/Users/' + this.state.username + '/c/')
             .then(data => {
                 this.setState({
                     name: data.data.name,
