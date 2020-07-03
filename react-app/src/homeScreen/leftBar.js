@@ -110,8 +110,8 @@ class LeftBar extends Component {
             calCard = <Card 
             variant="outlined"
             style={{marginTop: "5%", marginLeft: "2%"}}>
-                <CardHeader title="Ausgewählter Zeitraum"></CardHeader>
                 <CardContent>
+                    <h2>Ausgewählter Zeitraum</h2>
                     {this.state.calendar}
                 </CardContent>
             </Card>
