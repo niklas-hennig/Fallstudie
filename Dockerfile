@@ -34,5 +34,6 @@ EXPOSE 80
 WORKDIR /usr/src/app
 
 ENV DB_host "db"
+ENV NODE_PORT 80
 
 CMD ["node", "server.js"]

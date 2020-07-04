@@ -7,16 +7,18 @@ const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
 const fileUpload = require('express-fileupload');
 
-const Users = require('./api/Users');
-const Authentifications = require('./api/Authentifications');
-const Prefences = require('./api/Prefences')
-const Companies = require('./api/Companies')
-const Roles = require('./api/Roles')
-const Projects = require('./api/Projects');
-const Applications = require('./api/Applications')
-const Files = require('./api/Files');
+const Users = require('./routes/Users');
+const Authentifications = require('./routes/Authentifications');
+const Prefences = require('./routes/Prefences')
+const Companies = require('./routes/Companies')
+const Roles = require('./routes/Roles')
+const Projects = require('./routes/Projects');
+const Applications = require('./routes/Applications')
+const Files = require('./routes/Files');
 
-const API_PORT = 80;
+if (process.env.NODE_PORT) const API_PORT = process.env.NODE_PORT;
+else const API_PORT = 80;
+
 const app = express();
 app.use(cors());
 const router = express.Router();
