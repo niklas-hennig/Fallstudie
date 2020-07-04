@@ -63,7 +63,6 @@ class MainContent extends Component {
         this.handleSettingsComplete = this.handleSettingsComplete.bind(this);
         this.handleRoleSelected = this.handleRoleSelected.bind(this);
         this.handleProjectSelected = this.handleProjectSelected.bind(this);
-        this.handleRoleApplicationSelected = this.handleRoleApplicationSelected.bind(this);
         this.handleBackToHome = this.handleBackToHome.bind(this);
         this.handleProjectCreate = this.handleProjectCreate.bind(this);
         this.handleUpdate = this.handleUpdate.bind(this);
