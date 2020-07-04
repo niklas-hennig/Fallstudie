@@ -14,10 +14,8 @@ class ApplicationListItem extends Component {
     }
 
     handleAccept(){
-        console.log("accepted")
         axios.put('http://localhost:80/api/Applications/'+this.state.info.role_id+'/'+this.state.info.user_id+'/'+this.state.info.username)
-        .then(res => {this.props.onReject(this.state.info.role_id);
-            console.log(res)})
+        .then(res => {this.props.onReject(this.state.info.role_id)})
         .catch(err => console.log(err))
     }
 
@@ -30,10 +28,8 @@ class ApplicationListItem extends Component {
     }
 
     render(){
-        console.log("Aplication rendering state:")
-        console.log(this.state)
         let resumeBtn = 'Kein Lebenslauf gefunden'
-        if (this.state.info.resume_link) resumeBtn = <a target="_blank" href={'http://localhost:80/api/File/'+this.state.info.username+'/'+this.state.token}>Lebenslauf</a>
+        if (this.state.info.resume_link) resumeBtn = <a target="_blank" href={'http://localhost:80/api/Files/'+this.state.info.username+'/'+this.state.token}>Lebenslauf</a>
         return <TableRow>
                 <TableCell>{this.state.info.username}</TableCell>
                 <TableCell>{this.state.info.expienece}</TableCell>

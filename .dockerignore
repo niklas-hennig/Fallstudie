@@ -1,5 +1,7 @@
 react-app/node_modules
 react-app/build
+api/files
+api/node_modules
 .dockerignore
 Dockerfile
 Dockerfile.prod

@@ -38,8 +38,6 @@ class RegistrationForm extends Component {
                 country: this.state.country
             })
                 .then((res) => {
-                    console.log("respone")
-                    console.log(res.data)
                     this.props.onRegistered(res.data);
                 })
                 .catch((err) => {

@@ -43,7 +43,6 @@ class CompleteProfileFreelancer extends Component {
     }
 
     fileHandler = event => {
-        console.log(event.target.files[0])
         this.setState({ showUploadBtn: true })
         this.setState({ datei: event.target.files[0] })
     }
@@ -55,7 +54,6 @@ class CompleteProfileFreelancer extends Component {
         axios.post('http://localhost:80/api/Files/' + this.state.username + '/' + this.state.token, data, {
 
         }).then(res => {
-            console.log(res)
             this.setState({ showUploadBtn: false })
         })
             .catch(err => console.log(err))
@@ -77,7 +75,6 @@ class CompleteProfileFreelancer extends Component {
     submitHandler = (event) => {
         event.preventDefault();
 
-        console.log(this.state)
         axios.put('http://localhost:80/api/Users/Freelancer', {
             username: this.props.username,
             date_of_birth: this.state.date_of_birth,

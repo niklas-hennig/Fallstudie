@@ -118,7 +118,6 @@ class CompleteProfile extends Component{
                 </div>
                 );
         }else{
-            console.log(this.state)
             return (
                 <div style={this.style}>
                     <CompleteProfileCompany username={this.state.username} tel_no={this.state.tel_no} description={this.state.description} isChange={this.props.isChange} comp_id={this.state.comp_id} comp_name={this.state.comp_name} street={this.state.street} number={this.state.number} postcode={this.state.postcode} city={this.state.city} country={this.state.country} street_bill={this.state.street_bill} number_bill={this.state.number_bill} city_bill={this.state.city_bill} postcode_bill={this.state.postcode_bill} onBack={this.handleBack} onSubmit={this.handleSubmit}/>

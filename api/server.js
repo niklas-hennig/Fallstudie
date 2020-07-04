@@ -15,9 +15,10 @@ const Roles = require('./routes/Roles')
 const Projects = require('./routes/Projects');
 const Applications = require('./routes/Applications')
 const Files = require('./routes/Files');
+let API_PORT;
 
-if (process.env.NODE_PORT) const API_PORT = process.env.NODE_PORT;
-else const API_PORT = 80;
+if (process.env.NODE_PORT) API_PORT = process.env.NODE_PORT;
+else API_PORT = 80;
 
 const app = express();
 app.use(cors());
@@ -25,6 +26,8 @@ const router = express.Router();
 const htmlRouter = express.Router();
 const config = require('config');
 
+
+//Set DB host and test connection
 let host = 'localhost'
 if(process.env.DB_host) host=process.env.DB_host
 const pool = new Pool({
@@ -35,28 +38,18 @@ const pool = new Pool({
     port: 5432,
   })
 
-console.log(pool.query('SELECT NOW()', (err, data)=>{
+pool.query('SELECT NOW()', (err, data)=>{
   if (err) console.log(err)
-  else console.log(data)
-}))
+  else console.log(data.rows[0])
+})
 
 app.use(fileUpload());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 
-router.get('/Company', (req, res) => {
-  pool.query('SELECT * FROM company;')
-  .then(data => {
-    console.log(data.rows[0])
-    res.send(data.rows[0])
-  })
-  .catch(err => {
-    res.status(500).send(err)
-  })
-})
 
-
+//Send HTML index file
 htmlRouter.get('/', (req, res) => {
   fs.readFile('../react-app/build/index.html', (err, data) => {
     if (err) res.status(500).send(err);
@@ -64,7 +57,7 @@ htmlRouter.get('/', (req, res) => {
   })
 })
 
-
+//Respond with requested file, if not in Routes for API
 htmlRouter.get('*', (req, res) => {
   if (!req.path.match('\/api\/.*')){
     fs.readFile('../react-app/build/'+req.path, (err, data) => {

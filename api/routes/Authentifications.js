@@ -20,6 +20,7 @@ router.post('/', (req, res) => {
       res.status(500).send(err)})
   })
   
+  //Not in use
   router.delete('/', (req, res) => {
     res.clearCookie('Authentification');
     return res.send('Authentification cleared')

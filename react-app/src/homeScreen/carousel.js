@@ -115,7 +115,6 @@ class CarouselComp extends Component {
             </Slider>
         }
         if(this.state.all_projects.length>0){
-            console.log(this.state.all_projects)
             carousel = <React.Fragment>
                     <Slider {...settings}>
                         {this.state.all_projects.map((info, index) => <SlideProject key={info.project_id} project_id={info.project_id} title={info.titel} start_date={info.start_date} app_limit={info.application_limit} height={this.state.height} comp_name={info.name} onSelect={this.handleSelectProject} ></SlideProject>)}

@@ -72,7 +72,7 @@ module.exports={
             JOIN role as r on r.role_id=ra.role_id
             JOIN freelancer_assignment as fa ON fa.role_id=ra.role_id 
             JOIN freelancer as f ON fa.freelancer_id=f.user_id
-            WHERE p.start_date >= $1 
+            WHERE p.end_date >= $1 
             AND f.username = $2
           `, [start_date, username])
           .then(data => resolve(data))

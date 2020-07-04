@@ -18,11 +18,11 @@ import RightBar from '../homeScreen/rightBar';
 import Carousel from '../homeScreen/carousel';
 
 //Freelancer-Only pages
-import RoleDetail from '../Freelancer/role_detail';
+import RoleDetail from '../Freelancer/roleDetail';
 
 //Company-Only pages
-import ProjectDetail from '../Company/project_detail';
-import ProjectCreate from '../Company/project_create';
+import ProjectDetail from '../Company/projectDetail';
+import ProjectCreate from '../Company/projectCreate';
 
 //Grid Layout
 import { Card, CardHeader, CardContent, CardActions, TextField, MenuItem, Button, Typography, IconButton } from "@material-ui/core";
@@ -87,7 +87,6 @@ class MainContent extends Component {
     }
 
     handleApplied = (event) => {
-        console.log("application handle")
         this.setState({ content: this.getHome() })
         this.getBars();
     }
@@ -151,11 +150,6 @@ class MainContent extends Component {
         if (this.state.mainContent === "h") this.setState({ content: this.getHome() })
     }
 
-    //not used
-    handleRoleApplicationSelected(id) {
-        console.log("selected application: " + id)
-    }
-
     handleBackToHome() {
         this.getBars();
         this.setState({ content: this.getHome() })
@@ -180,8 +174,6 @@ class MainContent extends Component {
         else {
             token = this.state.auth['private']
             username = this.state.auth['username']
-            console.log("settings with user:")
-            console.log(username)
             if (this.state.auth['type'] === "f") isFreelancer = true
             else isFreelancer = false
         }
@@ -257,7 +249,6 @@ class MainContent extends Component {
     }
 
     getRoleDetail(role_id, showApplication) {
-        console.log("showing role" + role_id)
         let username = this.state.auth['username']
         let auth = this.state.auth['private']
         this.setState({ mainContent: "rd" })

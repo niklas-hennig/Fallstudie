@@ -114,12 +114,9 @@ module.exports={
     i = i+1;
     upd_info = upd_info + ' WHERE username=$' + i
 
-    console.log('UPDATE company SET ' + upd_info)
-    console.log(params)
-
     return new Promise((resolve, reject)=> {
         pool.query('UPDATE company_account SET ' + upd_info , params)
-        .then(data => {console.log(data)
+        .then(data => {
             resolve(true)})
         .catch(err => {console.log(err)
             reject(err)})

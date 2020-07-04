@@ -109,7 +109,6 @@ class ProjectDetail extends Component {
             project_id: this.state.project_id
         })
             .then(res => {
-                console.log(res)
                 this.closePopup();
                 this.fetchSpecific(this.state.project_id, true);
             })

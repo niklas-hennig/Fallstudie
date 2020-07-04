@@ -1,10 +1,10 @@
 const express = require('express');
 
-const db_utils = require('../modules/db_utils')
 const db_company = require('../modules/db_utils_company')
 
 const router = express.Router();
 
+//Erstellt aus dem body ein JSON
 function parseBody(body){
     const infos = {};
     for (key in body){
@@ -13,6 +13,7 @@ function parseBody(body){
       return infos;
   };
 
+  //Rückgabe aller Informationen der spezifizierten Firma
 router.get('/:name', (req, res)=>{
     if(!req.params.name) return res.status(400).send('No name provided')
 
@@ -21,6 +22,7 @@ router.get('/:name', (req, res)=>{
     .catch(err => res.send(500).send(err))
 })
 
+//Rückgabe eines Wahrheitswerts ob die Firma in der Datenbank existiert
 router.get('/Existence/:name', (req, res)=>{
     db_company.getCompanyInfo(req.params.name)
     .then(data => {
@@ -31,6 +33,7 @@ router.get('/Existence/:name', (req, res)=>{
         res.send(500).send(err)})
 })
 
+//Erstellen einer neuen Firma unter Angabe der wichtigesten Informationen im Body, Rückgabe des Datenbankoutputs, insbesondere der Firmenname
 router.post('/', (req, res) => {
     if (!req.body.name) return res.status(400).send('No name provided')
     name = req.body.name
@@ -54,13 +57,11 @@ router.post('/', (req, res) => {
 
 })
 
+//Akualisieren der gespeicherten Informationen, Informationen im Body
 router.put('/:comp_name', (req, res) => {
     name = req.params.comp_name
 
     infos = parseBody(req.body);
-
-    console.log(name)
-    console.log(infos)
     db_company.updateCompanyInfo(infos, name)
     .then(res.send('Infos updated'))
     .catch(err => {console.log(err)
@@ -69,6 +70,8 @@ router.put('/:comp_name', (req, res) => {
 
 })
 
+
+//Löschen einer Firme, derzeit nicht verwendet
 router.delete('/:name', (req, res) => {
 
     db_company.deleteCompany(name)

@@ -24,8 +24,6 @@ class ProjectRoleDetail extends Component {
     }
 
     fetchAccepted(id) {
-        console.log("setting")
-        console.log(id)
         axios.get('http://localhost:80/api/Roles/Accepted/All/' + id + '/' + this.state.token)
             .then(res => {
                 this.setState({ accepted: res.data.rows })
@@ -60,7 +58,6 @@ class ProjectRoleDetail extends Component {
     }
 
     render() {
-        console.log(this.state)
         let accepted = 'Keine Bewerbungen angenommen'
         if (this.state.accepted.length > 0) accepted = (
             <Box margin={7}>
@@ -149,7 +146,6 @@ class ProjectRoleDetail extends Component {
     }
 
     UNSAFE_componentWillReceiveProps(nextProps) {
-        console.log("will receive")
         this.setState({ info: this.props.info })
         this.fetchApplicationsSpecific(nextProps.info.role_id)
         this.fetchAccepted(nextProps.info.role_id)

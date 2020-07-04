@@ -142,8 +142,6 @@ class CompleteProfileCompany extends Component {
                 <BackspaceIcon />
             </IconButton>
         }
-        console.log(this.state.isChange)
-        console.log(disableComponent)
 
         if (!this.state.enable_billing) billing =
             <React.Fragment>
@@ -159,7 +157,6 @@ class CompleteProfileCompany extends Component {
         if (this.state.mailError) {
             mailError = <p style={{ color: 'red', position: 'relative', 'top': '10%' }}>Keine gültige Mailaddresse</p>
         }
-        console.log(this.state)
         return (
             <form id="completeCompany" onSubmit={this.submitHandler}>
                 <Card>

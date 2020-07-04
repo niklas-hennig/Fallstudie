@@ -52,6 +52,14 @@ module.exports={
     })
   },
 
+  setResume: function(username){
+    return new Promise((resolve, reject) => {
+      pool.query('UPDATE freelancer SET resume_link=$1 WHERE username=$1', [username])
+      .then(data => resolve())
+      .catch(err => reject(err))
+    })
+  },
+
   getPrefences: function(username){
     return new Promise((resolve, reject) => {
       pool.query('SELECT pref_name FROM prefences as a JOIN prefence_assignment as b ON a.pref_id=b.pref_id JOIN freelancer as c ON b.user_id=c.user_id')

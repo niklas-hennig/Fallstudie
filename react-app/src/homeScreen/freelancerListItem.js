@@ -21,8 +21,6 @@ class FreelancerListItem extends Component {
 
     //Send appliation request to backend and return if call succeded
     clickHandler = (event) => {
-        console.log("delting state:")
-        console.log(this.state)
         axios.delete('http://localhost:80/api/Applications/' + this.state.id + '/' + this.state.freelancer_user + '/' + this.state.token)
             .then(res => {
                 this.props.onChange()

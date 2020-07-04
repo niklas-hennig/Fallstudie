@@ -33,6 +33,8 @@ EXPOSE 80
 
 WORKDIR /usr/src/app
 
+RUN mkdir files
+
 ENV DB_host "db"
 ENV NODE_PORT 80
 

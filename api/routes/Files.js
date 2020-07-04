@@ -1,12 +1,14 @@
 const express = require('express');
 
 const auth_utils = require('../modules/auth_utils')
+const db_utils = require('../modules/db_utils')
 const fs = require('fs');
 
 const FileType = require('file-type');
 
 const router = express.Router();
 
+//Gibt die erste Datei des Nutzers als Download aus
 router.get('/:username/:token', (req, res) => {
     if(!auth_utils.validateToken(req.params.token)) return res.status(401).send('not signed in')
     fs.readdir('./files/'+req.params.username ,function(err, list){
@@ -16,6 +18,7 @@ router.get('/:username/:token', (req, res) => {
     
 })
 
+//Speichert eine neue Datei unter dem Nutzernamen ab
 router.post('/:username/:token', (req, res)=>{
     if(!auth_utils.validateToken(req.params.token)) return res.status(401).send('not signed in')
     new Promise((resolve, reject) => {
@@ -32,7 +35,11 @@ router.post('/:username/:token', (req, res)=>{
         })
     })
     .then(d =>{
-        res.send("file written")
+        db_utils.setResume(req.params.username)
+        .then(data => res.send("file written"))
+        .catch(err => {console.log(err)
+            res.status(500).send(err)}
+        )
     })
     .catch(err => {console.log(err)
         res.status(500).send(err)})

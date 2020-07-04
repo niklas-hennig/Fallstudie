@@ -65,7 +65,7 @@ module.exports={
     
     return new Promise((resolve, reject)=>{
         pool.query('UPDATE company SET ' + upd_info, params)
-        .then(data =>{console.log(data)
+        .then(data =>{
           resolve()})
         .catch(err => reject(err))
     })
