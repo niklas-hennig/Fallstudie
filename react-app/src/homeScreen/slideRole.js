@@ -46,6 +46,8 @@ class SlideRole extends Component {
     render() {
         let content = ''
         if (this.state.title) {
+            let payment = this.state.payment
+            payment = payment.replace('$', '€')
             content = <Card
                 variant="outlined"
             >
@@ -55,7 +57,7 @@ class SlideRole extends Component {
                         {this.state.description}
                     </Typography>
                     <Typography variant="caption" component="p">
-                        Bezahlung: {this.state.payment}
+                        Bezahlung: {payment}
                     </Typography>
                 </CardContent>
                 <CardActions>

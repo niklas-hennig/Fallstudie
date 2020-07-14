@@ -60,6 +60,7 @@ class RoleDetail extends Component {
             role_title = this.state.info.title
             role_description = this.state.info.description
             payment = this.state.info.payment
+            payment = payment.replace('$', '€')
             requirements = this.state.requirements
         }
         let applyBtn = ''
