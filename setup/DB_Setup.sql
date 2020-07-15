@@ -194,7 +194,7 @@ INSERT INTO role (title, description, requirements, area, payment)
 
 INSERT INTO project (titel, start_date, end_date, application_limit,comp_id)
     VALUES ('Project 1', '2020-07-01', '2020-08-01', '2020-06-15', 1),
-    ('Project 2', '2020-08-01', '2020-08-15', '2020-07-15', 1);
+    ('Project 2', '2020-08-01', '2020-08-15', '2020-07-25', 1);
 INSERT INTO role_assignment (role_id, project_id, number_of_freelancers) VALUES 
     (1, 1, 10), 
     (2, 1, 5), 
