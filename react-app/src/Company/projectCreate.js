@@ -196,7 +196,7 @@ class ProjectCreate extends Component {
         let creationDialog = this.getRoleCreation();
         return <Card
             variant="elevation"
-            style={{ marginTop: "4%" }}
+            style={{ marginTop: "4%", marginBottom: "5%" }}
         >
             <CardHeader
                 title="Ihr neues Projekt"

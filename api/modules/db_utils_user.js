@@ -146,7 +146,9 @@ module.exports={
         if (username)
             return new Promise((resolve, reject)=> {
             pool.query('SELECT * FROM ' + table + ' WHERE username=$1', [username])
-            .then(data => resolve(data.rows[0]))
+            .then(data => {
+                console.log(data)
+                resolve(data.rows[0])})
             .catch(err => reject(err))
             })
         else 

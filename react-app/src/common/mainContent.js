@@ -74,10 +74,10 @@ class MainContent extends Component {
         else {
             let auth = JSON.parse(window.localStorage.getItem("auth"))
             this.setState({ auth: auth })
-            this.props.onLogin(auth)
             axios.get('http://localhost:80/api/Users/' + auth['username'] + '/' + auth['type'], auth)
                 .then(data => {
                     let comp_id_new = data.data.comp_id
+                    this.props.onLogin(auth, data.data.name, data.data.surname)
                     this.setState({ content: this.getHome(), comp_id: comp_id_new, company_name: data.data.company_name })
                     this.getBars()
                 })
@@ -100,11 +100,12 @@ class MainContent extends Component {
 
     handleLogin = (event) => {
         this.setState({ auth: event })
-        this.props.onLogin(event)
+        
         axios.get('http://localhost:80/api/Users/' + this.state.auth['username'] + '/' + this.state.auth['type'], this.state.auth)
             .then(data => {
                 if (data.data['is_set']) {
                     let comp_id_new = data.data.comp_id
+                    this.props.onLogin(event, data.data.name, data.data.surname)
                     this.setState({ content: this.getHome(), comp_id: comp_id_new, company_name: data.data.company_name })
                     this.getBars()
                     window.localStorage.setItem("auth", JSON.stringify(event))

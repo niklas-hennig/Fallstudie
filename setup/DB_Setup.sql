@@ -84,7 +84,7 @@ DROP TABLE IF EXISTS project;
 
 CREATE TABLE project (
     project_id SERIAL PRIMARY KEY,
-    titel VARCHAR(30) NOT NULL,
+    titel VARCHAR(100) NOT NULL,
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
     application_limit DATE NOT NULL,
@@ -98,9 +98,9 @@ DROP TABLE IF EXISTS role;
 
 CREATE TABLE role (
     role_id SERIAL PRIMARY KEY,
-    title VARCHAR(30) NOT NULL,
+    title VARCHAR(70) NOT NULL,
     description VARCHAR(200),
-    requirements VARCHAR(50),
+    requirements VARCHAR(100),
     area int,
     payment MONEY, --Per role for whole project
     CONSTRAINT area_fkey FOREIGN KEY (area)

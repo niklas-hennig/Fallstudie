@@ -50,7 +50,7 @@ class Header extends Component {
     //greeting and menu only show up after login
     render() {
         let greeting = ''
-        if (this.state.user) greeting = 'Hallo ' + this.state.user
+        if (this.state.user) greeting = 'Hallo ' + this.props.surname + ' ' + this.props.name
 
         let menu = ''
         if (this.state.user) {

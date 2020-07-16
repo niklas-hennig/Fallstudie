@@ -20,8 +20,8 @@ class ContentWrapper extends Component{
         this.handleSettings=this.handleSettings.bind(this);
     }
 
-    handleLogin = (event) => {
-        this.setState({auth: event, username: event['username']})
+    handleLogin = (event, name, surname) => {
+        this.setState({auth: event, username: event['username'], name: name, surname: surname})
     }
 
     handleSettings = (event) => {
@@ -34,7 +34,7 @@ class ContentWrapper extends Component{
         return (
         <Grid container direction="column" id="contentWrapper" >
             <Grid item ref={(elem) => this.header = elem} >
-                <Header user={this.state.username} onSettings={this.handleSettings} />
+                <Header user={this.state.username} name={this.state.name} surname={this.state.surname} onSettings={this.handleSettings} />
             </Grid>
             <Grid item container>
                 <MainContent onLogin={this.handleLogin} goToSettings={this.state.toSettings} height={this.state.mainContentHeight}></MainContent>
