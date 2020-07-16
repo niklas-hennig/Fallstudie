@@ -145,10 +145,10 @@ class CompleteProfileCompany extends Component {
 
         if (!this.state.enable_billing) billing =
             <React.Fragment>
-                <TextField type="text" name="bill_street" helperText="Straße" defaultValue={this.state.street_bill} onChange={this.changeHandler} />
-                <TextField type="number" name="bill_number" helperText="Hausnummer" defaultValue={this.state.number_bill} onChange={this.changeHandler} /><br />
-                <TextField  name="bill_postcode" helperText="Postleitzahl" defaultValue={this.state.postcode_bill} onChange={this.changeHandler} />
-                <TextField type="text" name="bill_city" helperText="Stadt" defaultValue={this.state.city_bill} onChange={this.changeHandler} />
+                <TextField type="text" name="bill_street" helperText="Straße" value={this.state.street_bill} onChange={this.changeHandler} />
+                <TextField type="number" name="bill_number" helperText="Hausnummer" value={this.state.number_bill} onChange={this.changeHandler} /><br />
+                <TextField  name="bill_postcode" helperText="Postleitzahl" value={this.state.postcode_bill} onChange={this.changeHandler} />
+                <TextField type="text" name="bill_city" helperText="Stadt" value={this.state.city_bill} onChange={this.changeHandler} />
             </React.Fragment>
         if (this.state.passwordError) {
             passwordError = <p style={{ color: 'red', position: 'relative', 'top': '10%' }}>Passwörter stimmen nicht überein</p>
@@ -182,12 +182,12 @@ class CompleteProfileCompany extends Component {
                                         <Typography variant="subtitle1">
                                             Lieferadresse
                                         </Typography>
-                                        <TextField name="street" required helperText="Straße" value={this.state.street} onChange={this.changeHandler} />
-                                        <TextField name="number" type="number" required helperText="Hausnummer" value={this.state.number} onChange={this.changeHandler} />
-                                        <TextField name="postcode" required helperText="Postleitzahl" value={this.state.postcode} onChange={this.changeHandler} />
-                                        <TextField name="city" required helperText="Stadt" value={this.state.city} onChange={this.changeHandler} />
-                                        <TextField name="country" required helperText="Land" value={this.state.country} onChange={this.changeHandler} />
-                                        <TextField name="tel_no" type="number" required helperText="Telefonnummer" value={this.state.tel_no} onChange={this.changeHandler} />
+                                        <TextField name="street" required helperText="Straße *" value={this.state.street} onChange={this.changeHandler} />
+                                        <TextField name="number" type="number" required helperText="Hausnummer *" value={this.state.number} onChange={this.changeHandler} />
+                                        <TextField name="postcode" required helperText="Postleitzahl *" value={this.state.postcode} onChange={this.changeHandler} />
+                                        <TextField name="city" required helperText="Stadt *" value={this.state.city} onChange={this.changeHandler} />
+                                        <TextField name="country" required helperText="Land *" value={this.state.country} onChange={this.changeHandler} />
+                                        <TextField name="tel_no" type="number" required helperText="Telefonnummer *" value={this.state.tel_no} onChange={this.changeHandler} />
                                         <FormControlLabel
                                             control={
                                                 <Checkbox
@@ -208,7 +208,7 @@ class CompleteProfileCompany extends Component {
                                     <CardHeader title="Firmendetails" />
                                     <CardContent>
                                         <div id="details"><br />
-                                            <TextField multiline fullWidth rows={10} variant="outlined" name="description" label="Beschreibung" defaultValue={this.state.description} /><br />
+                                            <TextField multiline fullWidth rows={10} variant="outlined" name="description" label="Beschreibung" value={this.state.description} onChange={this.changeHandler}/><br />
                                         </div>
                                     </CardContent>
                                 </Card>
@@ -217,19 +217,19 @@ class CompleteProfileCompany extends Component {
                                 <Card>
                                     <CardHeader title="Ihr Account" />
                                     <CardContent>
-                                        <TextField name="name" required helperText="Nachname" value={this.state.name} onChange={this.changeHandler} />
-                                        <TextField name="surname" required helperText="Vorname" value={this.state.surname} onChange={this.changeHandler} />
-                                        <TextField select required name="gender" value={this.state.gender} onChange={this.changeHandler}>
+                                        <TextField name="name" required helperText="Nachname *" value={this.state.name} onChange={this.changeHandler} />
+                                        <TextField name="surname" required helperText="Vorname *" value={this.state.surname} onChange={this.changeHandler} />
+                                        <TextField select required name="gender" helperText="Geschlecht *" value={this.state.gender} onChange={this.changeHandler}>
                                             <MenuItem value="f">Weiblich</MenuItem>
                                             <MenuItem value="m">Männlich</MenuItem>
                                             <MenuItem value="d">Divers</MenuItem>
                                         </TextField><br />
 
                                         <TextField name="username" disabled={disableComponent} helperText="Nutername" value={this.state.username} onChange={this.changeHandler} />
-                                        <TextField name="email" required helperText="E-Mail" value={this.state.email} onChange={this.changeHandler} />
+                                        <TextField name="email" required helperText="E-Mail *" value={this.state.email} onChange={this.changeHandler} />
                                         <br />
-                                        <TextField type="password" name="password" helperText="Passwort" onChange={this.changeHandler} />
-                                        <TextField type="password" name="password_check" helperText="Passwort erneut eingeben" onChange={this.changeHandler} />
+                                        <TextField type="password" name="password" helperText="Passwort *" onChange={this.changeHandler} />
+                                        <TextField type="password" name="password_check" helperText="Passwort erneut eingeben *" onChange={this.changeHandler} />
                                         {mailError}
                                         {passwordError}
                                     </CardContent>
@@ -268,21 +268,19 @@ class CompleteProfileCompany extends Component {
     }
 
     UNSAFE_componentWillReceiveProps(nextProps){
-        if(this.state.comp_name!==nextProps.comp_name){
-            this.setState({comp_id: nextProps.comp_id,
-                comp_name: nextProps.comp_name,
-                street: nextProps.street,
-                number: nextProps.number,
-                postcode: nextProps.postcode,
-                city: nextProps.city,
-                country: nextProps.country,
-                tel_no: nextProps.tel_no,
-                street_bill: nextProps.street_bill,
-                number_bill: nextProps.number_bill,
-                postcode_bill: nextProps.postcode_bill,
-                city_bill: nextProps.city_bill,
-                description: nextProps.description,})
-        }
+        this.setState({comp_id: nextProps.comp_id,
+            comp_name: nextProps.comp_name,
+            street: nextProps.street,
+            number: nextProps.number,
+            postcode: nextProps.postcode,
+            city: nextProps.city,
+            country: nextProps.country,
+            tel_no: nextProps.tel_no,
+            street_bill: nextProps.street_bill,
+            number_bill: nextProps.number_bill,
+            postcode_bill: nextProps.postcode_bill,
+            city_bill: nextProps.city_bill,
+            description: nextProps.description,})
     }
 }
 
