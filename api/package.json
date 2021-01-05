@@ -6,7 +6,7 @@
     "start": "node server.js > /usr/output.log"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bcrypt": "^4.0.1",
     "config": "^3.3.0",
     "cookie-parser": "~1.4.4",
